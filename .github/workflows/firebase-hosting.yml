@@ -10,6 +10,7 @@ on:
       - master
     paths:
       - 'web_deploy/**'
+      - 'index.html'
       - 'firebase.json'
       - '.firebaserc'
       - '.github/workflows/firebase-hosting.yml'
