@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Privacy Policy — mana Vivaaha Vedika. How we collect, use, and protect your data." />
   <title>Privacy Policy — mana Vivaaha Vedika</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -12,8 +13,10 @@
     :root {
       --orange: #fc5603;
       --orange-light: #ff7a35;
-      --maroon: #8b4513;
-      --blue: #3498db;
+      --orange: #fc5603;
+      --orange-light: #ff7a35;
+      --orange-dark: #d84315;
+      --maroon: #d84315;
       --bg: #fff8f5;
       --surface: #f0f2f5;
       --text: #0a0a0a;
@@ -33,12 +36,26 @@
     .top-bar {
       max-width: 800px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 20px 20px 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
+    }
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .top-brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(252, 86, 3, 0.3);
     }
     .back-link {
       display: inline-flex;
@@ -73,9 +90,9 @@
     .lang-btn {
       padding: 10px 22px;
       border-radius: 20px;
-      border: 2px solid var(--blue);
+      border: 2px solid var(--orange);
       background: transparent;
-      color: var(--blue);
+      color: var(--orange-dark);
       font-family: inherit;
       font-weight: 600;
       font-size: 0.9rem;
@@ -138,7 +155,11 @@
 </head>
 <body>
   <div class="top-bar">
-    <a class="back-link" href="index.html">← Back to home</a>
+    <a class="top-brand" href="index.html">
+      <img src="assets/app_logo-256.png" width="40" height="40" alt="mana" loading="eager" decoding="async" />
+      mana Vivaaha Vedika
+    </a>
+    <a class="back-link" href="index.html">← Home</a>
   </div>
 
   <header class="hero">

@@ -11,6 +11,9 @@ on:
     paths:
       - 'web_deploy/**'
       - 'index.html'
+      - 'privacy.html'
+      - 'assets/**'
+      - 'favicon.png'
       - 'firebase.json'
       - '.firebaserc'
       - '.github/workflows/firebase-hosting.yml'
