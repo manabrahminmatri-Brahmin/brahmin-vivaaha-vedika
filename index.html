@@ -81,23 +81,21 @@
     .brand {
       display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 1.05rem;
     }
+    /* Match app icon: white rounded outer box, logo fills edge-to-edge */
     .brand-logo-wrap {
       width: 64px;
       height: 64px;
       flex-shrink: 0;
       border-radius: 18px;
       overflow: hidden;
-      background: linear-gradient(145deg, var(--orange), var(--orange-light));
+      background: #fff;
       box-shadow: 0 8px 24px var(--orange-glow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      line-height: 0;
     }
     .brand-logo-wrap img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
+      object-fit: contain;
       display: block;
     }
     .brand-text small {
@@ -171,17 +169,14 @@
       margin: 0 auto 28px;
       border-radius: 28px;
       overflow: hidden;
-      background: linear-gradient(145deg, var(--orange), var(--orange-light));
+      background: #fff;
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      line-height: 0;
     }
     .hero-logo-wrap img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
+      object-fit: contain;
       display: block;
     }
     .hero h1.brand-title {
@@ -475,7 +470,7 @@
     <div class="nav-inner">
       <a class="brand" href="#top">
         <span class="brand-logo-wrap">
-          <img src="assets/app_logo-hero.png" width="64" height="64" alt="mana logo" />
+          <img src="assets/app_logo-256.png" width="64" height="64" alt="mana logo" />
         </span>
         <span class="brand-text">
           <small>Brahmin Matrimony</small>
@@ -502,7 +497,7 @@
     <div class="hero-ornament b" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-logo-wrap">
-        <img src="assets/app_logo-hero.png" width="148" height="148" alt="mana Vivaaha Vedika" />
+        <img src="assets/app_logo.png" width="148" height="148" alt="mana Vivaaha Vedika" />
       </div>
       <h1 class="brand-title"><span class="mana">mana</span> Vivaaha Vedika</h1>
       <p class="telugu">మన వివాహ వేదిక</p>
