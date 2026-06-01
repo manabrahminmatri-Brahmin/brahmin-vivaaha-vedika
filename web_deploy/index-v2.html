@@ -26,7 +26,8 @@
       --green-wa: #25d366;
       --bg: #fff8f5;
       --bg-warm: var(--orange-tint);
-      --bg-hero: linear-gradient(145deg, var(--orange-dark) 0%, var(--orange) 45%, var(--orange-light) 100%);
+      /* Match app logo orange (#fc5603) — avoid darker reds that clash with the icon */
+      --bg-hero: linear-gradient(165deg, var(--orange) 0%, var(--orange-light) 55%, var(--orange) 100%);
       --surface: #ffffff;
       --text: #1a1410;
       --muted: #5c6670;
@@ -151,11 +152,13 @@
 
     .hero-logo-wrap {
       display: inline-flex; margin: 0 auto 28px;
-      background: #fff; padding: 16px; border-radius: 32px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.2);
+      padding: 0;
+      background: transparent;
+      filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.18));
     }
     .hero-logo-wrap img {
-      width: 140px; height: 140px; border-radius: 22px;
+      width: 148px; height: 148px;
+      border-radius: 28px;
     }
     .hero h1.brand-title {
       font-size: clamp(2rem, 5vw, 3rem);
@@ -473,7 +476,7 @@
     <div class="hero-ornament b" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-logo-wrap">
-        <img src="assets/app_logo.png" width="140" height="140" alt="mana Vivaaha Vedika" />
+        <img src="assets/app_logo-hero.png" width="148" height="148" alt="mana Vivaaha Vedika" />
       </div>
       <h1 class="brand-title"><span class="mana">mana</span> Vivaaha Vedika</h1>
       <p class="telugu">మన వివాహ వేదిక</p>
