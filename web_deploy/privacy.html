@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Privacy Policy — mana Vivaaha Vedika. How we collect, use, and protect your data." />
   <title>Privacy Policy — mana Vivaaha Vedika</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -33,12 +34,26 @@
     .top-bar {
       max-width: 800px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 20px 20px 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
+    }
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .top-brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(252, 86, 3, 0.3);
     }
     .back-link {
       display: inline-flex;
@@ -138,7 +153,11 @@
 </head>
 <body>
   <div class="top-bar">
-    <a class="back-link" href="index.html">← Back to home</a>
+    <a class="top-brand" href="index.html">
+      <img src="assets/app_logo.png" width="40" height="40" alt="mana" />
+      mana Vivaaha Vedika
+    </a>
+    <a class="back-link" href="index.html">← Home</a>
   </div>
 
   <header class="hero">

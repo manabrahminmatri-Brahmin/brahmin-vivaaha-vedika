@@ -1,0 +1,40 @@
+# Deploy web_deploy/ to Firebase Hosting on push to main/master.
+# Setup: see .github/DEPLOY.md
+
+name: Deploy Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'web_deploy/**'
+      - 'firebase.json'
+      - '.firebaserc'
+      - '.github/workflows/firebase-hosting.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: firebase-hosting-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: manabrahminmatri-de0ad
+          channelId: live
+          entryPoint: .
