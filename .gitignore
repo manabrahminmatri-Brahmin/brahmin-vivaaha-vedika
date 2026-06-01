@@ -75,3 +75,6 @@ __pycache__/
 .Python
 
 ".dart_tool/" 
+
+# Firebase CLI local cache
+.firebase/
