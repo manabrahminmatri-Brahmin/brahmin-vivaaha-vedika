@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="mana Vivaaha Vedika — Premium Brahmin matrimony. Ashtakoot matching, privacy-first profiles, and trusted matches for Brahmin families." />
+  <title>mana Vivaaha Vedika — Connecting Brahmin Hearts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #fc5603;
+      --orange-light: #ff7a35;
+      --maroon: #8b4513;
+      --green: #27ae60;
+      --gold: #d4af37;
+      --blue: #3498db;
+      --red: #e74c3c;
+      --bg: #fff8f5;
+      --surface: #f0f2f5;
+      --text: #0a0a0a;
+      --muted: #54656f;
+      --card: #ffffff;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(165deg, var(--bg) 0%, #fff 40%, #fff5f0 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--orange); }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px 64px;
+    }
+
+    /* Hero — matches About screen header */
+    .hero {
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      color: #fff;
+      text-align: center;
+      padding: 56px 24px 48px;
+      border-radius: 0 0 32px 32px;
+      box-shadow: 0 12px 40px rgba(252, 86, 3, 0.28);
+    }
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.1rem);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .hero .telugu {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      margin-bottom: 12px;
+    }
+    .hero .tagline {
+      font-size: 1.05rem;
+      font-weight: 500;
+      opacity: 0.92;
+    }
+    .hero .subtag {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .version-badge {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    section { margin-top: 40px; }
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--maroon);
+      margin-bottom: 16px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(252, 86, 3, 0.1);
+      margin-bottom: 16px;
+    }
+    .card p { color: var(--muted); }
+
+    /* Values list — from About screen */
+    .values-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+    .values-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .values-list li::before {
+      content: '✓';
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: rgba(39, 174, 96, 0.15);
+      color: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .feature-item {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px;
+      border: 1px solid var(--surface);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .feature-item:hover {
+      box-shadow: 0 8px 24px rgba(252, 86, 3, 0.12);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+    .feature-icon.orange { background: rgba(252, 86, 3, 0.12); }
+    .feature-icon.green { background: rgba(39, 174, 96, 0.12); }
+    .feature-icon.blue { background: rgba(52, 152, 219, 0.12); }
+    .feature-icon.gold { background: rgba(212, 175, 55, 0.15); }
+    .feature-icon.maroon { background: rgba(139, 69, 19, 0.12); }
+    .feature-item h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .feature-item p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .premium-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: linear-gradient(90deg, var(--gold), #f39c12);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* Platinum highlights */
+    .platinum-bar {
+      background: linear-gradient(90deg, #1a1a1a, #3d2914);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-top: 8px;
+    }
+    .platinum-bar h3 {
+      color: var(--gold);
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    .platinum-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .platinum-chips span {
+      font-size: 0.78rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      margin-top: 40px;
+      padding: 32px 24px;
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid rgba(252, 86, 3, 0.15);
+    }
+    .cta h2 { margin-bottom: 8px; }
+    .cta p { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(252, 86, 3, 0.35);
+    }
+    .btn-wa {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+    }
+    .btn-outline {
+      background: #fff;
+      color: var(--maroon);
+      border: 2px solid var(--maroon);
+    }
+
+    /* Contact */
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .contact-item {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+    .contact-item strong {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--orange);
+      margin-bottom: 4px;
+    }
+    .contact-item a { text-decoration: none; font-weight: 500; }
+
+    .privacy-notice {
+      margin-top: 32px;
+      padding: 16px 20px;
+      background: rgba(52, 152, 219, 0.08);
+      border-radius: 12px;
+      border: 1px solid rgba(52, 152, 219, 0.25);
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .privacy-notice a {
+      font-weight: 600;
+      color: var(--maroon);
+    }
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--surface);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer .telugu-footer {
+      margin-top: 6px;
+      font-size: 0.8rem;
+    }
+    .legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 16px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+    .legal-links a {
+      color: var(--maroon);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .legal-links a:hover { text-decoration: underline; color: var(--orange); }
+    .legal-links span { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-icon" aria-hidden="true">❤</div>
+    <h1>mana Vivaaha Vedika</h1>
+    <p class="telugu">మన వివాహ వేదిక</p>
+    <p class="tagline">Connecting Brahmin Hearts</p>
+    <p class="subtag">Where Tradition Meets Technology</p>
+    <span class="version-badge">Version 1.1.0</span>
+  </header>
+
+  <div class="container">
+    <section>
+      <p class="section-title">Our Mission</p>
+      <div class="card">
+        <p>
+          mana Vivaaha Vedika is dedicated to helping Brahmin families find suitable matches
+          while preserving our cultural values and traditions. We understand the importance
+          of compatibility, family values, and cultural alignment in marriage alliances.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-title">Our Values</p>
+      <h2>Built for Brahmin families</h2>
+      <div class="card">
+        <ul class="values-list">
+          <li>Cultural Preservation</li>
+          <li>Family-Centric Approach</li>
+          <li>Privacy &amp; Security</li>
+          <li>Authentic Profiles</li>
+          <li>Traditional Values with Modern Convenience</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-title">Key Features</p>
+      <h2>Everything in the app</h2>
+      <div class="features-grid">
+        <article class="feature-item">
+          <div class="feature-icon orange">☸</div>
+          <div>
+            <h3>Ashtakoot Matching</h3>
+            <p>Vedic compatibility scoring to find aligned matches.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon green">🔐</div>
+          <div>
+            <h3>Secure MPIN Login</h3>
+            <p>Bank-style MPIN and optional biometric unlock.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon maroon">👨‍👩‍👧</div>
+          <div>
+            <h3>Family-Managed Profiles</h3>
+            <p>Profiles managed with family involvement and trust.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon blue">🛡</div>
+          <div>
+            <h3>Privacy Controls</h3>
+            <p>Mask photos, contact details, and chat previews until you allow.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon orange">💌</div>
+          <div>
+            <h3>Interests &amp; Messages</h3>
+            <p>Send interests, track Received/Sent, and chat with accepted matches.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon green">📱</div>
+          <div>
+            <h3>Mobile OTP Verification</h3>
+            <p>Verified registration and profile trust badges.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon blue">📸</div>
+          <div>
+            <h3>Photo Requests</h3>
+            <p>Request, accept, or decline photos with full privacy flow.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon gold">🎠</div>
+          <div>
+            <h3>Discover 3D<span class="premium-tag">Premium</span></h3>
+            <p>Immersive profile discovery from the Home tab.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon maroon">💬</div>
+          <div>
+            <h3>In-App Support</h3>
+            <p>Chat with our team from Settings → Support.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon orange">📊</div>
+          <div>
+            <h3>Interest Analytics</h3>
+            <p>Overview, views, and engagement stats in one hub.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon green">✓</div>
+          <div>
+            <h3>Profile Verification</h3>
+            <p>Phone, email, and profile checks for trusted discovery.</p>
+          </div>
+        </article>
+        <article class="feature-item">
+          <div class="feature-icon blue">🚫</div>
+          <div>
+            <h3>Block &amp; Report</h3>
+            <p>Stay safe with block and report on any profile.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="platinum-bar">
+        <h3>✦ Platinum membership</h3>
+        <div class="platinum-chips">
+          <span>Unlimited contact requests</span>
+          <span>Direct WhatsApp messaging</span>
+          <span>View contact numbers</span>
+          <span>Advanced filters</span>
+          <span>Priority visibility</span>
+          <span>Incognito mode</span>
+          <span>Read receipts</span>
+          <span>Community Heads access</span>
+        </div>
+      </div>
+    </section>
+
+    <p class="privacy-notice">
+      We protect your data with privacy-first controls in the app.
+      Read our full <a href="privacy.html">Privacy Policy</a> (English &amp; తెలుగు).
+    </p>
+
+    <section class="cta" id="download">
+      <h2>Find your perfect match</h2>
+      <p>Premium Vivaaha Vedika app for the Brahmin community — download free on Google Play.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
+          Get it on Google Play
+        </a>
+        <a class="btn btn-wa" href="https://wa.me/918985936678" target="_blank" rel="noopener">
+          WhatsApp +91 8985936678
+        </a>
+        <a class="btn btn-outline" href="mailto:support@manaVivaahaVedika.com?subject=Support%20-%20mana%20Vivaaha%20Vedika">
+          Email Support
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-title">Contact Us</p>
+      <h2>We're here to help</h2>
+      <div class="card">
+        <p style="margin-bottom: 16px;">
+          For any queries, support, or feedback, please reach out to us.
+          We are here to help you find your perfect match.
+        </p>
+        <div class="contact-row">
+          <div class="contact-item">
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/918985936678">+91 8985936678</a>
+          </div>
+          <div class="contact-item">
+            <strong>Email</strong>
+            <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
+          </div>
+          <div class="contact-item">
+            <strong>Phone</strong>
+            <a href="tel:+918985936678">+91 8985936678</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <nav class="legal-links" aria-label="Legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <span aria-hidden="true">|</span>
+        <a href="privacy.html#contact">Contact &amp; data rights</a>
+        <span aria-hidden="true">|</span>
+        <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
+      </nav>
+      <p>&copy; 2026 mana Vivaaha Vedika. All rights reserved.</p>
+      <p class="telugu-footer">&copy; 2026 మన వివాహ వేదిక. అన్ని హక్కులు ప్రత్యేకించబడ్డాయి.</p>
+    </footer>
+  </div>
+</body>
+</html>
