@@ -88,6 +88,75 @@
       font-size: 0.8rem;
       font-weight: 600;
     }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .hero-actions .btn {
+      min-width: 160px;
+      justify-content: center;
+    }
+    .btn-register {
+      background: #fff;
+      color: var(--orange);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    .btn-register:hover { background: #fff8f5; }
+    .btn-login-hero {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      box-shadow: none;
+    }
+    .btn-login-hero:hover { background: rgba(255, 255, 255, 0.12); }
+
+    /* Registration cards */
+    .register-section { margin-top: 40px; }
+    .register-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .register-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      border: 2px solid rgba(252, 86, 3, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .register-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--orange);
+    }
+    .register-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    .register-card h3 {
+      font-size: 1.1rem;
+      color: var(--maroon);
+      margin-bottom: 8px;
+    }
+    .register-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .register-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .register-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 16px;
+    }
 
     section { margin-top: 40px; }
     .section-title {
@@ -349,10 +418,49 @@
     <p class="telugu">మన వివాహ వేదిక</p>
     <p class="tagline">Connecting Brahmin Hearts</p>
     <p class="subtag">Where Tradition Meets Technology</p>
-    <span class="version-badge">Version 1.1.0</span>
+    <div class="hero-actions">
+      <a class="btn btn-register" id="hero-register" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
+        Register Now — Free
+      </a>
+      <a class="btn btn-login-hero" id="hero-login" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
+        Login to App
+      </a>
+    </div>
+    <span class="version-badge">Version 1.1.0 · Register via mobile app</span>
   </header>
 
   <div class="container">
+    <section class="register-section" id="register">
+      <p class="section-title">Join Today</p>
+      <h2>Create your matrimony profile</h2>
+      <p style="color: var(--muted); margin-bottom: 20px; max-width: 640px;">
+        Registration is quick and secure — mobile OTP verification, MPIN setup, and family-managed profiles.
+        Download the app and tap <strong>Register Now</strong> to get started.
+      </p>
+      <div class="register-grid">
+        <article class="register-card">
+          <div class="icon" aria-hidden="true">👰</div>
+          <h3>Register as Bride</h3>
+          <p>వధువు గా నమోదు — For brides &amp; families seeking a groom</p>
+          <a class="btn btn-primary register-link" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" data-role="bride">
+            Register as Bride
+          </a>
+        </article>
+        <article class="register-card">
+          <div class="icon" aria-hidden="true">🤵</div>
+          <h3>Register as Groom</h3>
+          <p>వరుడు గా నమోదు — For grooms &amp; families seeking a bride</p>
+          <a class="btn btn-primary register-link" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" data-role="groom">
+            Register as Groom
+          </a>
+        </article>
+      </div>
+      <p class="register-note">
+        Already registered? Open the app and sign in with your mobile number &amp; MPIN.
+        <a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Download app</a>
+      </p>
+    </section>
+
     <section>
       <p class="section-title">Our Mission</p>
       <div class="card">
@@ -490,9 +598,12 @@
 
     <section class="cta" id="download">
       <h2>Find your perfect match</h2>
-      <p>Premium Vivaaha Vedika app for the Brahmin community — download free on Google Play.</p>
+      <p>Premium Vivaaha Vedika app for the Brahmin community — register free and start matching today.</p>
       <div class="actions">
-        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
+        <a class="btn btn-primary register-link" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
+          Register Now — Free
+        </a>
+        <a class="btn btn-outline" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
           Get it on Google Play
         </a>
         <a class="btn btn-wa" href="https://wa.me/918985936678" target="_blank" rel="noopener">
@@ -531,6 +642,8 @@
 
     <footer>
       <nav class="legal-links" aria-label="Legal">
+        <a href="#register">Register</a>
+        <span aria-hidden="true">|</span>
         <a href="privacy.html">Privacy Policy</a>
         <span aria-hidden="true">|</span>
         <a href="privacy.html#contact">Contact &amp; data rights</a>
