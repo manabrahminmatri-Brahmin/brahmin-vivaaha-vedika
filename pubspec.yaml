@@ -1,0 +1,125 @@
+name: brahmin_vivaaha_vedika
+description: "Mana Vivaaha Vedika - Premium Vivaaha Vedika App for Brahmin Community"
+publish_to: 'none'
+
+version: 1.1.0+2
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI & Design
+  cupertino_icons: ^1.0.8
+  google_fonts: ^8.0.2
+  flutter_animate: ^4.5.2
+  image_picker: ^1.2.2
+  file_picker: ^8.3.7  # Windows desktop support
+  image_cropper: ^8.0.2
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.16
+
+  # State Management
+  provider: ^6.1.2
+
+  # Storage & Data
+  shared_preferences: ^2.5.3
+  path_provider: ^2.1.5
+  flutter_secure_storage: ^10.0.0
+
+  # Security
+  crypto: ^3.0.5
+  local_auth: ^2.3.0
+  # bcrypt removed - too expensive for mobile
+  # Use crypto package for SHA-256 hashing instead
+
+  # Networking
+  http: ^1.6.0
+  http_parser: ^4.0.2
+  connectivity_plus: ^7.0.0
+
+  # ── Firebase — FlutterFire BoM 4.11.0+ (PR #18059: built-in Kotlin / no kotlin-android in plugins)
+  # Floors are minimum KGP-safe versions on pub.dev; `flutter pub upgrade` may resolve newer.
+  firebase_core: ^4.6.0
+  firebase_auth: ^6.3.0
+  cloud_firestore: ^6.2.0
+  firebase_database: ^12.2.0
+  firebase_storage: ^13.2.0
+  firebase_app_check: ^0.4.2
+  cloud_functions: ^6.1.0
+  firebase_analytics: ^12.2.0
+  firebase_crashlytics: ^5.1.0
+  firebase_messaging: ^16.1.3
+  # Profile photos: Cloudinary only (see CloudinaryService / FirebaseService.uploadPhoto).
+  # ─────────────────────────────────────────────────────────────────────────
+
+  # Forms & Validation
+  email_validator: ^3.0.0
+  pin_code_fields: ^8.0.1
+  intl: ^0.20.1
+
+  # Date & Time Pickers
+  flutter_datetime_picker_plus: ^2.2.0
+
+  # UUID for unique IDs
+  uuid: ^4.5.1
+
+  # URL Launcher for WhatsApp
+  url_launcher: ^6.3.1
+
+  # File handling
+  mime: ^2.0.0
+  path: ^1.9.1
+
+  # Forms & Permissions
+  permission_handler: ^12.0.1
+
+  # Package Info for version display
+  package_info_plus: ^9.0.0
+
+  # Local Notifications
+  flutter_local_notifications: ^18.0.1
+
+  # PDF Generation
+  pdf: ^3.11.3
+  printing: ^5.14.2
+
+  # flutter_local_notifications removed — not used in any Dart file.
+  # The plugin registers a native notification channel on Android startup
+  # and requires POST_NOTIFICATIONS permission handling; keeping it unused
+  # adds unnecessary startup work and occasional release init crashes.
+  # Re-add if push notifications are implemented:
+  #   flutter_local_notifications: ^21.0.0
+
+  share_plus: ^12.0.2
+  razorpay_flutter: ^1.3.7
+  # flutter_jailbreak_detection: ^1.10.0  # Temporarily removed — outdated Android KGP; re-add when plugin migrates
+  flutter_cache_manager: ^3.4.1
+  audioplayers: ^6.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.2
+  mockito: ^5.4.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_logo.png"
+  adaptive_icon_background: "#E85D04"
+  adaptive_icon_foreground: "assets/images/app_logo.png"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - dart_defines.json
+    - assets/images/

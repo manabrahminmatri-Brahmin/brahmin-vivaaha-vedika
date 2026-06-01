@@ -1,0 +1,33 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "interests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "from_user_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "interests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "to_user_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

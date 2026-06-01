@@ -1,0 +1,813 @@
+rules_version = '2';
+// ═══════════════════════════════════════════════════════════════════════════
+// UPDATED FIRESTORE RULES
+// Changes from previous version annotated with // ← CHANGED / // ← NEW / // ← REMOVED
+// Deploy: firebase deploy --only firestore:rules
+// ═══════════════════════════════════════════════════════════════════════════
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── CORE HELPERS ────────────────────────────────────────────────────────
+
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function isAnonymousAuth() {
+      return isAuth() && (
+        request.auth.token.get('firebase', {}).get('sign_in_provider', '') == 'anonymous' ||
+        request.auth.token.get('sign_in_provider', '') == 'anonymous'
+      );
+    }
+
+    function isNonEmptyString(v) {
+      return v is string && v.size() > 0;
+    }
+
+    function profileLinkedAuthMatches(userDocId) {
+      return isAuth() && isNonEmptyString(userDocId) && (
+        userDocId == request.auth.uid ||
+        (
+          exists(/databases/$(database)/documents/users/$(userDocId)) &&
+          get(/databases/$(database)/documents/users/$(userDocId)).data.get('auth_uid', '') == request.auth.uid
+        )
+      );
+    }
+
+    function isOwner(userId) {
+      // 🔥 FIXED: Use profileLinkedAuthMatches for all ownership checks
+      return isAuth() && profileLinkedAuthMatches(userId);
+    }
+
+    function isFromUserOwner(fromUserId) {
+      // 🔥 FIXED: Removed direct request.auth.uid comparison
+      return isAuth() && profileLinkedAuthMatches(fromUserId);
+    }
+
+    // Participant on a two-party doc (likes, interests, access requests).
+    function isParticipantOnDoc(data, fieldA, fieldB) {
+      return profileLinkedAuthMatches(data.get(fieldA, '')) ||
+        profileLinkedAuthMatches(data.get(fieldB, '')) ||
+        profileLinkedAuthMatches(data.get('requester_auth_uid', '')) ||
+        profileLinkedAuthMatches(data.get('owner_auth_uid', '')) ||
+        profileLinkedAuthMatches(data.get('from_user_id', '')) ||
+        profileLinkedAuthMatches(data.get('to_user_id', '')) ||
+        profileLinkedAuthMatches(data.get('fromUserId', '')) ||
+        profileLinkedAuthMatches(data.get('toUserId', '')) ||
+        profileLinkedAuthMatches(data.get('requesterId', '')) ||
+        profileLinkedAuthMatches(data.get('ownerId', ''));
+    }
+
+    // List/query-safe read for birth / community / photo request collections.
+    function canReadAccessRequestDoc(data) {
+      return isParticipantOnDoc(data, 'requester_id', 'owner_id') ||
+        isElevatedAdmin();
+    }
+
+    // Allow .get() on missing docs (status listeners); deny cross-user reads when doc exists.
+    function canReadParticipantDoc(collection, docId, fieldA, fieldB) {
+      return !exists(/databases/$(database)/documents/$(collection)/$(docId)) ||
+        isParticipantOnDoc(resource.data, fieldA, fieldB) ||
+        isElevatedAdmin();
+    }
+
+    // ─── ADMIN HELPERS ────────────────────────────────────────────────────────
+
+    // App user docs use random ids; is_admin lives on users/{docId} with auth_uid field.
+    function adminAuthLinkIsAdmin() {
+      return isAuth() &&
+        exists(/databases/$(database)/documents/admin_auth_links/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/admin_auth_links/$(request.auth.uid)).data.get('is_admin', false) == true;
+    }
+
+    function userDocIdIsAdminForAuth(userDocId) {
+      return isAuth() && isNonEmptyString(userDocId) &&
+        exists(/databases/$(database)/documents/users/$(userDocId)) &&
+        get(/databases/$(database)/documents/users/$(userDocId)).data.get('auth_uid', '') == request.auth.uid &&
+        get(/databases/$(database)/documents/users/$(userDocId)).data.get('is_admin', false) == true;
+    }
+
+    function isElevatedAdmin() {
+      let uid = request.auth.uid;
+      let claimAdmin = request.auth.token.get('admin', false) == true ||
+                       request.auth.token.get('is_admin', false) == true;
+      let directDoc  = exists(/databases/$(database)/documents/users/$(uid))
+                       ? get(/databases/$(database)/documents/users/$(uid)).data.get('is_admin', false)
+                       : false;
+      let sessionDoc = exists(/databases/$(database)/documents/admin_sessions/$(uid))
+                       ? get(/databases/$(database)/documents/admin_sessions/$(uid)).data.get('is_admin', false)
+                       : false;
+      return isAuth() && (
+        claimAdmin == true ||
+        adminAuthLinkIsAdmin() == true ||
+        directDoc == true ||
+        sessionDoc == true
+      );
+    }
+
+    // ─── FIELD-LEVEL HELPERS ─────────────────────────────────────────────────
+
+    function affectedKeys() {
+      return request.resource.data.diff(resource.data).affectedKeys();
+    }
+
+    function containsPrivilegedFields() {
+      let forbidden = ['is_admin', 'is_premium', 'subscription_tier', 'premium_expiry',
+                       'membership_level', 'membership_tier', 'membership_status',
+                       'membership_json', 'membership_expiry_date'];
+      return request.resource.data.diff(resource.data).affectedKeys().hasAny(forbidden);
+    }
+
+    function isProfileUpdate() {
+      let forbidden = ['is_admin', 'is_premium', 'subscription_tier', 'premium_expiry',
+                       'membership_level', 'membership_tier', 'membership_status',
+                       'membership_json', 'membership_expiry_date'];
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(forbidden);
+    }
+
+    function isSecurityUpdate() {
+      let securityFields = ['mpin_hash', 'mpin_verified', 'mpin_enabled',
+                            'biometric_enabled', 'updated_at', 'auth_uid'];
+      let common = ['first_name', 'last_name', 'email', 'mobile_number',
+                    'profile', 'profile_id', 'date_of_birth', 'gender',
+                    'city', 'state', 'country', 'education', 'occupation', 'about_me'];
+      let keys = affectedKeys();
+      return keys.hasAny(securityFields) &&
+             !containsPrivilegedFields() &&
+             !keys.hasAny(common);
+    }
+
+    function isPresenceFieldPatch() {
+      return affectedKeys().hasOnly(['is_online', 'last_active']) ||
+             affectedKeys().hasOnly(['is_online']) ||
+             affectedKeys().hasOnly(['last_active']);
+    }
+
+    function isAuthUidSyncOnly() {
+      return affectedKeys().hasOnly(['auth_uid', 'updated_at']) &&
+             profileLinkedAuthMatches(request.resource.data.auth_uid);
+    }
+
+    function isInterestAnalyticsFieldPatch() {
+      // Allow updating interest and like counters
+      return affectedKeys().hasOnly(['interests_sent']) ||
+             affectedKeys().hasOnly(['interests_received']) ||
+             affectedKeys().hasOnly(['likes_sent']) ||
+             affectedKeys().hasOnly(['likes_received']) ||
+             affectedKeys().hasOnly(['interests_sent', 'updated_at']) ||
+             affectedKeys().hasOnly(['interests_received', 'updated_at']) ||
+             affectedKeys().hasOnly(['likes_sent', 'updated_at']) ||
+             affectedKeys().hasOnly(['likes_received', 'updated_at']);
+    }
+
+    function isAnonymousBridgeOnlyPatch() {
+      return isAnonymousAuth() &&
+             affectedKeys().hasOnly(['anonymous_bridge_uid', 'anonymous_bridge_at']) &&
+             profileLinkedAuthMatches(request.resource.data.anonymous_bridge_uid);
+    }
+
+    function userDocHasReachableMobile() {
+      return isNonEmptyString(resource.data.get('mobile_number', ''));
+      // ← CHANGED: removed camelCase 'mobileNumber' fallback — all docs now use snake_case
+      // 🔥 FIXED: No direct auth comparison needed - this is field validation
+    }
+
+    // ─── LIKE HELPERS ────────────────────────────────────────────────────────
+
+    function isLikedByPatchValid() {
+      let keys = affectedKeys();
+      let lb   = request.resource.data.get('liked_by', []);
+      let lastId = lb[lb.size() - 1];
+      // 🔥 FIXED: Removed direct request.auth.uid comparison
+      return (keys.hasOnly(['liked_by']) || keys.hasOnly(['liked_by', 'updated_at'])) &&
+             lb is list && lb.size() > 0 && lb.size() <= 2000 &&
+             profileLinkedAuthMatches(lastId);
+    }
+
+    function isMutualLikeFieldPatch() {
+      return isAuth() && (
+        isLikedByPatchValid() ||
+        request.resource.data.keys().hasAny(['liked_users'])
+      );
+    }
+
+    // ─── BLOCK HELPERS (doc id: blockerId_blockedId) ─────────────────────────
+
+    function blockDocId(blocker, blocked) {
+      return blocker + '_' + blocked;
+    }
+
+    function isBlockedPair(userA, userB) {
+      return userA != userB &&
+        userA.size() > 0 && userB.size() > 0 &&
+        (
+          exists(/databases/$(database)/documents/blocks/$(blockDocId(userA, userB))) ||
+          exists(/databases/$(database)/documents/blocks/$(blockDocId(userB, userA)))
+        );
+    }
+
+    function noBlockBetween(userA, userB) {
+      return !isBlockedPair(userA, userB);
+    }
+
+    function isOwnLikedUsersPlusAuthSyncPatch() {
+      return isAuth() && (
+               affectedKeys().hasOnly(['liked_users']) ||
+               affectedKeys().hasOnly(['liked_users', 'updated_at'])
+             );
+    }
+
+    function isNotificationRecipient(data) {
+      return (isNonEmptyString(data.get('user_id', '')) &&
+          profileLinkedAuthMatches(data.get('user_id', ''))) ||
+        (isNonEmptyString(data.get('to_user_id', '')) &&
+          profileLinkedAuthMatches(data.get('to_user_id', ''))) ||
+        (isNonEmptyString(data.get('to_user', '')) &&
+          profileLinkedAuthMatches(data.get('to_user', ''))) ||
+        (isNonEmptyString(data.get('receiver_user_id', '')) &&
+          profileLinkedAuthMatches(data.get('receiver_user_id', '')));
+    }
+
+    function isNotificationCreateValid(data) {
+      return isNonEmptyString(data.get('user_id', '')) &&
+             isNonEmptyString(data.get('type', '')) &&
+             'created_at' in data &&
+             (data.created_at is timestamp || data.created_at is string);
+    }
+
+    function notificationFromUserIsCaller(data) {
+      let from = data.get('from_user', '');
+      return isNonEmptyString(from) && profileLinkedAuthMatches(from);
+    }
+
+    function notificationReadPatchOnly() {
+      return affectedKeys().hasOnly(['is_read']) ||
+             affectedKeys().hasOnly(['is_read', 'updated_at']) ||
+             affectedKeys().hasOnly(['read_at']) ||
+             affectedKeys().hasOnly(['is_read', 'read_at', 'updated_at']);
+    }
+
+    // ─── CHAT HELPERS ────────────────────────────────────────────────────────
+
+    function messageParticipant(uid) {
+      // 🔥 FIXED: Removed direct request.auth.uid comparison
+      return isNonEmptyString(uid) && profileLinkedAuthMatches(uid);
+    }
+
+    function participantsAllowCurrentUser(parts) {
+      // 🔥 FIXED: Removed request.auth.uid in parts - comparing authUid with userDocId array
+      return parts is list && (
+        (parts.size() > 0 && profileLinkedAuthMatches(parts[0])) ||
+        (parts.size() > 1 && profileLinkedAuthMatches(parts[1])) ||
+        (parts.size() > 2 && profileLinkedAuthMatches(parts[2])) ||
+        (parts.size() > 3 && profileLinkedAuthMatches(parts[3]))
+      );
+    }
+
+    function chatAuthUidParticipant(chatData) {
+      return isAuth() &&
+        chatData != null &&
+        request.auth.uid in chatData.get('participant_auth_uids', []);
+    }
+
+    // ─── REQUEST STATUS VALIDATORS ───────────────────────────────────────────
+
+    function isValidInterestStatus(s) {
+      return s in ['pending', 'accepted', 'rejected', 'declined', 'withdrawn'];
+    }
+
+    function isValidBirthRequestStatus(s)      { return s in ['pending', 'granted', 'denied']; }
+    function isValidCommunityRequestStatus(s)  { return s in ['pending', 'granted', 'denied']; }
+
+    // ─── PREFS ANONYMOUS BRIDGE ──────────────────────────────────────────────
+
+    function prefsAnonymousBridgeMatchesUserDoc(userDocId) {
+      return isNonEmptyString(userDocId) && isAuth() &&
+             exists(/databases/$(database)/documents/users/$(userDocId)) &&
+             get(/databases/$(database)/documents/users/$(userDocId)).data.get('anonymous_bridge_uid', '') == request.auth.uid;
+    }
+
+    function prefsAnonymousBridgeMatchesAuthUidParticipant(participantId) {
+      return isNonEmptyString(participantId) && isAuth() &&
+             exists(/databases/$(database)/documents/auth_uid_bridge/$(participantId)) &&
+             get(/databases/$(database)/documents/auth_uid_bridge/$(participantId)).data.get('anonymous_bridge_uid', '') == request.auth.uid;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // COLLECTIONS
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── USERS ────────────────────────────────────────────────────────────────
+    match /users/{userId} {
+      allow read: if isAuth();
+      allow list: if isAuth();
+
+      allow create: if isAuth() && (
+        isOwner(userId) ||
+        (
+          peerLikedByCreateForMutualLike() &&
+          !exists(/databases/$(database)/documents/users/$(userId))
+        )
+      );
+
+      allow update: if isAuth() && (
+        isElevatedAdmin() ||
+        (
+          !containsPrivilegedFields() && (
+            isMutualLikeFieldPatch() ||
+            isOwnLikedUsersPlusAuthSyncPatch() ||
+            (isSecurityUpdate() && profileLinkedAuthMatches(userId)) ||
+            (isProfileUpdate() && profileLinkedAuthMatches(userId)) ||
+            (isAnonymousBridgeOnlyPatch() && userDocHasReachableMobile()) ||
+            isPresenceFieldPatch() ||
+            isAuthUidSyncOnly() ||
+            (isInterestAnalyticsFieldPatch() && isElevatedAdmin()) // counters: server-only
+          )
+        )
+      );
+
+      allow delete: if isOwner(userId) || isElevatedAdmin();
+
+      match /likes/{likeId} {
+        allow read: if isAuth() && (
+          !exists(/databases/$(database)/documents/users/$(userId)/likes/$(likeId)) ||
+          isParticipantOnDoc(resource.data, 'from_user_id', 'to_user_id')
+        );
+        allow create: if isAuth() && 
+          profileLinkedAuthMatches(request.resource.data.get('from_user_id', '')) &&
+          request.resource.data.get('from_user_id', '') != request.resource.data.get('to_user_id', '');
+        allow update, delete: if isAuth() && (
+          profileLinkedAuthMatches(resource.data.get('from_user_id', '')) ||
+          profileLinkedAuthMatches(resource.data.get('to_user_id', ''))
+        );
+      }
+
+      match /_meta/{docId} {
+        allow read: if isAuth() && (
+          profileLinkedAuthMatches(userId) || isElevatedAdmin()
+        );
+        allow write: if isElevatedAdmin();
+      }
+    }
+
+    // ── INTERESTS ────────────────────────────────────────────────────────────
+    match /interests/{interestId} {
+      allow read: if isAuth() &&
+        canReadParticipantDoc('interests', interestId, 'from_user_id', 'to_user_id');
+      allow create, update, delete: if false;
+    }
+
+    // ── LIKES (top-level mirror) ─────────────────────────────────────────────
+    match /likes/{likeId} {
+      allow read: if isAuth() &&
+        canReadParticipantDoc('likes', likeId, 'from_user_id', 'to_user_id');
+      allow create, update, delete: if false;
+    }
+
+    // ── LIKED PROFILES ────────────────────────────────────────────────────────
+    match /liked_profiles/{docId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('from_user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create: if isAuth() && (
+        profileLinkedAuthMatches(request.resource.data.get('from_user_id', ''))
+      );
+      allow update, delete: if isAuth() && profileLinkedAuthMatches(resource.data.get('from_user_id', ''));
+    }
+
+    // ── BIDIRECTIONAL LIKE MIRRORS ────────────────────────────────────────────
+    match /youLiked/{userId} {
+      allow read: if messageParticipant(userId);
+      match /users/{targetId} {
+        allow read:   if messageParticipant(userId);
+        allow create: if messageParticipant(userId) &&
+                         request.resource.data.keys().hasAny(['created_at']);
+        allow delete: if messageParticipant(userId);
+      }
+    }
+
+    match /likedYou/{targetId} {
+      allow read: if messageParticipant(targetId);
+      match /users/{userId} {
+        allow read, list: if isAuth();
+        // 🔥 FIXED: Removed direct request.auth.uid comparison
+        allow create: if isAuth() && profileLinkedAuthMatches(userId) &&
+          request.resource.data.keys().hasAny(['created_at']);
+        allow delete: if isAuth() && profileLinkedAuthMatches(userId);
+      }
+    }
+
+    // ── USER META ────────────────────────────────────────────────────────────
+    match /userMeta/{userId} {
+      allow read, create, delete: if messageParticipant(userId);
+      allow update: if messageParticipant(userId) &&
+                       affectedKeys().hasOnly(
+                         ['likedIds', 'interestIds', 'likedCount',
+                          'interestSentCount', 'lastUpdated']
+                       );
+    }
+
+    // ── NOTIFICATIONS ────────────────────────────────────────────────────────
+    match /notifications/{notifId} {
+      allow read: if isAuth() && (
+        isNotificationRecipient(resource.data) || isElevatedAdmin()
+      );
+      allow create: if isAuth() &&
+        isNotificationCreateValid(request.resource.data) &&
+        notificationFromUserIsCaller(request.resource.data) &&
+        request.resource.data.get('to_user', '') ==
+          request.resource.data.get('user_id', '');
+      allow update: if isAuth() &&
+        isNotificationRecipient(resource.data) &&
+        notificationReadPatchOnly();
+      allow delete: if isAuth() &&
+        (isNotificationRecipient(resource.data) || isElevatedAdmin());
+    }
+
+    // ── PRESENCE ─────────────────────────────────────────────────────────────
+    match /user_status/{userId} {
+      allow read: if isAuth();
+      allow create, update: if isAuth() &&
+        profileLinkedAuthMatches(userId) &&
+        isPresenceFieldPatch();
+      allow delete: if isAuth() && profileLinkedAuthMatches(userId);
+    }
+
+    // ── PROFILE VIEWS ─────────────────────────────────────────────────────────
+    match /profile_views/{viewId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('viewer_user_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('viewer_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('viewed_user_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('viewed_profile_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if false;
+    }
+
+    // ── BLOCKS ── ← NEW COLLECTION RULE (was missing — all operations were denied)
+    match /blocks/{blockId} {
+      allow read: if isAuth();
+      allow create: if isAuth() &&
+        isFromUserOwner(request.resource.data.get('blockerId', '')) &&
+        request.resource.data.get('blockerId', '') !=
+          request.resource.data.get('blockedId', '');
+      allow update: if false;
+      allow delete: if isAuth() &&
+        isFromUserOwner(resource.data.get('blockerId', ''));
+    }
+
+    // ── SUCCESS STORIES ───────────────────────────────────────────────────────
+    match /success_stories/{storyId} {
+      allow read: if isAuth();
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('user_id', ''));
+      allow update: if isAuth() &&
+        profileLinkedAuthMatches(resource.data.get('user_id', ''));
+      allow delete: if isAuth() &&
+        (profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+         isElevatedAdmin());
+    }
+
+    // ── PHOTO REQUESTS ────────────────────────────────────────────────────────
+    function photoRequestStatusImmutable() {
+      return !('status' in request.resource.data) ||
+        request.resource.data.status == resource.data.status;
+    }
+
+    match /photo_requests/{reqId} {
+      allow read: if isAuth() && (
+        canReadAccessRequestDoc(resource.data) ||
+        isFromUserOwner(resource.data.get('from_user_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('to_user_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('to_profile_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update: if false;
+      // Lifecycle is server-authoritative via Cloud Functions (withdraw/revoke/deny).
+      // Direct client delete bypasses cooldown/history and is therefore blocked.
+      allow delete: if false;
+    }
+
+    // ── BIRTH REQUESTS ────────────────────────────────────────────────────────
+    match /birth_requests/{reqId} {
+      allow read: if isAuth() && (
+        !exists(/databases/$(database)/documents/birth_requests/$(reqId)) ||
+        canReadAccessRequestDoc(resource.data)
+      );
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('requester_id', ''));
+      allow update: if isAuth() &&
+        profileLinkedAuthMatches(resource.data.get('owner_id', ''));
+      allow delete: if false;
+    }
+
+    // ── REPORTS ───────────────────────────────────────────────────────
+    match /reports/{reportId} {
+      allow read: if isElevatedAdmin();
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('reporter_id', ''));
+      allow update, delete: if isElevatedAdmin();
+    }
+
+    // ── COMMUNITY REQUESTS ────────────────────────────────────────────────────
+    match /community_requests/{requestId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('requester_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('owner_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('requester_id', ''));
+      allow update: if isAuth() &&
+        profileLinkedAuthMatches(resource.data.get('owner_id', ''));
+      allow delete: if false;
+    }
+
+    // ── MESSAGES (legacy inbox: birthday/anniversary; chat uses chats/…/messages) ─
+    match /messages/{messageId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('to_user_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('from_user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if false;
+    }
+
+    // ── CHATS ─────────────────────────────────────────────────────────────────
+    function chatParticipant() {
+      return isAuth() && (
+        participantsAllowCurrentUser(resource.data.get('participants', [])) ||
+        chatAuthUidParticipant(resource.data)
+      );
+    }
+
+    // Subcollection rules: resource is the message doc (no participants field).
+    // Read parent chat participants — same check used for message create.
+    function chatParticipantOf(chatId) {
+      return isAuth() &&
+        exists(/databases/$(database)/documents/chats/$(chatId)) &&
+        (
+          participantsAllowCurrentUser(
+            get(/databases/$(database)/documents/chats/$(chatId)).data.get('participants', [])
+          ) ||
+          chatAuthUidParticipant(
+            get(/databases/$(database)/documents/chats/$(chatId)).data
+          )
+        );
+    }
+
+    function chatDeletedForSelfOnly() {
+      return affectedKeys().hasOnly(['deleted_for']) ||
+        affectedKeys().hasOnly(['deleted_for', 'updated_at']);
+    }
+
+    function chatMessagingMetaUpdateOnly() {
+      return affectedKeys().hasOnly([
+        'intro_message_sent_by',
+        'lastMessage',
+        'last_message',
+        'updated_at',
+        'updatedAt',
+      ]);
+    }
+
+    match /chats/{chatId} {
+      // Single-doc reads: participants may be profile doc ids (legacy chats).
+      allow get: if isAuth() && chatParticipant();
+      // Collection queries MUST match a query-safe rule (no OR). Clients query
+      // `participant_auth_uids` array-contains request.auth.uid only.
+      allow list: if isAuth() &&
+        request.auth.uid in resource.data.get('participant_auth_uids', []);
+      allow create: if false;
+      allow update: if isAuth() && chatParticipant() &&
+        (chatDeletedForSelfOnly() || chatMessagingMetaUpdateOnly());
+      allow delete: if false;
+
+      match /messages/{msgId} {
+        allow read: if chatParticipantOf(chatId);
+        allow create: if isAuth() &&
+          chatParticipantOf(chatId) &&
+          isFromUserOwner(request.resource.data.get('sender_id', ''));
+        allow update: if false;
+        allow delete: if false;
+      }
+    }
+
+    // ── PAYMENT REQUESTS ──────────────────────────────────────────────────────
+    match /payment_requests/{id} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        resource.data.get('auth_uid', '') == request.auth.uid ||
+        isElevatedAdmin()
+      );
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('user_id', ''));
+      allow update, delete: if isElevatedAdmin();
+    }
+
+    // ── PAYMENTS ──────────────────────────────────────────────────────────────
+    match /payments/{paymentId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        resource.data.get('auth_uid', '') == request.auth.uid ||
+        isElevatedAdmin()
+      );
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('user_id', ''));
+      allow update, delete: if isElevatedAdmin();
+    }
+
+    // ── PROFILE VERIFICATIONS ─────────────────────────────────────────────────
+    match /profile_verifications/{id} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    // ── ADMIN AUTH LINK (Firebase UID → app user doc with is_admin) ───────────
+    match /admin_auth_links/{authUid} {
+      allow read: if isAuth() && (request.auth.uid == authUid || isElevatedAdmin());
+      allow create, update: if isAuth() &&
+        request.auth.uid == authUid &&
+        userDocIdIsAdminForAuth(request.resource.data.get('user_doc_id', ''));
+      allow delete: if isElevatedAdmin();
+    }
+
+    // ── ADMIN SESSIONS ────────────────────────────────────────────────────────
+    match /admin_sessions/{docId} {
+      allow read: if isAuth() && (
+        request.auth.uid == docId ||
+        isElevatedAdmin()
+      );
+      allow create, update: if isAuth() && request.auth.uid == docId && (
+        isElevatedAdmin() ||
+        (
+          request.resource.data.get('is_admin', false) == true &&
+          userDocIdIsAdminForAuth(request.resource.data.get('user_doc_id', ''))
+        )
+      );
+      allow delete: if isElevatedAdmin();
+    }
+
+    // ── RATE LIMITS ───────────────────────────────────────────────────────────
+    match /rate_limits/{docId} {
+      allow read, create, update, delete: if isElevatedAdmin();
+    }
+
+    // ── COMMUNITY REFERENCE REQUESTS ──────────────────────────────────────────
+    match /community_reference_requests/{requestId} {
+      allow read: if isAuth() && (
+        !exists(/databases/$(database)/documents/community_reference_requests/$(requestId)) ||
+        canReadAccessRequestDoc(resource.data)
+      );
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('requester_id', ''));
+      allow update: if isAuth() &&
+        profileLinkedAuthMatches(resource.data.get('owner_id', ''));
+      allow delete: if false;
+    }
+
+    // ── COMMUNITY REFERENCE ACCESS ────────────────────────────────────────────
+    match /community_reference_access/{accessId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('granted_to_user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    // ── AUTH UID BRIDGE ───────────────────────────────────────────────────────
+    match /auth_uid_bridge/{authUid} {
+      allow read: if isAuth() && (
+        authUid == request.auth.uid || isElevatedAdmin()
+      );
+      allow create, update: if isAuth() &&
+        authUid == request.auth.uid &&
+        request.resource.data.get('anonymous_bridge_uid', '') == request.auth.uid;
+      allow delete: if isElevatedAdmin();
+    }
+
+    // ── IN-APP SUPPORT CHAT (user ↔ admin dashboard) ─────────────────────────
+    match /support_threads/{threadId} {
+      allow read: if isAuth() && (isOwner(threadId) || isElevatedAdmin());
+      allow create, update, delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if isAuth() && (isOwner(threadId) || isElevatedAdmin());
+        allow create, update, delete: if false;
+      }
+    }
+
+    // ── ADMIN / AUDIT ────────────────────────────────────────────────────────
+    match /admin_settings/{docId}     { allow read: if isAuth(); allow write: if isElevatedAdmin(); }
+    match /admin_logs/{docId}         { allow read, create: if isElevatedAdmin(); allow update, delete: if false; }
+    match /otp_audit_logs/{logId}     { allow read, create, update, delete: if isElevatedAdmin(); }
+    match /interest_logs/{logId}      { allow read: if isElevatedAdmin(); allow create, update, delete: if false; }
+    match /security_audit_logs/{logId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('actor_user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if false;
+    }
+    match /payment_events/{eventId}   { allow read: if isElevatedAdmin(); allow create, update, delete: if false; }
+    match /admin_claim_logs/{logId}   { allow read: if isElevatedAdmin(); allow create, update, delete: if false; }
+
+    // ── USER ACTIVITY ─────────────────────────────────────────────────────────
+    // ← CHANGED: was admin-write-only which blocked all client activity logging
+    match /user_activity/{id} {
+      // 🔥 FIXED: Removed direct request.auth.uid comparison to user_id
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        resource.data.get('auth_uid', '') == request.auth.uid ||
+        isElevatedAdmin()
+      );
+      allow create: if isAuth() &&  // ← NEW: allow users to log their own activity
+        profileLinkedAuthMatches(request.resource.data.get('user_id', ''));
+      allow update, delete: if isElevatedAdmin();
+    }
+
+    // ── ANALYTICS EVENTS ──────────────────────────────────────────────────────
+    match /analytics_events/{id} {
+      allow read: if isElevatedAdmin();
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('user_id', '')) &&
+        request.resource.data.keys().hasOnly([
+          'user_id', 'event', 'module', 'created_at', 'metadata'
+        ]);
+      allow update, delete: if isElevatedAdmin();
+    }
+
+    // ── MEMBERSHIP / SUBSCRIPTION PLANS ──────────────────────────────────────
+    match /membership_plans/{planId} {
+      allow read: if isAuth() && resource.data.get('is_active', false) == true;
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    // ← CHANGED: public read for pricing in app + admin; writes remain admin-only
+    match /subscription_plans/{planId} {
+      allow read: if true;
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    // ── INDIAN PINCODES (synced dataset — read-only for clients) ─────────────
+    match /indian_pincodes/{pin} {
+      allow read: if isAuth();
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    // ── DISCOVER / MATCHES CACHE (server or admin only) ───────────────────────
+    match /discover_cache/{docId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    match /matches_cache/{docId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create, update, delete: if isElevatedAdmin();
+    }
+
+    // ── TYPING / PRESENCE METADATA ────────────────────────────────────────────
+    match /typing_status/{chatId} {
+      allow read: if isAuth();
+      allow create, update: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('user_id', ''));
+      allow delete: if isAuth() &&
+        profileLinkedAuthMatches(resource.data.get('user_id', ''));
+    }
+
+    match /media_metadata/{docId} {
+      allow read: if isAuth() && (
+        profileLinkedAuthMatches(resource.data.get('owner_id', '')) ||
+        profileLinkedAuthMatches(resource.data.get('user_id', '')) ||
+        isElevatedAdmin()
+      );
+      allow create: if isAuth() &&
+        profileLinkedAuthMatches(request.resource.data.get('owner_id', ''));
+      allow update, delete: if isAuth() &&
+        profileLinkedAuthMatches(resource.data.get('owner_id', ''));
+    }
+
+    match /webhook_errors/{docId} {
+      allow read, write: if isElevatedAdmin();
+    }
+
+    match /moderation_queue/{docId} {
+      allow read, create, update, delete: if isElevatedAdmin();
+    }
+
+  }
+}
+

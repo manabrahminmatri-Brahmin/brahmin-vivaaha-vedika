@@ -1,0 +1,77 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# Firebase Admin SDK keys (migration scripts only)
+scripts/serviceAccountKey.json
+scripts/node_modules/
+functions/node_modules/
+
+# Local function secrets (never commit)
+functions/.env.local
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Local Android build captures
+/android/build_log*.txt
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Local environment variables — never commit secrets
+dart_defines.json
+.env
+
+# Signing keys and keystores — NEVER commit these
+keystore.properties
+*.jks
+*.keystore
+/android/app/*.jks
+/android/app/*.keystore
+/android/key.properties
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+".dart_tool/" 

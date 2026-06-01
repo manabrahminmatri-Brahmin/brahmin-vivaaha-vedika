@@ -1,0 +1,10 @@
+﻿{
+    "qr_image_path":  "C:\\Users\\attil\\Documents\\brahmin_Vivaaha_Vedika\\payment_qr.png",
+    "payee_name":  "Prasad",
+    "amount":  100,
+    "generated_at":  "2026-04-19 09:51:52",
+    "payee_vpa":  "8985404777@upi",
+    "currency":  "INR",
+    "upi_uri":  "upi://pay?pa=8985404777%40upi\u0026pn=Prasad\u0026am=100\u0026cu=INR\u0026tn=Membership%20Fee",
+    "note":  "Membership Fee"
+}

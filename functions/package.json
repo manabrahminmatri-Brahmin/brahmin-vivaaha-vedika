@@ -1,0 +1,20 @@
+{
+  "name": "brahmin-vivaaha-vedika-functions",
+  "description": "Firebase Cloud Functions for Mana Vivaaha Vedika",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.0.0",
+    "firebase-functions": "^4.0.0",
+    "cloudinary": "^1.41.0",
+    "razorpay": "^2.9.4"
+  },
+  "private": true
+}

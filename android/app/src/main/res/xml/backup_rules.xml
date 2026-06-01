@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Backup rules for Android Auto Backup (API 23+) and Data Extraction (API 31+).
+
+    WHY THIS FILE EXISTS:
+    flutter_secure_storage uses EncryptedSharedPreferences (encryptedSharedPreferences=true).
+    The encryption key lives in the Android KeyStore and is device-specific.
+    If Android backs up the encrypted prefs and restores them to a different device
+    (or after a factory reset / reinstall), the KeyStore key no longer matches —
+    causing an unrecoverable crash on the very first read from FlutterSecureStorage.
+
+    FIX: Exclude the FlutterSecureStorage prefs file from all backups so only
+    unencrypted SharedPreferences (regular app data) are ever backed up.
+
+    Referenced by:
+      android:fullBackupContent="@xml/backup_rules"      (API 23-30)
+      android:dataExtractionRules="@xml/backup_rules"    (API 31+)
+    in AndroidManifest.xml <application> tag.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Exclude flutter_secure_storage encrypted prefs (KeyStore-backed, device-specific) -->
+        <exclude domain="sharedpref" path="FlutterSecureStorage"/>
+        <exclude domain="sharedpref" path="flutter_secure_storage"/>
+        <!-- Exclude any file whose name starts with FlutterSecureStorage -->
+        <exclude domain="sharedpref" path="FlutterSecureStorage.xml"/>
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="FlutterSecureStorage"/>
+        <exclude domain="sharedpref" path="flutter_secure_storage"/>
+        <exclude domain="sharedpref" path="FlutterSecureStorage.xml"/>
+    </device-transfer>
+</data-extraction-rules>

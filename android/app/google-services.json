@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1058308497678",
+    "project_id": "manabrahminmatri-de0ad",
+    "firebase_url": "https://manabrahminmatri-de0ad-default-rtdb.firebaseio.com",
+    "storage_bucket": "manabrahminmatri-de0ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058308497678:android:53d585e910e85464fcf75f",
+        "android_client_info": {
+          "package_name": "com.manavivaahavedika.brahmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo-5h4Fa4m9DLSmUnHTl7dwVtTG-6BE9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "bv-firestore-admin-scripts",
+  "private": true,
+  "dependencies": {
+    "firebase-admin": "^11.11.1"
+  }
+}
