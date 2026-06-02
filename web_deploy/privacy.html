@@ -13,8 +13,6 @@
     :root {
       --orange: #fc5603;
       --orange-light: #ff7a35;
-      --orange: #fc5603;
-      --orange-light: #ff7a35;
       --orange-dark: #d84315;
       --maroon: #d84315;
       --bg: #fff8f5;
@@ -29,7 +27,8 @@
       font-family: 'Poppins', system-ui, sans-serif;
       background: linear-gradient(165deg, var(--bg) 0%, #fff 50%, #fff5f0 100%);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: var(--orange); text-decoration: none; font-weight: 500; }
     a:hover { text-decoration: underline; }
@@ -111,8 +110,8 @@
     .policy-section {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 22px 24px;
-      margin-bottom: 16px;
+      padding: 26px 28px;
+      margin-bottom: 18px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(252, 86, 3, 0.08);
     }
@@ -120,24 +119,53 @@
       font-size: 1.1rem;
       font-weight: 700;
       color: var(--maroon);
-      margin-bottom: 12px;
+      line-height: 1.35;
+      margin: 0 0 14px;
     }
-    .policy-section p, .policy-section ul {
+    .policy-section p {
       color: var(--muted);
       font-size: 0.95rem;
-      white-space: pre-line;
+      line-height: 1.75;
+      margin: 0 0 12px;
     }
-    .policy-section ul { padding-left: 1.25rem; margin-top: 8px; }
-    .policy-section li { margin-bottom: 6px; }
+    .policy-section p:last-child { margin-bottom: 0; }
+    .policy-section ul {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      padding-left: 1.35rem;
+      margin: 0;
+      list-style-position: outside;
+    }
+    .policy-section li {
+      margin-bottom: 10px;
+      padding-left: 0.2em;
+    }
+    .policy-section li:last-child { margin-bottom: 0; }
+    .contact-details {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .contact-details p {
+      margin: 0;
+      line-height: 1.6;
+    }
     .policy-footer {
       background: var(--surface);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 24px 28px;
       text-align: center;
       font-size: 0.9rem;
       color: var(--muted);
+      line-height: 1.75;
     }
-    .policy-footer p + p { margin-top: 10px; }
+    .policy-footer p {
+      margin: 0 0 14px;
+      line-height: 1.75;
+    }
+    .policy-footer p:last-child { margin-bottom: 0; }
     .legal-footer {
       text-align: center;
       margin-top: 32px;
@@ -151,6 +179,12 @@
     body.lang-telugu .lang-en { display: none; }
     body.lang-telugu .lang-te { display: block; }
     body.lang-telugu .lang-te.inline { display: inline; }
+    body.lang-telugu .contact-details.lang-te { display: flex; }
+    body.lang-telugu .policy-section p,
+    body.lang-telugu .policy-section li,
+    body.lang-telugu .policy-footer p {
+      line-height: 1.85;
+    }
   </style>
 </head>
 <body>
@@ -336,14 +370,16 @@
     <article class="policy-section" id="contact">
       <h2 class="lang-en">Contact Information</h2>
       <h2 class="lang-te">సంప్రదింపు సమాచారం</h2>
-      <p class="lang-en">If you have questions about this Privacy Policy or want to exercise your rights, please contact us:<br><br>
-        WhatsApp: <a href="https://wa.me/918985936678">+91 8985936678</a><br>
-        Email: <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
-      </p>
-      <p class="lang-te">ఈ గోప్యతా విధానం గురించి మీకు ప్రశ్నలు ఉంటే లేదా మీ హక్కులను అమలు చేయాలనుకుంటే, దయచేసి మమ్మలను సంప్రదించండి:<br><br>
-        WhatsApp: <a href="https://wa.me/918985936678">+91 8985936678</a><br>
-        ఇమెయిల్: <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
-      </p>
+      <p class="lang-en">If you have questions about this Privacy Policy or want to exercise your rights, please contact us:</p>
+      <div class="contact-details lang-en">
+        <p>WhatsApp: <a href="https://wa.me/918985936678">+91 8985936678</a></p>
+        <p>Email: <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a></p>
+      </div>
+      <p class="lang-te">ఈ గోప్యతా విధానం గురించి మీకు ప్రశ్నలు ఉంటే లేదా మీ హక్కులను అమలు చేయాలనుకుంటే, దయచేసి మమ్మలను సంప్రదించండి:</p>
+      <div class="contact-details lang-te">
+        <p>WhatsApp: <a href="https://wa.me/918985936678">+91 8985936678</a></p>
+        <p>ఇమెయిల్: <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a></p>
+      </div>
     </article>
 
     <div class="policy-footer">
