@@ -366,31 +366,54 @@
       color: var(--ink-3); line-height: 1.7;
       max-width: 420px; margin-bottom: 24px;
     }
-    .hero-features {
-      list-style: none;
-      margin: 0 0 8px;
-      padding: 0;
+    .hero-highlights {
+      max-width: 440px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      max-width: 440px;
+      gap: 14px;
+      max-height: min(420px, 52vh);
+      overflow-y: auto;
+      padding-right: 6px;
+      scrollbar-width: thin;
     }
-    .hero-features li {
+    .hero-highlights::-webkit-scrollbar { width: 5px; }
+    .hero-highlights::-webkit-scrollbar-thumb {
+      background: rgba(252, 86, 3, 0.35);
+      border-radius: 999px;
+    }
+    .hero-point {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 0.9rem;
-      color: var(--ink-3);
-      line-height: 1.55;
     }
-    .hero-features li::before {
-      content: '•';
+    .hero-point::before {
+      content: '✓';
       flex-shrink: 0;
-      margin-top: -2px;
-      color: var(--orange);
-      font-size: 1.1rem;
+      margin-top: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--rust-tint);
+      color: var(--rust);
+      font-size: 0.7rem;
       font-weight: 800;
-      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-point-body { min-width: 0; }
+    .hero-point-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink-2);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .hero-point-text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
     }
 
     /* ─── Reg Card ─── */
@@ -867,7 +890,7 @@
       .hero-grid { grid-template-columns: 1fr; gap: 32px; }
       .hero-copy { text-align: center; }
       .hero-desc { max-width: 100%; }
-      .hero-features { align-items: flex-start; text-align: left; margin-left: auto; margin-right: auto; }
+      .hero-highlights { max-width: 100%; max-height: none; margin-left: auto; margin-right: auto; text-align: left; }
       .hero-badge { margin-bottom: 14px; }
       .reg-card { max-width: 420px; margin: 0 auto; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -982,15 +1005,45 @@
           <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
           <h1>Find Your <span class="accent">Perfect</span><br/>Brahmin Match</h1>
           <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
-          <p class="hero-desc">Everything you need for a serious Brahmin matrimony search — in one trusted app.</p>
-          <ul class="hero-features">
-            <li><strong>Free registration (₹0)</strong> — OTP-verified mobile number &amp; secure MPIN login</li>
-            <li><strong>Ashtakoot matching</strong> — sub-community &amp; advanced profile filters</li>
-            <li><strong>Family-managed profiles</strong> — privacy-first photo &amp; visibility controls</li>
-            <li><strong>Connect safely</strong> — send interest, photo requests &amp; chat after mutual acceptance</li>
-            <li><strong>Premium Platinum</strong> — full access from ₹99/month</li>
-            <li><strong>Trusted platform</strong> — OTP verified · family friendly · UDYAM registered</li>
-          </ul>
+          <p class="hero-desc">Everything you need for a meaningful Brahmin matrimony journey — in one trusted app.</p>
+          <div class="hero-highlights">
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Free Registration (₹0)</h3>
+                <p class="hero-point-text">OTP-verified mobile number &amp; secure MPIN login.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Smart Compatibility Matching</h3>
+                <p class="hero-point-text">Ashtakoot matching, sub-community preferences &amp; advanced filters.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Family-Managed Profiles</h3>
+                <p class="hero-point-text">Secure profile management with privacy controls.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Connect with Confidence</h3>
+                <p class="hero-point-text">Interests, photo requests &amp; chat after mutual acceptance.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Premium Platinum Membership</h3>
+                <p class="hero-point-text">Full access to premium features from ₹99/month.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Trusted &amp; Secure Platform</h3>
+                <p class="hero-point-text">OTP Verified • Family Friendly • Privacy Focused • UDYAM Registered</p>
+              </div>
+            </article>
+          </div>
         </div>
         <!-- Registration Card -->
         <div class="reg-card" id="register">
