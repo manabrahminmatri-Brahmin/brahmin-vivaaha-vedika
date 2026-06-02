@@ -273,17 +273,13 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem;
     }
-    .profile-avatar .verified-badge {
-      position: absolute; top: 12px; right: 12px;
-      background: #22c55e; color: #fff; font-size: 0.65rem;
-      font-weight: 700; padding: 4px 10px; border-radius: 999px;
-      letter-spacing: 0.05em;
-    }
     .profile-avatar .premium-badge {
       position: absolute; top: 12px; left: 12px;
-      background: linear-gradient(135deg, var(--orange-dark), var(--orange));
-      color: #fff; font-size: 0.65rem; font-weight: 700;
+      background: linear-gradient(135deg, #d4a017, #f5c842);
+      color: #3d2e00; font-size: 0.65rem; font-weight: 700;
       padding: 4px 10px; border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
     .profile-body { padding: 18px 20px 20px; }
     .profile-id { font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
@@ -977,7 +973,7 @@
         <button class="tab-btn active" onclick="filterProfiles('all',this)">All Profiles</button>
         <button class="tab-btn" onclick="filterProfiles('bride',this)">Brides 👰</button>
         <button class="tab-btn" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
-        <button class="tab-btn" onclick="filterProfiles('platinum',this)">Platinum ✦</button>
+        <button class="tab-btn" onclick="filterProfiles('premium',this)">Premium ✦</button>
         <button class="tab-btn" onclick="filterProfiles('new',this)">New Joins</button>
       </div>
       <div class="profiles-grid" id="profilesGrid">
@@ -985,8 +981,7 @@
         <div class="profile-card reveal" data-type="bride">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffd0b5);">
             👰
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
+            <span class="premium-badge">Premium</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-B-2024-0182</div>
@@ -1010,7 +1005,6 @@
         <div class="profile-card reveal" data-type="groom">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffc5a0);">
             🤵
-            <span class="verified-badge">✓ Verified</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-G-2024-0341</div>
@@ -1031,11 +1025,10 @@
           </div>
         </div>
         <!-- Bride 2 -->
-        <div class="profile-card reveal" data-type="bride platinum">
+        <div class="profile-card reveal" data-type="bride premium">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#ffe0cc,#ffcba4);">
             👰
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
+            <span class="premium-badge">Premium</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-B-2024-0227</div>
@@ -1056,11 +1049,10 @@
           </div>
         </div>
         <!-- Groom 2 -->
-        <div class="profile-card reveal" data-type="groom platinum new">
+        <div class="profile-card reveal" data-type="groom premium new">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fdd9c0,#ffbf94);">
             🤵
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
+            <span class="premium-badge">Premium</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-G-2024-0512</div>
@@ -1084,7 +1076,6 @@
         <div class="profile-card reveal" data-type="bride new">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fef3c7,#fde68a);">
             👰
-            <span class="verified-badge">✓ Verified</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-B-2024-0604</div>
@@ -1108,7 +1099,6 @@
         <div class="profile-card reveal" data-type="groom new">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#dbeafe,#bfdbfe);">
             🤵
-            <span class="verified-badge">✓ Verified</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-G-2024-0689</div>
@@ -1129,11 +1119,10 @@
           </div>
         </div>
         <!-- Bride 4 -->
-        <div class="profile-card reveal" data-type="bride platinum">
+        <div class="profile-card reveal" data-type="bride premium">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fce7f3,#fbcfe8);">
             👰
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
+            <span class="premium-badge">Premium</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-B-2024-0733</div>
@@ -1154,11 +1143,10 @@
           </div>
         </div>
         <!-- Groom 4 -->
-        <div class="profile-card reveal" data-type="groom platinum">
+        <div class="profile-card reveal" data-type="groom premium">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#d1fae5,#a7f3d0);">
             🤵
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
+            <span class="premium-badge">Premium</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-G-2024-0801</div>
