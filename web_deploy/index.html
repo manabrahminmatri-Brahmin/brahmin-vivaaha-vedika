@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="mana Vivaaha Vedika — Telugu Trusted Brahmin matrimony platform. OTP verified profiles, Ashtakoot matching, family-managed alliances." />
+  <meta name="description" content="mana Vivaaha Vedika — Telugu Brahmin matrimony app. Ashtakoot matching, MPIN login, family-managed profiles, privacy controls, and Platinum plans from ₹99/month." />
   <meta name="theme-color" content="#fc5603" />
   <title>mana Vivaaha Vedika — Premium Brahmin Matrimony</title>
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -288,7 +288,7 @@
     .view-all-wrap { text-align: center; margin-top: 36px; }
 
     /* ── How it works ── */
-    .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
+    .how-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; position: relative; }
     .how-steps::before {
       content: ''; position: absolute; top: 36px; left: 12%; right: 12%; height: 2px;
       background: linear-gradient(90deg, var(--orange-tint-2), var(--orange), var(--orange-tint-2));
@@ -584,7 +584,7 @@
     }
 
     /* ── Contact / Support ── */
-    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     .contact-card {
       background: var(--surface); border-radius: var(--radius); padding: 32px 28px;
       border: 1px solid var(--orange-border); box-shadow: var(--shadow); text-align: center;
@@ -649,7 +649,7 @@
     @media (max-width: 960px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .why-grid { grid-template-columns: repeat(2, 1fr); }
-      .how-steps { grid-template-columns: repeat(2, 1fr); }
+      .how-steps { grid-template-columns: repeat(3, 1fr); }
       .how-steps::before { display: none; }
       .register-duo { grid-template-columns: 1fr; }
       .stories-grid { grid-template-columns: 1fr; }
@@ -658,7 +658,8 @@
       .app-cta { flex-direction: column; text-align: center; }
       .app-stores { justify-content: center; }
       .app-cta-visual { font-size: 5rem; }
-      .contact-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
       .pref-grid { grid-template-columns: 1fr; }
       .search-fields { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
@@ -709,12 +710,13 @@
       </a>
       <button class="nav-toggle" type="button" id="navToggle" aria-label="Menu">☰</button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#profiles">Profiles</a></li>
+        <li><a href="#features">Features</a></li>
         <li><a href="#how">How It Works</a></li>
         <li><a href="#plans">Plans</a></li>
-        <li><a href="#stories">Stories</a></li>
+        <li><a href="#register">Register</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
       </ul>
       <div class="nav-actions">
         <a class="btn btn-sm btn-outline-dark" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">📲 Download</a>
@@ -735,7 +737,7 @@
         </div>
         <h1><span class="mana">mana</span> Vivaaha Vedika</h1>
         <p class="telugu">మన వివాహ వేదిక</p>
-        <p class="tagline">Telugu Trusted Brahmin Matrimony — Where Tradition Meets Technology</p>
+        <p class="tagline">Telugu Brahmin matrimony — Where Tradition Meets Technology</p>
       </div>
       <div class="trust-badges">
         <span>✓ OTP Verified</span>
@@ -753,292 +755,70 @@
     </div>
   </header>
 
-  <!-- ── Quick Search Bar ── -->
-  <div style="padding: 0 24px; background: var(--orange-tint);">
-    <div class="wrap">
-      <div class="search-bar-wrap reveal">
-        <div class="search-bar-title">🔍 Quick Profile Search</div>
-        <div class="search-fields">
-          <div class="search-field">
-            <label>Looking For</label>
-            <select>
-              <option>Bride</option>
-              <option>Groom</option>
-            </select>
-          </div>
-          <div class="search-field">
-            <label>Age Range</label>
-            <select>
-              <option>21–25 years</option>
-              <option>26–30 years</option>
-              <option>31–35 years</option>
-              <option>36–40 years</option>
-            </select>
-          </div>
-          <div class="search-field">
-            <label>Gotra / Sub-caste</label>
-            <select>
-              <option>Any Gotra</option>
-              <option>Vishwamitra</option>
-              <option>Bharadwaja</option>
-              <option>Kasyapa</option>
-              <option>Vasistha</option>
-              <option>Atri</option>
-            </select>
-          </div>
-          <div class="search-field">
-            <label>City / District</label>
-            <select>
-              <option>Anywhere in AP / TS</option>
-              <option>Vijayawada</option>
-              <option>Hyderabad</option>
-              <option>Visakhapatnam</option>
-              <option>Tirupati</option>
-              <option>Guntur</option>
-            </select>
-          </div>
-          <div class="search-field">
-            <label>Education</label>
-            <select>
-              <option>Any</option>
-              <option>B.E / B.Tech</option>
-              <option>M.Tech / M.E</option>
-              <option>MBBS / MD</option>
-              <option>CA / CS</option>
-              <option>MBA</option>
-              <option>PG / Doctorate</option>
-            </select>
-          </div>
-          <div>
-            <a class="btn btn-primary" href="#profiles" style="height:46px; margin-top:22px;">Search</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── Stats ── -->
-  <section class="section alt" id="stats">
+  <!-- ── About (matches app About screen) ── -->
+  <section class="section" style="padding-top:56px;" id="about">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Our Community</span>
-        <h2>Growing with trust</h2>
-        <p>Thousands of Brahmin families choose <strong>mana Vivaaha Vedika</strong> for serious matrimony search.</p>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-card reveal">
-          <div class="num" data-target="10000" data-suffix="+">0+</div>
-          <div class="label">Registered Members</div>
-        </div>
-        <div class="stat-card reveal">
-          <div class="num" data-target="2500" data-suffix="+">0+</div>
-          <div class="label">Active Profiles</div>
-        </div>
-        <div class="stat-card reveal">
-          <div class="num" data-target="500" data-suffix="+">0+</div>
-          <div class="label">Successful Matches</div>
-        </div>
-        <div class="stat-card reveal">
-          <div class="num">24×7</div>
-          <div class="label">WhatsApp Support</div>
-        </div>
+        <span class="eyebrow">Our Mission</span>
+        <h2>Built for Telugu Brahmin families</h2>
+        <p class="plans-intro" style="margin-bottom:0;">mana Vivaaha Vedika is dedicated to helping Brahmin families find suitable matches while preserving our cultural values and traditions. We understand the importance of compatibility, family values, and cultural alignment in marriage alliances.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── Featured Profiles ── -->
-  <section class="section" id="profiles">
+  <!-- ── Key Features (app About → Key Features) ── -->
+  <section class="section alt" id="features">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Today's Matches</span>
-        <h2>Featured Profiles</h2>
-        <p>Verified Brahmin profiles across Andhra Pradesh and Telangana — updated daily.</p>
+        <span class="eyebrow">Key Features</span>
+        <h2>What you get in the app</h2>
+        <p>Same features listed in Settings → About in mana Vivaaha Vedika.</p>
       </div>
-      <div class="profiles-tabs reveal">
-        <button class="tab-btn active" onclick="filterProfiles('all',this)">All Profiles</button>
-        <button class="tab-btn" onclick="filterProfiles('bride',this)">Brides 👰</button>
-        <button class="tab-btn" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
-        <button class="tab-btn" onclick="filterProfiles('platinum',this)">Platinum ✦</button>
-        <button class="tab-btn" onclick="filterProfiles('new',this)">New Joins</button>
+      <div class="why-grid">
+        <article class="why-card reveal"><div class="icon">☸</div><h3>Ashtakoot compatibility</h3><p>Vedic 8-parameter matching on profiles with birth details — scores out of 36 points.</p></article>
+        <article class="why-card reveal"><div class="icon">🔐</div><h3>Secure MPIN login</h3><p>OTP-verified registration, then your private MPIN (and optional biometric) to open the app.</p></article>
+        <article class="why-card reveal"><div class="icon">👨‍👩‍👧</div><h3>Family-managed profiles</h3><p>Parents and guardians can help manage the profile and matrimony search, as families prefer.</p></article>
+        <article class="why-card reveal"><div class="icon">🛡</div><h3>Privacy controls</h3><p>Mask photos, identity, contacts, and chat previews until you allow — consistent across lists and chat.</p></article>
+        <article class="why-card reveal"><div class="icon">💬</div><h3>Direct communication</h3><p>Send interest, photo requests, and chat with accepted matches; manage Received and Sent in the Interests hub.</p></article>
+        <article class="why-card reveal"><div class="icon">📱</div><h3>Mobile OTP verification</h3><p>Every account is tied to a verified Indian mobile number at registration.</p></article>
       </div>
-      <div class="profiles-grid" id="profilesGrid">
-        <!-- Bride 1 -->
-        <div class="profile-card reveal" data-type="bride">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffd0b5);">
-            👰
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-B-2024-0182</div>
-            <div class="profile-name">Sowmya Sharma</div>
-            <div class="profile-age">26 yrs · 5'4" · Vijayawada</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Bharadwaja Gotra</span>
-              <span class="profile-tag">M.Tech</span>
-              <span class="profile-tag">Software Engineer</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" title="Express Interest" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Groom 1 -->
-        <div class="profile-card reveal" data-type="groom">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffc5a0);">
-            🤵
-            <span class="verified-badge">✓ Verified</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-G-2024-0341</div>
-            <div class="profile-name">Karthik Subramanyam</div>
-            <div class="profile-age">29 yrs · 5'10" · Hyderabad</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Kasyapa Gotra</span>
-              <span class="profile-tag">B.E + MBA</span>
-              <span class="profile-tag">IT Manager</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" title="Express Interest" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Bride 2 -->
-        <div class="profile-card reveal" data-type="bride platinum">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#ffe0cc,#ffcba4);">
-            👰
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-B-2024-0227</div>
-            <div class="profile-name">Padmavathi Rao</div>
-            <div class="profile-age">24 yrs · 5'2" · Tirupati</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Vasistha Gotra</span>
-              <span class="profile-tag">MBBS</span>
-              <span class="profile-tag">Doctor</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" title="Express Interest" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Groom 2 -->
-        <div class="profile-card reveal" data-type="groom platinum new">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#fdd9c0,#ffbf94);">
-            🤵
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-G-2024-0512</div>
-            <div class="profile-name">Venkata Ramana</div>
-            <div class="profile-age">31 yrs · 5'8" · Visakhapatnam</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Atri Gotra</span>
-              <span class="profile-tag">CA</span>
-              <span class="profile-tag">Finance Director</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Bride 3 -->
-        <div class="profile-card reveal" data-type="bride new">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#fef3c7,#fde68a);">
-            👰
-            <span class="verified-badge">✓ Verified</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-B-2024-0604</div>
-            <div class="profile-name">Ananya Krishnamurthy</div>
-            <div class="profile-age">27 yrs · 5'5" · Guntur</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Vishwamitra Gotra</span>
-              <span class="profile-tag">MBA</span>
-              <span class="profile-tag">Bank Manager</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Groom 3 -->
-        <div class="profile-card reveal" data-type="groom new">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#dbeafe,#bfdbfe);">
-            🤵
-            <span class="verified-badge">✓ Verified</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-G-2024-0689</div>
-            <div class="profile-name">Srinivasa Murthy</div>
-            <div class="profile-age">28 yrs · 5'9" · Nellore</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Bharadwaja Gotra</span>
-              <span class="profile-tag">M.Pharm</span>
-              <span class="profile-tag">Govt Employee</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Bride 4 -->
-        <div class="profile-card reveal" data-type="bride platinum">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#fce7f3,#fbcfe8);">
-            👰
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-B-2024-0733</div>
-            <div class="profile-name">Lalitha Devi</div>
-            <div class="profile-age">25 yrs · 5'3" · Kurnool</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Kasyapa Gotra</span>
-              <span class="profile-tag">B.Ed + M.A</span>
-              <span class="profile-tag">Teacher</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
-        <!-- Groom 4 -->
-        <div class="profile-card reveal" data-type="groom platinum">
-          <div class="profile-avatar" style="background:linear-gradient(145deg,#d1fae5,#a7f3d0);">
-            🤵
-            <span class="verified-badge">✓ Verified</span>
-            <span class="premium-badge">✦ Platinum</span>
-          </div>
-          <div class="profile-body">
-            <div class="profile-id">MVV-G-2024-0801</div>
-            <div class="profile-name">Prasad Narayana</div>
-            <div class="profile-age">32 yrs · 5'11" · Chennai</div>
-            <div class="profile-tags">
-              <span class="profile-tag">Vasistha Gotra</span>
-              <span class="profile-tag">MBBS + MS</span>
-              <span class="profile-tag">Surgeon</span>
-            </div>
-            <div class="profile-actions">
-              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
-              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
-            </div>
-          </div>
-        </div>
+    </div>
+  </section>
+
+  <!-- ── Our Values (app About → Our Values) ── -->
+  <section class="section" id="values">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Values</span>
+        <h2>How we serve the community</h2>
       </div>
-      <div class="view-all-wrap reveal">
-        <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View All Profiles in App →</a>
+      <div class="why-grid">
+        <article class="why-card reveal"><div class="icon">🪷</div><h3>Cultural preservation</h3><p>Respect for Brahmin traditions, gotra, and family-led alliances.</p></article>
+        <article class="why-card reveal"><div class="icon">🏠</div><h3>Family-centric approach</h3><p>Designed for parents, guardians, and candidates working together.</p></article>
+        <article class="why-card reveal"><div class="icon">🔒</div><h3>Privacy &amp; security</h3><p>MPIN, OTP, and profile privacy settings you control.</p></article>
+        <article class="why-card reveal"><div class="icon">✓</div><h3>Authentic profiles</h3><p>Complete verification steps in Profile to improve trust and visibility.</p></article>
+        <article class="why-card reveal"><div class="icon">⚡</div><h3>Tradition + convenience</h3><p>Classic matrimony values with a modern Android app experience.</p></article>
       </div>
+    </div>
+  </section>
+
+  <!-- ── App capabilities (real screens & flows) ── -->
+  <section class="section alt" id="app-flows">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Inside the app</span>
+        <h2>Search, match, and connect</h2>
+        <p>Use Search &amp; Filters, partner preferences in your profile wizard, and Platinum tools when you upgrade.</p>
+      </div>
+      <div class="why-grid">
+        <article class="why-card reveal"><div class="icon">🔍</div><h3>Search &amp; filters</h3><p>Filter by gotra, age, location, education, and more from the in-app search screen.</p></article>
+        <article class="why-card reveal"><div class="icon">💌</div><h3>Interests</h3><p>Send Interest from a profile; track Received and Sent tabs, including withdraw and reminder on pending sent items.</p></article>
+        <article class="why-card reveal"><div class="icon">📸</div><h3>Photo requests</h3><p>Request private photos — accept or decline in Received; withdraw or remind from Sent.</p></article>
+        <article class="why-card reveal"><div class="icon">📨</div><h3>Messages</h3><p>Chat with accepted matches only; unread badge counts chat messages (not photo requests or wishes).</p></article>
+        <article class="why-card reveal"><div class="icon">🎠</div><h3>Discover 3D</h3><p>Platinum members open Discover 3D from the Home tab (floating control) for compatible profiles.</p></article>
+        <article class="why-card reveal"><div class="icon">👥</div><h3>Community Heads</h3><p>Platinum access to Community Heads details and community reference requests.</p></article>
+      </div>
+      <p class="plans-footnote reveal" style="margin-top:28px;">Partner preferences (age, gotra, education, location, etc.) are set in Profile → Edit Profile in the app — not on this website.</p>
     </div>
   </section>
 
@@ -1048,177 +828,33 @@
       <div class="section-head reveal">
         <span class="eyebrow">Simple Steps</span>
         <h2>How mana Vivaaha Vedika works</h2>
-        <p>Your journey to a perfect alliance in just four easy steps.</p>
+        <p>The same flow as the mana Vivaaha Vedika Android app.</p>
       </div>
       <div class="how-steps">
         <div class="step-card reveal">
           <div class="step-num">1</div>
-          <h3>Download & Register</h3>
-          <p>Install the app, verify your mobile via OTP, and set up your secure MPIN in minutes.</p>
+          <h3>Download &amp; register</h3>
+          <p>Install from Google Play, verify your mobile with OTP, and set your secure MPIN.</p>
         </div>
         <div class="step-card reveal">
           <div class="step-num">2</div>
-          <h3>Create Your Profile</h3>
-          <p>Add horoscope, gotram, education, and family details. Upload photos with privacy controls.</p>
+          <h3>Complete your profile</h3>
+          <p>Add birth details, gotra, family, education, photos, and partner preferences in the profile wizard.</p>
         </div>
         <div class="step-card reveal">
           <div class="step-num">3</div>
-          <h3>Browse & Match</h3>
-          <p>Discover profiles. Our Ashtakoot engine shows compatibility scores instantly.</p>
+          <h3>Browse &amp; match</h3>
+          <p>Search and filter profiles; view Ashtakoot scores; send interest and photo requests.</p>
         </div>
         <div class="step-card reveal">
           <div class="step-num">4</div>
-          <h3>Connect & Celebrate</h3>
-          <p>Express interest, get approval, and connect via WhatsApp — then celebrate your alliance!</p>
+          <h3>Upgrade to Platinum</h3>
+          <p>Unlock photos, contacts, WhatsApp messaging, Discover 3D, and more — pay via Razorpay (UPI/card) in the app.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Why Choose Us ── -->
-  <section class="section" id="why">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Why Choose Us</span>
-        <h2>Premium matrimony, built for families</h2>
-      </div>
-      <div class="why-grid">
-        <article class="why-card reveal">
-          <div class="icon">☸</div>
-          <h3>Vedic Compatibility</h3>
-          <p>Ashtakoot matching helps families find culturally aligned alliances with confidence and clarity.</p>
-        </article>
-        <article class="why-card reveal">
-          <div class="icon">✓</div>
-          <h3>Verified Profiles Only</h3>
-          <p>Mobile OTP verification and manual profile checks ensure a trusted and scam-free experience.</p>
-        </article>
-        <article class="why-card reveal">
-          <div class="icon">👨‍👩‍👧</div>
-          <h3>Family Involvement</h3>
-          <p>Profiles managed with parents and guardians — the way Brahmin alliances are traditionally meant to be.</p>
-        </article>
-        <article class="why-card reveal">
-          <div class="icon">🛡</div>
-          <h3>Secure Privacy Controls</h3>
-          <p>Mask photos, contacts, and chat previews until you choose to share. Full control, always.</p>
-        </article>
-        <article class="why-card reveal">
-          <div class="icon">💬</div>
-          <h3>Direct WhatsApp Connect</h3>
-          <p>Platinum members connect directly with matches via WhatsApp once interest is mutually confirmed.</p>
-        </article>
-        <article class="why-card reveal">
-          <div class="icon">✦</div>
-          <h3>Platinum Membership</h3>
-          <p>Priority visibility, advanced filters, incognito mode, and unlimited contact requests.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Partner Preferences ── -->
-  <section class="section alt" id="preferences">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Find Your Match</span>
-        <h2>Set your partner preferences</h2>
-        <p>Tell us what you're looking for and we'll help you find the right match in the app.</p>
-      </div>
-      <div class="pref-form-wrap reveal">
-        <div class="pref-form-header">
-          <h3>Partner Preference Form</h3>
-          <p>Fill this form to get matched — complete your profile in the app after downloading.</p>
-        </div>
-        <div class="pref-form-body">
-          <div class="pref-grid">
-            <div class="pref-field">
-              <label>I am looking for</label>
-              <select><option>Bride</option><option>Groom</option></select>
-            </div>
-            <div class="pref-field">
-              <label>Preferred Gotra</label>
-              <select>
-                <option>Any Gotra</option>
-                <option>Vishwamitra</option>
-                <option>Bharadwaja</option>
-                <option>Kasyapa</option>
-                <option>Vasistha</option>
-                <option>Atri</option>
-                <option>Agastya</option>
-              </select>
-            </div>
-            <div class="pref-field">
-              <label>Age Range</label>
-              <div class="age-range">
-                <select style="flex:1"><option>21</option><option>22</option><option>23</option><option>24</option><option selected>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option></select>
-                <span>to</span>
-                <select style="flex:1"><option>27</option><option>28</option><option>29</option><option selected>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option></select>
-              </div>
-            </div>
-            <div class="pref-field">
-              <label>Location Preference</label>
-              <select>
-                <option>Anywhere in AP / TS</option>
-                <option>Vijayawada</option>
-                <option>Hyderabad</option>
-                <option>Visakhapatnam</option>
-                <option>Guntur</option>
-                <option>Tirupati</option>
-                <option>Nellore</option>
-                <option>Kurnool</option>
-              </select>
-            </div>
-            <div class="pref-field">
-              <label>Minimum Education</label>
-              <select>
-                <option>Any Education</option>
-                <option>Graduate</option>
-                <option>Post Graduate</option>
-                <option>Professional Degree</option>
-                <option>Doctorate / PhD</option>
-              </select>
-            </div>
-            <div class="pref-field">
-              <label>Profession</label>
-              <select>
-                <option>Any Profession</option>
-                <option>IT / Software</option>
-                <option>Doctor / Healthcare</option>
-                <option>Engineer</option>
-                <option>Government / PSU</option>
-                <option>Business / Entrepreneur</option>
-                <option>Teacher / Academic</option>
-                <option>Finance / CA / CS</option>
-              </select>
-            </div>
-            <div class="pref-field">
-              <label>Marital Status</label>
-              <select>
-                <option>Never Married</option>
-                <option>Divorced</option>
-                <option>Widowed</option>
-                <option>Any</option>
-              </select>
-            </div>
-            <div class="pref-field">
-              <label>Height Preference</label>
-              <select>
-                <option>No preference</option>
-                <option>Below 5'0"</option>
-                <option>5'0" – 5'3"</option>
-                <option>5'4" – 5'7"</option>
-                <option>5'8" – 5'11"</option>
-                <option>6'0" and above</option>
-              </select>
-            </div>
-          </div>
-          <div style="text-align:center;">
-            <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="font-size:1rem; padding:16px 40px;">
-              Find My Match in App →
-            </a>
-            <p style="font-size:0.78rem;color:var(--muted);margin-top:12px;">Free registration · No credit card required</p>
-          </div>
+        <div class="step-card reveal">
+          <div class="step-num">5</div>
+          <h3>Connect with families</h3>
+          <p>Chat with accepted matches; use WhatsApp when interest is mutual; get help via in-app support or WhatsApp.</p>
         </div>
       </div>
     </div>
@@ -1238,10 +874,10 @@
           <h3>Register as Bride</h3>
           <p>వధువు గా నమోదు — For brides and families seeking a suitable Brahmin groom.</p>
           <ul class="perks">
-            <li>Free profile creation</li>
-            <li>Ashtakoot compatibility report</li>
-            <li>Privacy controls for photos</li>
-            <li>Family can manage your profile</li>
+            <li>Free registration (₹0)</li>
+            <li>View profiles &amp; About Me (photos blurred until Platinum)</li>
+            <li>Ashtakoot on profiles with birth details</li>
+            <li>Family-managed profile &amp; privacy controls</li>
           </ul>
           <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Create Bride Profile Free</a>
         </article>
@@ -1250,10 +886,10 @@
           <h3>Register as Groom</h3>
           <p>వరుడు గా నమోదు — For grooms and families seeking a suitable Brahmin bride.</p>
           <ul class="perks">
-            <li>Free profile creation</li>
-            <li>Unlimited profile browsing</li>
-            <li>Express interest in matches</li>
-            <li>Secure MPIN login</li>
+            <li>Free registration (₹0)</li>
+            <li>Search, filter &amp; send interest</li>
+            <li>Receive interest requests</li>
+            <li>OTP + secure MPIN login</li>
           </ul>
           <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Create Groom Profile Free</a>
         </article>
@@ -1269,7 +905,7 @@
         <h2>Choose the right plan for you</h2>
         <p class="plans-intro">Registration is always <strong>free</strong>. Browse profiles, view details, and receive interest requests at no cost. Upgrade to <strong>Platinum</strong> in the app to unlock clear photos, contact information, WhatsApp messaging, and every premium feature below — same plans and prices as inside mana Vivaaha Vedika.</p>
         <p class="plans-pricing-summary">Free (₹0) · Platinum 1 month ₹99 · 3 months ₹297 · 6 months ₹594 · 12 months ₹1,188</p>
-        <p class="plans-note">Listed prices are the app’s discounted fees. Strikethrough amounts show reference pricing. Pay securely via UPI in the app.</p>
+        <p class="plans-note">Listed prices are the app’s discounted fees. Strikethrough amounts show reference pricing. Pay in the app via Razorpay (UPI, card, netbanking). Prices shown exclude 18% GST added at checkout, same as the Premium screen.</p>
       </div>
       <div class="plans-grid">
         <!-- Free — matches MembershipPlan.free in app -->
@@ -1386,257 +1022,13 @@
     </div>
   </section>
 
-  <!-- ── Platinum Highlights ── -->
-  <section class="section" id="platinum">
-    <div class="wrap">
-      <div class="platinum reveal">
-        <h2>✦ Platinum Membership</h2>
-        <p>Unlock the full power of <span class="mana">mana</span> Vivaaha Vedika — connect faster, discover smarter, stay in control.</p>
-        <ul class="platinum-features">
-          <li>Unlimited Contacts</li>
-          <li>Direct WhatsApp</li>
-          <li>Profile Boost</li>
-          <li>Priority Listing</li>
-          <li>Incognito Mode</li>
-          <li>Advanced Filters</li>
-          <li>Read Receipts</li>
-          <li>Community Heads Access</li>
-          <li>Discover 3D</li>
-        </ul>
-        <div style="margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;">
-          <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Upgrade in App</a>
-          <a class="btn btn-outline" href="https://wa.me/918985936678" target="_blank" rel="noopener">💬 Ask on WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Gotras / Community ── -->
-  <section class="section alt" id="community">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Brahmin Community</span>
-        <h2>Search by Gotra &amp; Sub-community</h2>
-        <p>We support all major Brahmin gotras and sub-communities across Telugu states.</p>
-      </div>
-      <div class="gotra-grid">
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🕉</div>
-          <div class="gotra-name">Vishwamitra</div>
-          <div class="gotra-count">340+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">📿</div>
-          <div class="gotra-name">Bharadwaja</div>
-          <div class="gotra-count">520+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">☸</div>
-          <div class="gotra-name">Kasyapa</div>
-          <div class="gotra-count">290+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🪷</div>
-          <div class="gotra-name">Vasistha</div>
-          <div class="gotra-count">410+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🌺</div>
-          <div class="gotra-name">Atri</div>
-          <div class="gotra-count">180+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🪔</div>
-          <div class="gotra-name">Agastya</div>
-          <div class="gotra-count">150+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🌸</div>
-          <div class="gotra-name">Gautama</div>
-          <div class="gotra-count">220+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🔱</div>
-          <div class="gotra-name">Jamadagni</div>
-          <div class="gotra-count">90+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">⭐</div>
-          <div class="gotra-name">Shandilya</div>
-          <div class="gotra-count">130+ profiles</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🌟</div>
-          <div class="gotra-name">Other Gotras</div>
-          <div class="gotra-count">600+ profiles</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Testimonials ── -->
-  <section class="section" id="stories">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Success Stories</span>
-        <h2>Families who found their match</h2>
-        <p>Real couples. Real celebrations. Real traditions.</p>
-      </div>
-      <div class="stories-grid">
-        <article class="story-card reveal">
-          <div class="story-couple-emoji">💑</div>
-          <div class="stars">★★★★★</div>
-          <blockquote>"We found a perfect match for our daughter within the Brahmin community. The Ashtakoot report gave our parents full confidence in the alliance."</blockquote>
-          <div class="author">Lakshmi &amp; Sai Teja</div>
-          <div class="meta">Hyderabad · Bride profile · Bharadwaja Gotra</div>
-          <div class="match-date">Matched: March 2025 • Married: June 2025</div>
-        </article>
-        <article class="story-card reveal">
-          <div class="story-couple-emoji">💍</div>
-          <div class="stars">★★★★★</div>
-          <blockquote>"Privacy controls let us share photos only when we were ready. The app respects our traditions while being modern and easy to use."</blockquote>
-          <div class="author">Venkatesh &amp; Divya</div>
-          <div class="meta">Vijayawada · Kasyapa Gotra</div>
-          <div class="match-date">Matched: January 2025 • Married: April 2025</div>
-        </article>
-        <article class="story-card reveal">
-          <div class="story-couple-emoji">🌸</div>
-          <div class="stars">★★★★★</div>
-          <blockquote>"Platinum membership helped us connect on WhatsApp after mutual interest. The support team was always responsive. Highly recommended to all families."</blockquote>
-          <div class="author">Priya &amp; Karthik</div>
-          <div class="meta">Visakhapatnam · Platinum members · Vasistha Gotra</div>
-          <div class="match-date">Matched: October 2024 • Married: February 2025</div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── App Preview Carousel ── -->
-  <section class="section alt" id="screenshots">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">App Preview</span>
-        <h2>Designed for modern matrimony</h2>
-        <p>Secure login, smart matching, rich profiles, and Platinum tools — all in one app.</p>
-      </div>
-      <div class="carousel-wrap reveal">
-        <div class="carousel" id="carousel">
-          <div class="screen-slide">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen login">
-                <h4>🔐 Secure Login</h4>
-                <p>MPIN &amp; biometric unlock</p>
-              </div>
-            </div>
-            <p class="carousel-label">Secure Login</p>
-          </div>
-          <div class="screen-slide">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen home">
-                <h4>🏠 Home</h4>
-                <p>Discover &amp; recent profiles</p>
-              </div>
-            </div>
-            <p class="carousel-label">Home</p>
-          </div>
-          <div class="screen-slide">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen search">
-                <h4>🔍 Smart Search</h4>
-                <p>Filter by gotra, age, city</p>
-              </div>
-            </div>
-            <p class="carousel-label">Search &amp; Filter</p>
-          </div>
-          <div class="screen-slide">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen match">
-                <h4>☸ Ashtakoot</h4>
-                <p>Vedic compatibility score</p>
-              </div>
-            </div>
-            <p class="carousel-label">Matching</p>
-          </div>
-          <div class="screen-slide">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen profile">
-                <h4>👤 Profile</h4>
-                <p>Family &amp; horoscope details</p>
-              </div>
-            </div>
-            <p class="carousel-label">Detailed Profile</p>
-          </div>
-          <div class="screen-slide">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen member">
-                <h4>✦ Platinum</h4>
-                <p>Exclusive membership tools</p>
-              </div>
-            </div>
-            <p class="carousel-label">Membership</p>
-          </div>
-        </div>
-        <div class="carousel-nav">
-          <button type="button" id="carouselPrev" aria-label="Previous">‹</button>
-          <button type="button" id="carouselNext" aria-label="Next">›</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Blog / Tips ── -->
-  <section class="section" id="blog">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Tips &amp; Guidance</span>
-        <h2>Matrimony advice for Telugu families</h2>
-        <p>Expert guidance on Brahmin wedding traditions, matching, and alliance etiquette.</p>
-      </div>
-      <div class="blog-grid">
-        <div class="blog-card reveal">
-          <div class="blog-thumb">☸</div>
-          <div class="blog-body">
-            <span class="blog-tag">Vedic Matching</span>
-            <div class="blog-title">What is Ashtakoot and why it matters in Brahmin matrimony</div>
-            <div class="blog-excerpt">Ashtakoot is a traditional 36-point compatibility system used in Vedic astrology. We explain how each of the 8 aspects are scored and what score is ideal for a successful alliance.</div>
-            <div class="blog-meta"><span>Matrimony Guide</span><span>5 min read</span></div>
-          </div>
-        </div>
-        <div class="blog-card reveal">
-          <div class="blog-thumb">🛡</div>
-          <div class="blog-body">
-            <span class="blog-tag">Privacy & Safety</span>
-            <div class="blog-title">How to protect your family's privacy while using matrimony apps</div>
-            <div class="blog-excerpt">Learn the best practices for managing your photo visibility, who can see your contact number, and how to safely communicate with potential matches on mana Vivaaha Vedika.</div>
-            <div class="blog-meta"><span>Safety Tips</span><span>4 min read</span></div>
-          </div>
-        </div>
-        <div class="blog-card reveal">
-          <div class="blog-thumb">💬</div>
-          <div class="blog-body">
-            <span class="blog-tag">Alliance Tips</span>
-            <div class="blog-title">5 questions families must ask before finalising a Brahmin alliance</div>
-            <div class="blog-excerpt">From gotram verification to horoscope review, here are the essential checks that every Telugu Brahmin family should complete before confirming an alliance through any platform.</div>
-            <div class="blog-meta"><span>Family Guide</span><span>6 min read</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── App Download CTA ── -->
   <section class="section alt">
     <div class="wrap">
       <div class="app-cta reveal">
         <div class="app-cta-text">
           <h2>Download <span class="mana">mana</span> Vivaaha Vedika</h2>
-          <p>Join thousands of Brahmin families finding their perfect alliance. Free to download, free to register. Available on Android — iOS coming soon.</p>
+          <p>Free to download and register on Android. Upgrade to Platinum inside the app when you are ready to connect.</p>
           <div class="app-stores">
             <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
               <span class="store-icon">▶</span>
@@ -1669,53 +1061,36 @@
       </div>
       <div class="faq-list reveal">
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            Is mana Vivaaha Vedika free to use?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">Yes. Registration is free (₹0). You can view profile details, read the About Me section, use basic sorting and filtering, edit your profile, and receive interest requests. Profile photos stay blurred until you upgrade. Platinum plans in the app are ₹99 (1 month), ₹297 (3 months), ₹594 (6 months), or ₹1,188 (12 months).</div>
+          <div class="faq-question" onclick="toggleFaq(this)">What makes mana Vivaaha Vedika special?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">We combine traditional Vedic compatibility with modern discovery and privacy-first controls. You get curated interests, structured requests, profile analytics, and real-time updates in one place.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            How are profiles verified on the platform?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">Every profile is verified through mobile OTP at registration. Our team also manually reviews profiles to ensure authenticity. Platinum members receive an additional verification badge for extra trust.</div>
+          <div class="faq-question" onclick="toggleFaq(this)">Is registration free?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">Yes. Registration is ₹0. You can view profile details, read About Me, use basic sorting and filtering, edit your profile, and receive interest requests. Profile photos stay blurred until you upgrade to Platinum (₹99 / 1 month, ₹297 / 3 months, ₹594 / 6 months, ₹1,188 / 12 months).</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            Is this platform only for Brahmin community?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">Yes, mana Vivaaha Vedika is specifically built for the Telugu Brahmin community across Andhra Pradesh and Telangana. We cater to all Brahmin sub-communities and gotras within the Telugu-speaking community.</div>
+          <div class="faq-question" onclick="toggleFaq(this)">Where is Discover 3D?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">Discover 3D is a Platinum feature. Platinum members can open it from the Home tab using the floating Discover 3D control.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            Can my parents or family members manage my profile?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">Absolutely! mana Vivaaha Vedika is designed for family involvement. Parents and guardians can fully manage your profile, browse matches, and communicate with prospective families — reflecting the traditional Brahmin matrimony process.</div>
+          <div class="faq-question" onclick="toggleFaq(this)">How do Interests work?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">Use Send Interest from a profile. Received interests are in the Received tab; sent interests are in the Sent tab with status tracking. Withdraw and Reminder for pending sent items are managed in the Sent tab only.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            How does the Ashtakoot matching work?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">Ashtakoot is an 8-parameter Vedic compatibility test with a total score of 36. Our app automatically calculates the Ashtakoot score for any two profiles based on their birth details. A score of 18 or above is generally considered a good match by Vedic traditions.</div>
+          <div class="faq-question" onclick="toggleFaq(this)">How do Photo Requests work?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">Photo requests appear in Received and Sent. In Received, accept or decline. In Sent, withdraw or send a reminder for pending requests.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            What is included in Platinum membership?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">All Platinum plans include the same features: unlimited contact requests, direct WhatsApp messaging, advanced compatibility matching, priority profile visibility, view contact information, access Community Heads details, community reference requests, send interest, profile highlighter, read receipts for messages, advanced filters, and incognito mode. Choose 1, 3, 6, or 12 months — prices are ₹99, ₹297, ₹594, and ₹1,188 respectively in the app.</div>
+          <div class="faq-question" onclick="toggleFaq(this)">What appears in the Messages tab?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">Messages lists chat conversations with accepted matches only. The badge counts unread chat messages. Photo requests and birthday wishes stay in Received or Notifications — not Messages.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            How do I contact support?
-            <span class="faq-icon">+</span>
-          </div>
-          <div class="faq-answer">You can reach us 24×7 via WhatsApp at +91 8985936678. You can also email us at support@manaVivaahaVedika.com or call us directly. Our team typically responds within a few hours.</div>
+          <div class="faq-question" onclick="toggleFaq(this)">What is included in Platinum?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">All Platinum durations include: unlimited contact requests, direct WhatsApp messaging, advanced compatibility matching, priority profile visibility, view contact information, access Community Heads details, community reference requests, send interest, profile highlighter, read receipts, advanced filters, and incognito mode.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How do I contact support?<span class="faq-icon">+</span></div>
+          <div class="faq-answer">In the app: Settings → Support → Chat with Support, or use Call / WhatsApp / Email on Help &amp; Support. WhatsApp: +91 8985936678 · Email: support@manaVivaahaVedika.com. Share your profile ID and a screenshot for faster help.</div>
         </div>
       </div>
     </div>
@@ -1727,25 +1102,31 @@
       <div class="section-head reveal">
         <span class="eyebrow">Get in Touch</span>
         <h2>We're here to help</h2>
-        <p>Reach out any time — our team is available 24×7 to assist your family.</p>
+        <p>Same options as Settings → Help &amp; Support in the app.</p>
       </div>
       <div class="contact-grid">
         <div class="contact-card reveal">
           <div class="contact-icon">💬</div>
-          <h4>WhatsApp Support</h4>
-          <p>Chat with us instantly — fastest way to get help, day or night.</p>
+          <h4>In-app chat</h4>
+          <p>Settings → Support → Chat with Support (fastest inside the app).</p>
+          <a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Open app</a>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-icon">📱</div>
+          <h4>WhatsApp</h4>
+          <p>Direct WhatsApp support (same number as in the app).</p>
           <a href="https://wa.me/918985936678" target="_blank" rel="noopener">+91 8985936678</a>
         </div>
         <div class="contact-card reveal">
           <div class="contact-icon">📧</div>
-          <h4>Email Support</h4>
-          <p>Send us your queries, profile help requests, or feedback anytime.</p>
+          <h4>Email</h4>
+          <p>support@manaVivaahaVedika.com</p>
           <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
         </div>
         <div class="contact-card reveal">
           <div class="contact-icon">📞</div>
-          <h4>Phone Support</h4>
-          <p>Speak directly with our matrimony advisors for personalised help.</p>
+          <h4>Phone</h4>
+          <p>Call support from Help &amp; Support in the app.</p>
           <a href="tel:+918985936678">+91 8985936678</a>
         </div>
       </div>
@@ -1774,7 +1155,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="app_logo.png" width="64" height="64" alt="mana" />
-        <p><strong style="color:#fff;"><span class="mana">mana</span> Vivaaha Vedika</strong><br />మన వివాహ వేదిక — Connecting Brahmin hearts with tradition, trust, and technology across Telugu states.</p>
+        <p><strong style="color:#fff;"><span class="mana">mana</span> Vivaaha Vedika</strong><br />మన వివాహ వేదిక — Where Tradition Meets Technology</p>
         <div class="social-links">
           <a class="social-link" href="https://wa.me/918985936678" target="_blank" rel="noopener" title="WhatsApp">💬</a>
           <a class="social-link" href="mailto:support@manaVivaahaVedika.com" title="Email">✉️</a>
@@ -1784,21 +1165,19 @@
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#profiles">Browse Profiles</a></li>
+          <li><a href="#features">Features</a></li>
           <li><a href="#register">Register Free</a></li>
           <li><a href="#plans">Membership Plans</a></li>
-          <li><a href="#platinum">Platinum Benefits</a></li>
           <li><a href="#how">How It Works</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Community</h4>
+        <h4>Legal</h4>
         <ul>
-          <li><a href="#community">Browse by Gotra</a></li>
-          <li><a href="#stories">Success Stories</a></li>
-          <li><a href="#blog">Matrimony Tips</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="#screenshots">App Preview</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1813,8 +1192,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 mana Vivaaha Vedika · UDYAM-AP-19-0068132 · All rights reserved.</p>
-      <p>&copy; 2026 మన వివాహ వేదిక · Vijayawada, Andhra Pradesh</p>
+      <p>&copy; 2025 mana Vivaaha Vedika · UDYAM-AP-19-0068132 · All rights reserved.</p>
+      <p>&copy; 2025 మన వివాహ వేదిక · Vijayawada, Andhra Pradesh</p>
     </div>
   </footer>
 
@@ -1839,61 +1218,13 @@
         });
       }
 
-      // Animated counters
-      function animateCounter(el) {
-        var target = parseInt(el.dataset.target, 10);
-        var suffix = el.dataset.suffix || '';
-        var duration = 1800;
-        var startTime = null;
-        function step(ts) {
-          if (!startTime) startTime = ts;
-          var p = Math.min((ts - startTime) / duration, 1);
-          var ease = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.floor(ease * target).toLocaleString('en-IN') + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      // Scroll reveal + counters
+      // Scroll reveal
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            e.target.querySelectorAll && e.target.querySelectorAll('.num[data-target]').forEach(function (n) {
-              if (!n.dataset.done) { n.dataset.done = '1'; animateCounter(n); }
-            });
-          }
+          if (e.isIntersecting) e.target.classList.add('visible');
         });
       }, { threshold: 0.12 });
-
       document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-      var statsEl = document.getElementById('stats');
-      if (statsEl) io.observe(statsEl);
-
-      // Carousel
-      var carousel = document.getElementById('carousel');
-      var prev = document.getElementById('carouselPrev');
-      var next = document.getElementById('carouselNext');
-      if (carousel && prev && next) {
-        var scrollAmt = 284;
-        prev.addEventListener('click', function () { carousel.scrollBy({ left: -scrollAmt, behavior: 'smooth' }); });
-        next.addEventListener('click', function () { carousel.scrollBy({ left: scrollAmt, behavior: 'smooth' }); });
-      }
-
-      // Profile tab filter
-      window.filterProfiles = function (type, btn) {
-        document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        document.querySelectorAll('.profile-card').forEach(function (card) {
-          if (type === 'all') {
-            card.style.display = '';
-          } else {
-            var types = card.dataset.type || '';
-            card.style.display = types.includes(type) ? '' : 'none';
-          }
-        });
-      };
 
       // FAQ accordion
       window.toggleFaq = function (el) {
