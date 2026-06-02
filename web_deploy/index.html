@@ -552,21 +552,29 @@
     .udyam-badge { display: flex; align-items: center; gap: 20px; }
     .udyam-icon {
       flex-shrink: 0;
-      min-width: 64px;
-      height: 56px;
-      padding: 0 10px;
+      width: 60px;
+      height: 60px;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      margin: 0;
       border-radius: 12px;
       background: linear-gradient(135deg, var(--orange-dark), var(--orange));
       color: #fff;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       font-family: 'Poppins', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.58rem;
       font-weight: 700;
-      letter-spacing: 0.02em;
-      line-height: 1;
-      white-space: nowrap;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      text-align: center;
+      overflow: hidden;
+    }
+    .udyam-icon span {
+      display: block;
+      max-width: 100%;
+      padding: 0 2px;
     }
     .udyam h3 {
       font-size: clamp(1.1rem, 2.5vw, 1.35rem);
@@ -710,6 +718,7 @@
       </a>
       <button class="nav-toggle" type="button" id="navToggle" aria-label="Menu">☰</button>
       <ul class="nav-links" id="navLinks">
+        <li><a href="#profiles">Profiles</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#how">How It Works</a></li>
         <li><a href="#plans">Plans</a></li>
@@ -755,8 +764,297 @@
     </div>
   </header>
 
+  <!-- ── Quick Search Bar ── -->
+  <div style="padding: 0 24px; background: var(--orange-tint);">
+    <div class="wrap">
+      <div class="search-bar-wrap reveal">
+        <div class="search-bar-title">🔍 Quick Profile Search</div>
+        <div class="search-fields">
+          <div class="search-field">
+            <label>Looking For</label>
+            <select>
+              <option>Bride</option>
+              <option>Groom</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>Age Range</label>
+            <select>
+              <option>21–25 years</option>
+              <option>26–30 years</option>
+              <option>31–35 years</option>
+              <option>36–40 years</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>Gotra / Sub-caste</label>
+            <select>
+              <option>Any Gotra</option>
+              <option>Vishwamitra</option>
+              <option>Bharadwaja</option>
+              <option>Kasyapa</option>
+              <option>Vasistha</option>
+              <option>Atri</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>City / District</label>
+            <select>
+              <option>Anywhere in AP / TS</option>
+              <option>Vijayawada</option>
+              <option>Hyderabad</option>
+              <option>Visakhapatnam</option>
+              <option>Tirupati</option>
+              <option>Guntur</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>Education</label>
+            <select>
+              <option>Any</option>
+              <option>B.E / B.Tech</option>
+              <option>M.Tech / M.E</option>
+              <option>MBBS / MD</option>
+              <option>CA / CS</option>
+              <option>MBA</option>
+              <option>PG / Doctorate</option>
+            </select>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="#profiles" style="height:46px; margin-top:22px;">Search</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stats ── -->
+  <section class="section alt" id="stats">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Community</span>
+        <h2>Growing with trust</h2>
+        <p>Thousands of Brahmin families choose <strong>mana Vivaaha Vedika</strong> for serious matrimony search.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="num" data-target="10000" data-suffix="+">0+</div>
+          <div class="label">Registered Members</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="num" data-target="2500" data-suffix="+">0+</div>
+          <div class="label">Active Profiles</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="num" data-target="500" data-suffix="+">0+</div>
+          <div class="label">Successful Matches</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="num">24×7</div>
+          <div class="label">WhatsApp Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Featured Profiles ── -->
+  <section class="section" id="profiles">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Today's Matches</span>
+        <h2>Featured Profiles</h2>
+        <p>Sample profiles for preview — open the app to browse and match real members.</p>
+      </div>
+      <div class="profiles-tabs reveal">
+        <button class="tab-btn active" onclick="filterProfiles('all',this)">All Profiles</button>
+        <button class="tab-btn" onclick="filterProfiles('bride',this)">Brides 👰</button>
+        <button class="tab-btn" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
+        <button class="tab-btn" onclick="filterProfiles('platinum',this)">Platinum ✦</button>
+        <button class="tab-btn" onclick="filterProfiles('new',this)">New Joins</button>
+      </div>
+      <div class="profiles-grid" id="profilesGrid">
+        <!-- Bride 1 -->
+        <div class="profile-card reveal" data-type="bride">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffd0b5);">
+            👰
+            <span class="verified-badge">✓ Verified</span>
+            <span class="premium-badge">✦ Platinum</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-B-2024-0182</div>
+            <div class="profile-name">Sowmya Sharma</div>
+            <div class="profile-age">26 yrs · 5'4" · Vijayawada</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Bharadwaja Gotra</span>
+              <span class="profile-tag">M.Tech</span>
+              <span class="profile-tag">Software Engineer</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" title="Express Interest" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Groom 1 -->
+        <div class="profile-card reveal" data-type="groom">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffc5a0);">
+            🤵
+            <span class="verified-badge">✓ Verified</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-G-2024-0341</div>
+            <div class="profile-name">Karthik Subramanyam</div>
+            <div class="profile-age">29 yrs · 5'10" · Hyderabad</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Kasyapa Gotra</span>
+              <span class="profile-tag">B.E + MBA</span>
+              <span class="profile-tag">IT Manager</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" title="Express Interest" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Bride 2 -->
+        <div class="profile-card reveal" data-type="bride platinum">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#ffe0cc,#ffcba4);">
+            👰
+            <span class="verified-badge">✓ Verified</span>
+            <span class="premium-badge">✦ Platinum</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-B-2024-0227</div>
+            <div class="profile-name">Padmavathi Rao</div>
+            <div class="profile-age">24 yrs · 5'2" · Tirupati</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Vasistha Gotra</span>
+              <span class="profile-tag">MBBS</span>
+              <span class="profile-tag">Doctor</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" title="Express Interest" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Groom 2 -->
+        <div class="profile-card reveal" data-type="groom platinum new">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#fdd9c0,#ffbf94);">
+            🤵
+            <span class="verified-badge">✓ Verified</span>
+            <span class="premium-badge">✦ Platinum</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-G-2024-0512</div>
+            <div class="profile-name">Venkata Ramana</div>
+            <div class="profile-age">31 yrs · 5'8" · Visakhapatnam</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Atri Gotra</span>
+              <span class="profile-tag">CA</span>
+              <span class="profile-tag">Finance Director</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Bride 3 -->
+        <div class="profile-card reveal" data-type="bride new">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#fef3c7,#fde68a);">
+            👰
+            <span class="verified-badge">✓ Verified</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-B-2024-0604</div>
+            <div class="profile-name">Ananya Krishnamurthy</div>
+            <div class="profile-age">27 yrs · 5'5" · Guntur</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Vishwamitra Gotra</span>
+              <span class="profile-tag">MBA</span>
+              <span class="profile-tag">Bank Manager</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Groom 3 -->
+        <div class="profile-card reveal" data-type="groom new">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#dbeafe,#bfdbfe);">
+            🤵
+            <span class="verified-badge">✓ Verified</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-G-2024-0689</div>
+            <div class="profile-name">Srinivasa Murthy</div>
+            <div class="profile-age">28 yrs · 5'9" · Nellore</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Bharadwaja Gotra</span>
+              <span class="profile-tag">M.Pharm</span>
+              <span class="profile-tag">Govt Employee</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Bride 4 -->
+        <div class="profile-card reveal" data-type="bride platinum">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#fce7f3,#fbcfe8);">
+            👰
+            <span class="verified-badge">✓ Verified</span>
+            <span class="premium-badge">✦ Platinum</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-B-2024-0733</div>
+            <div class="profile-name">Lalitha Devi</div>
+            <div class="profile-age">25 yrs · 5'3" · Kurnool</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Kasyapa Gotra</span>
+              <span class="profile-tag">B.Ed + M.A</span>
+              <span class="profile-tag">Teacher</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+        <!-- Groom 4 -->
+        <div class="profile-card reveal" data-type="groom platinum">
+          <div class="profile-avatar" style="background:linear-gradient(145deg,#d1fae5,#a7f3d0);">
+            🤵
+            <span class="verified-badge">✓ Verified</span>
+            <span class="premium-badge">✦ Platinum</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-id">MVV-G-2024-0801</div>
+            <div class="profile-name">Prasad Narayana</div>
+            <div class="profile-age">32 yrs · 5'11" · Chennai</div>
+            <div class="profile-tags">
+              <span class="profile-tag">Vasistha Gotra</span>
+              <span class="profile-tag">MBBS + MS</span>
+              <span class="profile-tag">Surgeon</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a>
+              <button class="profile-interest-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="view-all-wrap reveal">
+        <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View All Profiles in App →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ── About (matches app About screen) ── -->
-  <section class="section" style="padding-top:56px;" id="about">
+  <section class="section alt" id="about">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Our Mission</span>
@@ -819,6 +1117,69 @@
         <article class="why-card reveal"><div class="icon">👥</div><h3>Community Heads</h3><p>Platinum access to Community Heads details and community reference requests.</p></article>
       </div>
       <p class="plans-footnote reveal" style="margin-top:28px;">Partner preferences (age, gotra, education, location, etc.) are set in Profile → Edit Profile in the app — not on this website.</p>
+    </div>
+  </section>
+
+  <!-- ── Gotras / Community ── -->
+  <section class="section alt" id="community">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Brahmin Community</span>
+        <h2>Search by Gotra &amp; Sub-community</h2>
+        <p>We support all major Brahmin gotras and sub-communities across Telugu states.</p>
+      </div>
+      <div class="gotra-grid">
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🕉</div>
+          <div class="gotra-name">Vishwamitra</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">📿</div>
+          <div class="gotra-name">Bharadwaja</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">☸</div>
+          <div class="gotra-name">Kasyapa</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🪷</div>
+          <div class="gotra-name">Vasistha</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🌺</div>
+          <div class="gotra-name">Atri</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🪔</div>
+          <div class="gotra-name">Agastya</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🌸</div>
+          <div class="gotra-name">Gautama</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🔱</div>
+          <div class="gotra-name">Jamadagni</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">⭐</div>
+          <div class="gotra-name">Shandilya</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+        <div class="gotra-card reveal">
+          <div class="gotra-icon">🌟</div>
+          <div class="gotra-name">Other Gotras</div>
+          <div class="gotra-count">Filter in app</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1138,7 +1499,7 @@
     <div class="wrap">
       <div class="udyam reveal">
         <div class="udyam-badge">
-          <div class="udyam-icon">MSME</div>
+          <div class="udyam-icon" aria-hidden="true"><span>MSME</span></div>
           <div>
             <h3>MSME Registered Enterprise</h3>
             <p class="udyam-meta">Government of India — Ministry of MSME</p>
@@ -1165,7 +1526,10 @@
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
+          <li><a href="#profiles">Profiles</a></li>
+        <li><a href="#profiles">Browse Profiles</a></li>
           <li><a href="#features">Features</a></li>
+          <li><a href="#community">By Gotra</a></li>
           <li><a href="#register">Register Free</a></li>
           <li><a href="#plans">Membership Plans</a></li>
           <li><a href="#how">How It Works</a></li>
@@ -1218,13 +1582,46 @@
         });
       }
 
-      // Scroll reveal
+      function animateCounter(el) {
+        var target = parseInt(el.dataset.target, 10);
+        var suffix = el.dataset.suffix || '';
+        var duration = 1800;
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var p = Math.min((ts - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.floor(ease * target).toLocaleString('en-IN') + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
-          if (e.isIntersecting) e.target.classList.add('visible');
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            if (e.target.querySelectorAll) {
+              e.target.querySelectorAll('.num[data-target]').forEach(function (n) {
+                if (!n.dataset.done) { n.dataset.done = '1'; animateCounter(n); }
+              });
+            }
+          }
         });
       }, { threshold: 0.12 });
       document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      var statsEl = document.getElementById('stats');
+      if (statsEl) io.observe(statsEl);
+
+      window.filterProfiles = function (type, btn) {
+        document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.querySelectorAll('.profile-card').forEach(function (card) {
+          if (type === 'all') { card.style.display = ''; return; }
+          var types = card.dataset.type || '';
+          card.style.display = types.includes(type) ? '' : 'none';
+        });
+      };
 
       // FAQ accordion
       window.toggleFaq = function (el) {
