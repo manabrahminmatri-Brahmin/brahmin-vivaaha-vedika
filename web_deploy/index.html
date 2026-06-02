@@ -85,8 +85,10 @@
     }
     .nav.scrolled { box-shadow: 0 8px 32px rgba(252, 86, 3, 0.12); }
     .nav-inner {
+      position: relative;
       max-width: var(--max); margin: 0 auto; padding: 0 24px;
-      height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      flex-wrap: nowrap;
     }
     .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; min-width: 0; }
     .brand-logo-wrap {
@@ -101,12 +103,54 @@
       text-transform: uppercase; color: var(--orange);
     }
     .brand-title { font-weight: 700; font-size: 0.95rem; line-height: 1.15; white-space: nowrap; }
+    /* Drawer menu only — never inline in the header bar (prevents overlap with hero) */
     .nav-links {
-      display: flex; flex-wrap: wrap; align-items: center;
-      gap: var(--topic-gap); row-gap: var(--topic-gap); column-gap: var(--topic-gap);
-      list-style: none; font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      display: none;
+      list-style: none;
+      margin: 0; padding: 0;
     }
-    .nav-links a:hover { color: var(--orange); }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      z-index: 199;
+      max-height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 16px 24px 24px;
+      gap: 4px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--orange-border);
+      box-shadow: 0 16px 40px rgba(26, 20, 16, 0.12);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .nav-links a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: var(--text);
+    }
+    .nav-links a:hover {
+      color: var(--orange-dark);
+      background: var(--orange-tint);
+      text-decoration: none;
+    }
+    .nav-drawer-label {
+      padding: 10px 14px 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      pointer-events: none;
+    }
+    .nav-drawer-label + .nav-drawer-label { margin-top: 8px; }
+    body.nav-menu-open { overflow: hidden; }
     .nav-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
     .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--orange-dark); padding: 4px; }
     .nav-help { position: relative; }
@@ -366,11 +410,10 @@
       text-align: center; font-size: 0.85rem; opacity: 0.92;
       margin-top: 20px; max-width: 28rem; margin-left: auto; margin-right: auto;
     }
-    body.site-locked .nav-links a:not([href="#register"]):not([href="#top"]):not([href*="privacy"]):not([href*="terms"]):not([href="#faq"]):not([href="#contact"]) {
-      opacity: 0.45; pointer-events: none;
+    body.site-locked .nav-links.open a[href^="#"]:not([href="#register"]):not([href="#top"]):not([href="#faq"]):not([href="#contact"]) {
+      opacity: 0.5;
+      pointer-events: none;
     }
-    body.site-locked .nav-links { display: none; }
-    body.site-unlocked .nav-links { display: flex; }
     .site-content.is-locked { display: none; }
     .site-content.is-locked + .gate-spacer { display: none; }
     .unlock-toast {
@@ -381,6 +424,8 @@
     body.site-unlocked .unlock-toast { display: block; }
     .hero--gate { min-height: calc(100vh - var(--nav-h)); display: flex; align-items: center; }
     .hero--gate .hero-grid { width: 100%; }
+    .hero { isolation: isolate; z-index: 1; }
+    .hero-inner { position: relative; z-index: 2; }
     body.site-unlocked .hero--gate { min-height: auto; padding-bottom: 32px; }
     body.site-unlocked .hero-copy .hero-features { display: grid; }
     body.site-unlocked .hero-highlights { display: flex; }
@@ -1046,17 +1091,10 @@
       @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
       .pref-grid { grid-template-columns: 1fr; }
       .search-fields { grid-template-columns: 1fr 1fr; }
-      body.site-unlocked .nav-links { display: none; }
-      .nav-links.open,
-      body.site-unlocked .nav-links.open {
-        display: flex; flex-direction: column; position: absolute;
-        top: var(--nav-h); left: 0; right: 0; background: var(--surface);
-        padding: 20px 24px; box-shadow: var(--shadow); gap: 16px;
-        max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
-      }
-      body.site-locked .nav-links.open { display: flex; }
       .nav-toggle { display: block; }
       .nav-help-menu { right: 0; left: auto; }
+      .nav-actions .btn-sm { padding: 10px 14px; font-size: 0.78rem; }
+      .nav-help-btn { padding: 10px 12px; font-size: 0.78rem; }
       .profiles-grid { grid-template-columns: repeat(2, 1fr); }
       .blog-grid { grid-template-columns: 1fr; }
     }
@@ -1101,23 +1139,6 @@
           <span class="brand-title"><span class="mana">mana</span> Vivaaha Vedika</span>
         </span>
       </a>
-      <button class="nav-toggle" type="button" id="navToggle" aria-label="Menu">☰</button>
-      <ul class="nav-links" id="navLinks">
-        <li class="nav-links-mobile-help"><strong style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Browse</strong></li>
-        <li><a href="#profiles">Profiles</a></li>
-        <li><a href="#app-preview">App Preview</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#plans">Plans</a></li>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#register">Register</a></li>
-        <li class="nav-links-mobile-help"><strong style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;">Help</strong></li>
-        <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener">Live Help (WhatsApp)</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="mailto:support@manaVivaahaVedika.com">Email Support</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="terms.html">Terms</a></li>
-      </ul>
       <div class="nav-actions">
         <div class="nav-help" id="navHelp">
           <button type="button" class="nav-help-btn" id="navHelpBtn" aria-expanded="false" aria-haspopup="true" aria-controls="navHelpMenu">
@@ -1145,8 +1166,21 @@
         </div>
         <a class="btn btn-sm btn-outline-dark" href="#register" id="navLoginBtn" data-reg-tab="login">Log in</a>
         <a class="btn btn-sm btn-primary" href="#register" id="navRegisterBtn" data-reg-tab="register">Register Free</a>
+        <button class="nav-toggle" type="button" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
       </div>
     </div>
+    <ul class="nav-links" id="navLinks" aria-label="Site menu">
+      <li class="nav-drawer-label">Browse</li>
+      <li><a href="#profiles">Profiles</a></li>
+      <li><a href="#app-preview">App Preview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#plans">Plans</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#register">Register</a></li>
+      <li class="nav-drawer-label">Legal</li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms &amp; Conditions</a></li>
+    </ul>
   </nav>
 
   <!-- ── Hero (registration / login gate) ── -->
@@ -2303,13 +2337,64 @@
         });
       }
 
-      // Mobile nav toggle
+      // Help dropdown
+      var navHelp = document.getElementById('navHelp');
+      var navHelpBtn = document.getElementById('navHelpBtn');
+      function closeHelpMenu() {
+        if (!navHelp || !navHelpBtn) return;
+        navHelp.classList.remove('open');
+        navHelpBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      // Menu drawer (browse links — not shown inline in header)
       var toggle = document.getElementById('navToggle');
       var links = document.getElementById('navLinks');
+      function closeNavMenu() {
+        if (!links || !toggle) return;
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-menu-open');
+      }
+      function openNavMenu() {
+        if (!links || !toggle) return;
+        closeHelpMenu();
+        links.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('nav-menu-open');
+      }
       if (toggle && links) {
-        toggle.addEventListener('click', function () { links.classList.toggle('open'); });
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (links.classList.contains('open')) closeNavMenu();
+          else openNavMenu();
+        });
         links.querySelectorAll('a').forEach(function (a) {
-          a.addEventListener('click', function () { links.classList.remove('open'); });
+          a.addEventListener('click', function () { closeNavMenu(); });
+        });
+        document.addEventListener('click', function (e) {
+          if (!links.classList.contains('open')) return;
+          if (links.contains(e.target) || toggle.contains(e.target)) return;
+          closeNavMenu();
+        });
+      }
+      if (navHelp && navHelpBtn) {
+        navHelpBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          closeNavMenu();
+          var open = navHelp.classList.toggle('open');
+          navHelpBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', function (e) {
+          if (!navHelp.contains(e.target)) closeHelpMenu();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeHelpMenu();
+            closeNavMenu();
+          }
+        });
+        navHelp.querySelectorAll('.nav-help-links a').forEach(function (link) {
+          link.addEventListener('click', function () { closeHelpMenu(); });
         });
       }
 
@@ -2401,6 +2486,23 @@
 
       if (sessionStorage.getItem('mvv_unlocked') === '1') {
         unlockSite(false);
+      }
+
+      if (navHelp) {
+        navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            closeHelpMenu();
+            var href = link.getAttribute('href');
+            if (document.body.classList.contains('site-locked') && href && href.charAt(0) === '#') {
+              e.preventDefault();
+              unlockSite(false);
+              requestAnimationFrame(function () {
+                var target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              });
+            }
+          });
+        });
       }
 
       function setRegTab(panelName) {
@@ -2500,45 +2602,6 @@
           if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
       });
-
-      // Help dropdown (always available in header)
-      var navHelp = document.getElementById('navHelp');
-      var navHelpBtn = document.getElementById('navHelpBtn');
-      function closeHelpMenu() {
-        if (!navHelp || !navHelpBtn) return;
-        navHelp.classList.remove('open');
-        navHelpBtn.setAttribute('aria-expanded', 'false');
-      }
-      if (navHelp && navHelpBtn) {
-        navHelpBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          var open = navHelp.classList.toggle('open');
-          navHelpBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-        document.addEventListener('click', function (e) {
-          if (!navHelp.contains(e.target)) closeHelpMenu();
-        });
-        document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') closeHelpMenu();
-        });
-        navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
-          link.addEventListener('click', function (e) {
-            closeHelpMenu();
-            var href = link.getAttribute('href');
-            if (document.body.classList.contains('site-locked') && href && href.charAt(0) === '#') {
-              e.preventDefault();
-              unlockSite(false);
-              requestAnimationFrame(function () {
-                var target = document.querySelector(href);
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              });
-            }
-          });
-        });
-        navHelp.querySelectorAll('.nav-help-links a').forEach(function (link) {
-          link.addEventListener('click', function () { closeHelpMenu(); });
-        });
-      }
 
       // FAQ accordion
       window.toggleFaq = function (el) {
