@@ -34,7 +34,7 @@
       color: var(--text);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
-      padding-top: calc(var(--nav-h) + var(--page-gap));
+      padding-top: var(--nav-h);
     }
     a { color: var(--orange); text-decoration: none; font-weight: 500; }
     a:hover { text-decoration: underline; }
@@ -81,7 +81,7 @@
       color: #fff;
       text-align: center;
       padding: 40px 24px 36px;
-      margin: 0 20px 24px;
+      margin: var(--page-gap) 20px 24px;
       max-width: 760px;
       margin-left: auto;
       margin-right: auto;
@@ -188,11 +188,11 @@
 
     @media (max-width: 900px) {
       :root { --nav-h: 120px; }
-      body { padding-top: calc(var(--nav-h) + var(--page-gap)); }
+      body { padding-top: var(--nav-h); }
       .top-brand img { width: 80px; height: 80px; border-radius: 18px; }
       .top-brand { gap: 12px; }
       .back-link { font-size: 0.85rem; }
-      .hero { padding: 34px 16px 30px; margin: 0 16px 20px; }
+      .hero { padding: 34px 16px 30px; margin: var(--page-gap) 16px 20px; }
     }
   </style>
 </head>
