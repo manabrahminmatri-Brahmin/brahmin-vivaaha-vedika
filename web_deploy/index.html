@@ -366,30 +366,31 @@
       color: var(--ink-3); line-height: 1.7;
       max-width: 420px; margin-bottom: 24px;
     }
-    .hero-features { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+    .hero-features {
+      list-style: none;
+      margin: 0 0 8px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 440px;
+    }
     .hero-features li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 0.88rem; color: var(--ink-3); line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--ink-3);
+      line-height: 1.55;
     }
     .hero-features li::before {
-      content: '✓'; flex-shrink: 0; margin-top: 1px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--rust-tint); color: var(--rust);
-      font-size: 0.65rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero-trust { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
-    .hero-trust span {
-      font-size: 0.7rem; font-weight: 600;
-      padding: 5px 12px; border-radius: 999px;
-      background: #fff; border: 1px solid var(--border);
-      color: var(--ink-3); letter-spacing: 0.04em;
-    }
-    .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
-    .hero-chip {
-      font-size: 0.75rem; font-weight: 500; padding: 6px 13px;
-      border-radius: 999px; background: var(--rust-pale);
-      border: 1px solid var(--rust-tint2); color: var(--rust-deep);
+      content: '•';
+      flex-shrink: 0;
+      margin-top: -2px;
+      color: var(--orange);
+      font-size: 1.1rem;
+      font-weight: 800;
+      line-height: 1.4;
     }
 
     /* ─── Reg Card ─── */
@@ -866,7 +867,7 @@
       .hero-grid { grid-template-columns: 1fr; gap: 32px; }
       .hero-copy { text-align: center; }
       .hero-desc { max-width: 100%; }
-      .hero-trust, .hero-chips, .hero-features { justify-content: center; align-items: center; }
+      .hero-features { align-items: flex-start; text-align: left; margin-left: auto; margin-right: auto; }
       .hero-badge { margin-bottom: 14px; }
       .reg-card { max-width: 420px; margin: 0 auto; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -981,27 +982,15 @@
           <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
           <h1>Find Your <span class="accent">Perfect</span><br/>Brahmin Match</h1>
           <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
-          <p class="hero-desc">Free registration, Ashtakoot compatibility, sub-community filters, and family-friendly profiles — all in one place.</p>
+          <p class="hero-desc">Everything you need for a serious Brahmin matrimony search — in one trusted app.</p>
           <ul class="hero-features">
-            <li>Free registration (₹0) · OTP-verified mobile &amp; secure MPIN</li>
-            <li>Ashtakoot compatibility · sub-community &amp; advanced filters</li>
-            <li>Interests, photo requests &amp; chat with accepted matches</li>
-            <li>Premium Platinum plans from ₹99/month</li>
+            <li><strong>Free registration (₹0)</strong> — OTP-verified mobile number &amp; secure MPIN login</li>
+            <li><strong>Ashtakoot matching</strong> — sub-community &amp; advanced profile filters</li>
+            <li><strong>Family-managed profiles</strong> — privacy-first photo &amp; visibility controls</li>
+            <li><strong>Connect safely</strong> — send interest, photo requests &amp; chat after mutual acceptance</li>
+            <li><strong>Premium Platinum</strong> — full access from ₹99/month</li>
+            <li><strong>Trusted platform</strong> — OTP verified · family friendly · UDYAM registered</li>
           </ul>
-          <div class="hero-trust">
-            <span>✓ OTP Verified</span>
-            <span>✓ Family Managed</span>
-            <span>✓ Privacy First</span>
-            <span>✓ UDYAM Registered</span>
-          </div>
-          <div class="hero-chips">
-            <span class="hero-chip">☸ Ashtakoot</span>
-            <span class="hero-chip">🔐 MPIN Login</span>
-            <span class="hero-chip">👨‍👩‍👧 Family Profiles</span>
-            <span class="hero-chip">💌 Send Interest</span>
-            <span class="hero-chip">📸 Photo Requests</span>
-            <span class="hero-chip">🔍 Sub-community Filters</span>
-          </div>
         </div>
         <!-- Registration Card -->
         <div class="reg-card" id="register">
