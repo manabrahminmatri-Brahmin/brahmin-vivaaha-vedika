@@ -16,6 +16,7 @@
       --orange-dark: #d84315;
       --maroon: #d84315;
       --nav-h: 140px;
+      --page-gap: 32px;
       --bg: #fff8f5;
       --surface: #f0f2f5;
       --text: #0a0a0a;
@@ -33,7 +34,7 @@
       color: var(--text);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
-      padding-top: calc(var(--nav-h) + 20px);
+      padding-top: calc(var(--nav-h) + var(--page-gap));
     }
     a { color: var(--orange); text-decoration: none; font-weight: 500; }
     a:hover { text-decoration: underline; }
@@ -80,7 +81,7 @@
       color: #fff;
       text-align: center;
       padding: 40px 24px 36px;
-      margin: 8px 20px 24px;
+      margin: 0 20px 24px;
       max-width: 760px;
       margin-left: auto;
       margin-right: auto;
@@ -187,11 +188,11 @@
 
     @media (max-width: 700px) {
       :root { --nav-h: 120px; }
-      body { padding-top: calc(var(--nav-h) + 16px); }
+      body { padding-top: calc(var(--nav-h) + var(--page-gap)); }
       .top-brand img { width: 72px; height: 72px; border-radius: 18px; }
       .top-brand { gap: 12px; }
       .back-link { font-size: 0.85rem; }
-      .hero { padding: 34px 16px 30px; margin: 6px 16px 20px; }
+      .hero { padding: 34px 16px 30px; margin: 0 16px 20px; }
     }
   </style>
 </head>
