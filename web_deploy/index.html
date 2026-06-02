@@ -35,6 +35,12 @@
       --radius-sm: 14px;
       --nav-h: 80px;
       --max: 1180px;
+      --topic-gap: 12px;
+    }
+    /* Uniform spacing for chip / tab / topic rows */
+    .topic-row {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: var(--topic-gap); row-gap: var(--topic-gap); column-gap: var(--topic-gap);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html {
@@ -83,7 +89,9 @@
     }
     .brand-title { font-weight: 700; font-size: 0.95rem; line-height: 1.15; white-space: nowrap; }
     .nav-links {
-      display: flex; gap: 24px; list-style: none; font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--topic-gap); row-gap: var(--topic-gap); column-gap: var(--topic-gap);
+      list-style: none; font-size: 0.85rem; font-weight: 500; color: var(--muted);
     }
     .nav-links a:hover { color: var(--orange); }
     .nav-actions { display: flex; gap: 10px; align-items: center; }
@@ -160,22 +168,20 @@
       max-width: 480px; margin: 2px auto 0; font-weight: 400; line-height: 1.45;
     }
     .trust-badges {
-      display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
-      gap: 8px; margin-bottom: 24px; max-width: 100%;
+      flex-wrap: nowrap; margin-bottom: 24px; max-width: 100%;
       overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
       padding: 0 2px 4px;
     }
     .trust-badges::-webkit-scrollbar { display: none; }
     .trust-badges span {
       flex-shrink: 0;
-      font-size: clamp(0.68rem, 1.4vw, 0.78rem); font-weight: 600;
-      padding: 8px clamp(10px, 1.6vw, 14px);
+      font-size: 0.76rem; font-weight: 600;
+      padding: 8px 14px;
       background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
       border-radius: 999px; backdrop-filter: blur(8px); white-space: nowrap;
     }
     .hero-ctas {
-      display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
-      gap: 10px; max-width: 100%;
+      flex-wrap: nowrap; max-width: 100%;
       overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
       padding: 0 2px 4px;
     }
@@ -252,11 +258,13 @@
     .stat-card .label { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
 
     /* ── Featured Profiles ── */
-    .profiles-tabs { display: flex; gap: 8px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+    .profiles-tabs { margin-bottom: 40px; }
     .tab-btn {
-      padding: 10px 22px; border-radius: 999px; border: 1.5px solid var(--orange-border);
+      padding: 10px 18px; border-radius: 999px; border: 1.5px solid var(--orange-border);
       background: var(--surface); color: var(--muted); font-size: 0.85rem; font-weight: 600;
       cursor: pointer; transition: all 0.2s;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 42px; flex: 0 0 auto;
     }
     .tab-btn.active, .tab-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
     .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -273,13 +281,24 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem;
     }
-    .profile-avatar .premium-badge {
+    .profile-avatar .premium-badge,
+    .profile-avatar .free-badge {
       position: absolute; top: 12px; left: 12px;
-      background: linear-gradient(135deg, #d4a017, #f5c842);
-      color: #3d2e00; font-size: 0.65rem; font-weight: 700;
+      font-size: 0.65rem; font-weight: 700;
       padding: 4px 10px; border-radius: 999px;
+      line-height: 1.2;
+    }
+    .profile-avatar .premium-badge {
+      background: linear-gradient(135deg, #d4a017, #f5c842);
+      color: #3d2e00;
       border: 1px solid rgba(255, 255, 255, 0.5);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    .profile-avatar .free-badge {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--muted);
+      border: 1px solid var(--orange-border);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     }
     .profile-body { padding: 18px 20px 20px; }
     .profile-id { font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
@@ -298,9 +317,14 @@
     .profile-subcommunity-value {
       font-size: 0.84rem; font-weight: 600; color: var(--orange-dark); line-height: 1.35;
     }
-    .profile-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .profile-tags {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--topic-gap); row-gap: var(--topic-gap); column-gap: var(--topic-gap);
+      margin-bottom: 14px;
+    }
     .profile-tag {
-      font-size: 0.68rem; font-weight: 600; padding: 4px 10px;
+      font-size: 0.68rem; font-weight: 600; padding: 5px 12px;
+      flex: 0 0 auto;
       background: var(--orange-tint); color: var(--orange-dark);
       border-radius: 999px; border: 1px solid var(--orange-border);
     }
@@ -531,7 +555,10 @@
     .app-cta-visual .phone-frame { max-width: 220px; }
 
     /* ── Community / Sub-community ── */
-    .gotra-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+    .gotra-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: var(--topic-gap); row-gap: var(--topic-gap); column-gap: var(--topic-gap);
+    }
     .gotra-card {
       background: var(--surface); border-radius: var(--radius-sm); padding: 18px 14px 16px;
       text-align: center; border: 1px solid var(--orange-border); box-shadow: var(--shadow);
@@ -540,11 +567,14 @@
     }
     .gotra-card:hover { transform: translateY(-4px); border-color: var(--orange); }
     .community-type {
-      display: inline-block; font-size: 0.6rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.07em;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100%; max-width: 11.5rem; min-height: 2rem;
+      font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; text-align: center;
       color: var(--orange); background: var(--orange-tint);
-      border: 1px solid var(--orange-border); padding: 4px 10px;
-      border-radius: 999px; margin-bottom: 10px; line-height: 1.2;
+      border: 1px solid var(--orange-border); padding: 6px 8px;
+      border-radius: 999px; margin-bottom: 10px; line-height: 1.25;
+      box-sizing: border-box;
     }
     .community-type--region { color: var(--orange-dark); background: #fff; }
     .community-type--branch { color: #9a3412; background: #fff7ed; border-color: #fdba74; }
@@ -851,14 +881,14 @@
         <p class="telugu">మన వివాహ వేదిక</p>
         <p class="tagline">Telugu Brahmin matrimony — Where Tradition Meets Technology</p>
       </div>
-      <div class="trust-badges">
+      <div class="trust-badges topic-row">
         <span>✓ OTP Verified</span>
         <span>✓ Family Managed</span>
         <span>✓ Ashtakoot Matching</span>
         <span>✓ Privacy First</span>
         <span>✓ MSME Registered</span>
       </div>
-      <div class="hero-ctas">
+      <div class="hero-ctas topic-row">
         <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">📲 Download App</a>
         <a class="btn btn-outline" href="#register">👰 Register as Bride</a>
         <a class="btn btn-outline" href="#register">🤵 Register as Groom</a>
@@ -969,7 +999,7 @@
         <h2>Featured Profiles</h2>
         <p>Sample profiles for preview — open the app to browse and match real members.</p>
       </div>
-      <div class="profiles-tabs reveal">
+      <div class="profiles-tabs topic-row reveal">
         <button class="tab-btn active" onclick="filterProfiles('all',this)">All Profiles</button>
         <button class="tab-btn" onclick="filterProfiles('bride',this)">Brides 👰</button>
         <button class="tab-btn" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
@@ -981,7 +1011,7 @@
         <div class="profile-card reveal" data-type="bride">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffd0b5);">
             👰
-            <span class="premium-badge">Premium</span>
+            <span class="free-badge">Free</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-B-2024-0182</div>
@@ -1005,6 +1035,7 @@
         <div class="profile-card reveal" data-type="groom">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fde8d8,#ffc5a0);">
             🤵
+            <span class="free-badge">Free</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-G-2024-0341</div>
@@ -1076,6 +1107,7 @@
         <div class="profile-card reveal" data-type="bride new">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#fef3c7,#fde68a);">
             👰
+            <span class="free-badge">Free</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-B-2024-0604</div>
@@ -1099,6 +1131,7 @@
         <div class="profile-card reveal" data-type="groom new">
           <div class="profile-avatar" style="background:linear-gradient(145deg,#dbeafe,#bfdbfe);">
             🤵
+            <span class="free-badge">Free</span>
           </div>
           <div class="profile-body">
             <div class="profile-id">MVV-G-2024-0689</div>
