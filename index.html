@@ -3,42 +3,1744 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="0; url=web_deploy/index.html" />
-  <link rel="canonical" href="web_deploy/index.html" />
-  <title>mana Vivaaha Vedika</title>
+  <meta name="description" content="mana Vivaaha Vedika — Telugu Brahmin matrimony. Ashtakoot matching, MPIN login, family-managed profiles, privacy controls, and Platinum plans from ₹99/month." />
+  <meta name="theme-color" content="#fc5603" />
+  <title>mana Vivaaha Vedika — Premium Brahmin Matrimony</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="app_logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    /* ─── Design Tokens ─── */
+    :root {
+      --orange:       #fc5603;
+      --orange-light: #ff7a35;
+      --orange-dark:  #d84315;
+      --rust:       #C44B0A;
+      --rust-deep:  #962E00;
+      --rust-vivid: #E05A12;
+      --rust-light: #F07840;
+      --rust-pale:  #FDF0E8;
+      --rust-tint:  #FBE4D6;
+      --rust-tint2: #F8D1B8;
+      --amber:      #F5A623;
+      --gold:       #D4920A;
+      --surface:    #FFFFFF;
+      --bg:         #FDFAF7;
+      --bg-warm:    #FBF5EF;
+      --ink:        #1C0E08;
+      --ink-2:      #3D2010;
+      --ink-3:      #6B3A20;
+      --muted:      #8C6E5A;
+      --border:     rgba(196, 75, 10, 0.14);
+      --shadow-sm:  0 2px 12px rgba(196,75,10,0.10);
+      --shadow-md:  0 8px 32px rgba(196,75,10,0.14);
+      --shadow-lg:  0 20px 60px rgba(100,30,5,0.18);
+      --radius:     20px;
+      --radius-sm:  12px;
+      --nav-h:      140px;
+      --max:        1160px;
+      --font: 'Poppins', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Poppins', system-ui, sans-serif;
-      display: flex; min-height: 100vh; align-items: center; justify-content: center;
-      margin: 0; padding: 24px; text-align: center;
-      background: linear-gradient(165deg, #fff8f5 0%, #fff 50%, #fff5f0 100%);
-      color: #0a0a0a; line-height: 1.65;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .box {
-      max-width: 32rem; padding: 32px 28px; border-radius: 16px;
-      background: #fff; border: 1px solid rgba(252, 86, 3, 0.15);
-      box-shadow: 0 16px 48px rgba(252, 86, 3, 0.1);
+    button, input, select, textarea, optgroup {
+      font-family: var(--font);
     }
-    h1 { font-size: 1.25rem; color: #d84315; margin: 0 0 12px; font-weight: 700; }
-    p { margin: 0 0 10px; font-size: 0.92rem; color: #54656f; }
-    a { color: #fc5603; font-weight: 600; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    ul { list-style: none; padding: 0; margin: 16px 0 0; font-size: 0.88rem; }
-    li + li { margin-top: 8px; }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    .brand-logo img,
+    .footer-brand-logo img {
+      max-width: none;
+      object-fit: contain;
+    }
+
+    /* ─── Utility ─── */
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .eyebrow {
+      display: inline-block;
+      font-family: var(--font);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 10px;
+    }
+    .section-head { text-align: center; max-width: 600px; margin: 0 auto 52px; }
+    .section-head h2 {
+      font-family: var(--font);
+      font-size: clamp(1.85rem, 4vw, 2.75rem);
+      font-weight: 700;
+      color: var(--ink-2);
+      line-height: 1.18;
+      margin-bottom: 14px;
+    }
+    .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; border-radius: 999px;
+      font-family: var(--font); font-weight: 600; font-size: 0.88rem;
+      border: none; cursor: pointer; transition: all 0.22s; white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rust-vivid), var(--rust));
+      color: #fff; box-shadow: 0 8px 24px rgba(196,75,10,0.35);
+    }
+    .btn-primary:hover { box-shadow: 0 12px 32px rgba(196,75,10,0.45); }
+    .btn-secondary {
+      background: #fff; color: var(--rust-deep);
+      border: 2px solid var(--rust);
+    }
+    .btn-secondary:hover { background: var(--rust-pale); }
+    .btn-ghost {
+      background: transparent; color: var(--rust-deep);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--rust-pale); border-color: var(--rust); }
+    .btn-sm { padding: 9px 18px; font-size: 0.8rem; }
+    .btn-light { background: rgba(255,255,255,0.92); color: var(--rust-deep); backdrop-filter: blur(8px); }
+    .btn-light:hover { background: #fff; }
+
+    /* ─── Navbar ─── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: var(--nav-h);
+      background: var(--orange);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18); }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 20px;
+      height: 100%; display: flex; align-items: center;
+      justify-content: space-between; gap: 14px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 16px;
+      min-width: 0; flex: 1 1 auto; max-width: min(520px, 58vw);
+    }
+    .brand-logo {
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+    }
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 14px;
+      max-width: none;
+    }
+    .brand-text-wrap { line-height: 1.2; min-width: 0; align-self: center; }
+    .brand-text-wrap small {
+      display: block; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.11em; text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 4px;
+    }
+    .brand-name {
+      font-family: var(--font);
+      font-size: clamp(1.12rem, 2.5vw, 1.45rem);
+      font-weight: 700; line-height: 1.2;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .brand-name .mana { color: #fff; font-weight: 800; }
+    .nav-actions {
+      display: flex; gap: 8px; align-items: center;
+      flex-shrink: 0; margin-left: auto;
+    }
+    .nav-toggle {
+      display: none; background: none; border: none; font-size: 1.4rem;
+      cursor: pointer; color: #fff; padding: 4px;
+    }
+    .nav-actions .btn-ghost {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.55);
+      background: transparent;
+    }
+    .nav-actions .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: #fff;
+      color: #fff;
+    }
+    .nav-actions .btn-primary {
+      background: #fff;
+      color: var(--orange-dark);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    }
+    .nav-actions .btn-primary:hover {
+      background: #fff;
+      color: var(--orange);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    /* Help menu */
+    .nav-help { position: relative; }
+    .nav-help-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 9px 16px; border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff; font-family: var(--font);
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-help-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.75);
+      color: #fff;
+    }
+    .nav-help-chevron { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-help.open .nav-help-chevron { transform: rotate(180deg); }
+    .nav-help-menu {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      width: min(290px, calc(100vw - 32px));
+      background: #fff; border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden; opacity: 0; visibility: hidden;
+      transform: translateY(-6px); transition: all 0.2s; z-index: 300;
+    }
+    .nav-help.open .nav-help-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-help-head {
+      padding: 12px 16px 9px; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+      background: var(--rust-pale); border-bottom: 1px solid var(--border);
+    }
+    .nav-help-phone-row { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .nav-help-phone-row p { font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .nav-help-num { font-size: 0.88rem; font-weight: 600; color: var(--rust); display: flex; justify-content: space-between; }
+    .nav-help-num span { font-size: 0.75rem; color: var(--muted); font-weight: 400; }
+    .nav-help-links { list-style: none; padding: 6px 0; }
+    .nav-help-links a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; font-size: 0.86rem; font-weight: 500; color: var(--ink);
+      transition: background 0.15s;
+    }
+    .nav-help-links a:hover { background: var(--rust-pale); color: var(--rust-deep); }
+    .nav-help-links .hi { width: 1.2rem; text-align: center; flex-shrink: 0; font-size: 1rem; }
+    .nav-help-foot { padding: 10px 16px 12px; font-size: 0.68rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); background: var(--bg); }
+
+    /* Mobile drawer */
+    .nav-links { display: none; list-style: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 199;
+      max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
+      padding: 12px 20px 24px; gap: 2px;
+      background: #fff; border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+    }
+    .nav-links a {
+      display: block; padding: 11px 14px; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 500; color: var(--ink-2);
+    }
+    .nav-links a:hover { background: var(--rust-pale); color: var(--rust-deep); }
+    .nav-drawer-label {
+      padding: 10px 14px 4px; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust);
+      pointer-events: none;
+    }
+    body.menu-open { overflow: hidden; }
+
+    /* ─── Hero ─── */
+    .hero {
+      position: relative; min-height: 100vh;
+      padding: calc(var(--nav-h) + 32px) 24px 52px;
+      background: var(--bg);
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 55% 70% at 90% 40%, rgba(240,120,64,0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(196,75,10,0.06) 0%, transparent 60%),
+        var(--bg);
+    }
+    .hero-ornament {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(196,75,10,0.07); pointer-events: none;
+    }
+    .hero-ornament.a { width: 520px; height: 520px; top: -100px; right: -120px; }
+    .hero-ornament.b { width: 280px; height: 280px; bottom: -60px; left: -60px; }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: var(--max); width: 100%; margin: 0 auto;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr min(420px, 42%);
+      gap: clamp(32px, 5vw, 64px); align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--rust-tint); border: 1px solid var(--rust-tint2);
+      border-radius: 999px; padding: 5px 14px;
+      font-size: 0.7rem; font-weight: 600; color: var(--rust-deep);
+      letter-spacing: 0.06em; margin-bottom: 18px;
+    }
+    .hero-badge::before { content: '✦'; color: var(--amber); }
+    .hero h1 {
+      font-family: var(--font);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800; line-height: 1.1;
+      color: var(--ink-2); letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .hero h1 .accent { color: var(--rust-vivid); }
+    .hero-telugu {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted); margin-bottom: 16px; font-weight: 400;
+    }
+    .hero-desc {
+      font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+      color: var(--ink-3); line-height: 1.7;
+      max-width: 420px; margin-bottom: 24px;
+    }
+    .hero-features { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+    .hero-features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.88rem; color: var(--ink-3); line-height: 1.5;
+    }
+    .hero-features li::before {
+      content: '✓'; flex-shrink: 0; margin-top: 1px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--rust-tint); color: var(--rust);
+      font-size: 0.65rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-trust { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .hero-trust span {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 5px 12px; border-radius: 999px;
+      background: #fff; border: 1px solid var(--border);
+      color: var(--ink-3); letter-spacing: 0.04em;
+    }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
+    .hero-chip {
+      font-size: 0.75rem; font-weight: 500; padding: 6px 13px;
+      border-radius: 999px; background: var(--rust-pale);
+      border: 1px solid var(--rust-tint2); color: var(--rust-deep);
+    }
+
+    /* ─── Reg Card ─── */
+    .reg-card {
+      background: #fff; border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .reg-tabs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .reg-tab {
+      padding: 13px 12px; border: none; background: var(--rust-pale);
+      font-family: var(--font); font-size: 0.82rem; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all 0.2s;
+    }
+    .reg-tab.active { background: #fff; color: var(--rust-deep); box-shadow: inset 0 -2.5px 0 var(--rust); }
+    .reg-card-head {
+      background: linear-gradient(135deg, var(--rust-deep), var(--rust-vivid));
+      color: #fff; padding: 15px 22px; text-align: center;
+      font-family: var(--font); font-size: 1rem; font-weight: 700;
+    }
+    .reg-form { padding: 20px 22px 18px; }
+    .reg-field { margin-bottom: 14px; }
+    .reg-field label {
+      display: block; font-size: 0.68rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .reg-field select, .reg-field input {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 0.9rem; font-family: var(--font);
+      background: var(--bg-warm); color: var(--ink); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .reg-field select:focus, .reg-field input:focus {
+      border-color: var(--rust);
+      box-shadow: 0 0 0 3px rgba(196,75,10,0.1);
+    }
+    .reg-phone-row { display: grid; grid-template-columns: 84px 1fr; gap: 8px; }
+    .reg-submit {
+      width: 100%; margin-top: 6px; padding: 13px;
+      font-size: 0.92rem; font-weight: 700;
+    }
+    .reg-check { display: flex; gap: 9px; margin-top: 12px; font-size: 0.76rem; color: var(--muted); line-height: 1.5; align-items: flex-start; }
+    .reg-check input { margin-top: 3px; accent-color: var(--rust); flex-shrink: 0; }
+    .reg-check a { color: var(--rust); font-weight: 600; }
+    .reg-note { font-size: 0.68rem; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.5; }
+    .login-hint { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; text-align: center; }
+    .reg-panel { display: none; }
+    .reg-panel.active { display: block; }
+
+    /* ─── Section spacing ─── */
+    .section { padding: 84px 24px; }
+    .section.alt { background: var(--bg-warm); }
+
+    /* ─── Divider ornament ─── */
+    .divider {
+      width: 48px; height: 3px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--rust), var(--amber));
+      margin: 0 auto 16px;
+    }
+
+    /* ─── Stats ─── */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .stat-card {
+      background: #fff; border-radius: var(--radius); padding: 34px 20px;
+      text-align: center; border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: linear-gradient(90deg, var(--rust-vivid), var(--amber));
+    }
+    .stat-card .num {
+      font-family: var(--font);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--rust); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-card .label { font-size: 0.84rem; color: var(--muted); font-weight: 500; }
+
+    /* ─── Profile Cards ─── */
+    .profiles-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .tab-btn {
+      padding: 8px 18px; border-radius: 999px;
+      border: 1.5px solid var(--border); background: #fff;
+      color: var(--muted); font-size: 0.82rem; font-weight: 600;
+      font-family: var(--font); cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover { background: var(--rust); color: #fff; border-color: var(--rust); }
+    .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .profile-card {
+      background: #fff; border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+      transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
+    }
+    .profile-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .profile-avatar {
+      height: 190px; display: flex; align-items: center; justify-content: center;
+      font-size: 4.5rem; position: relative;
+    }
+    .profile-avatar .badge-pill {
+      position: absolute; top: 12px; left: 12px;
+      font-size: 0.63rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; line-height: 1.2;
+    }
+    .badge-premium { background: linear-gradient(135deg, #D4920A, #F5C842); color: #3D2500; border: 1px solid rgba(255,255,255,0.5); }
+    .badge-free { background: rgba(255,255,255,0.92); color: var(--muted); border: 1px solid var(--border); }
+    .profile-body { padding: 16px 18px 18px; }
+    .profile-id { font-size: 0.66rem; color: var(--muted); margin-bottom: 3px; letter-spacing: 0.04em; }
+    .profile-name { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 2px; }
+    .profile-age { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+    .profile-subcomm {
+      padding: 9px 12px; background: var(--rust-pale);
+      border: 1px solid var(--rust-tint2); border-radius: 10px; margin-bottom: 10px;
+    }
+    .profile-subcomm-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rust); margin-bottom: 2px; }
+    .profile-subcomm-val { font-size: 0.82rem; font-weight: 600; color: var(--ink-2); }
+    .profile-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 13px; }
+    .profile-tag {
+      font-size: 0.66rem; font-weight: 600; padding: 4px 10px;
+      background: var(--bg-warm); color: var(--ink-3);
+      border-radius: 999px; border: 1px solid var(--border);
+    }
+    .profile-actions { display: flex; gap: 7px; }
+    .profile-actions .btn { flex: 1; padding: 9px 10px; font-size: 0.76rem; justify-content: center; }
+    .profile-like-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; font-size: 0.95rem; flex-shrink: 0;
+    }
+    .profile-like-btn:hover, .profile-like-btn.liked { background: #fee2e2; border-color: #ef4444; }
+
+    /* ─── How It Works ─── */
+    .how-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; position: relative; }
+    .how-steps::before {
+      content: ''; position: absolute; top: 34px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rust-tint2), var(--rust), var(--rust-tint2), transparent);
+      z-index: 0;
+    }
+    .step-card { text-align: center; position: relative; z-index: 1; }
+    .step-num {
+      width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 18px;
+      background: linear-gradient(135deg, var(--rust-vivid), var(--rust-deep));
+      color: #fff; font-family: var(--font); font-size: 1.5rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(196,75,10,0.35);
+    }
+    .step-card h3 { font-family: var(--font); font-size: 0.98rem; font-weight: 700; color: var(--ink-2); margin-bottom: 7px; }
+    .step-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── Features Grid ─── */
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feature-card {
+      background: #fff; border-radius: var(--radius); padding: 28px 24px;
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 18px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      background: var(--rust-pale); border: 1px solid var(--rust-tint2);
+    }
+    .feature-card h3 { font-family: var(--font); font-size: 1.05rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
+    .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    /* ─── Sub-community ─── */
+    .subcomm-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .subcomm-card {
+      background: #fff; border-radius: var(--radius-sm); padding: 18px 12px 16px;
+      text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .subcomm-card:hover { transform: translateY(-4px); border-color: var(--rust); }
+    .subcomm-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.56rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+      color: var(--rust); background: var(--rust-pale); border: 1px solid var(--rust-tint2);
+      line-height: 1.4; min-height: 1.8rem;
+    }
+    .subcomm-pill.regional { color: #7C2D12; background: #FFF7ED; border-color: #FDBA74; }
+    .subcomm-pill.branch { color: #92400E; background: #FFFBEB; border-color: #FCD34D; }
+    .subcomm-icon { font-size: 1.7rem; margin-bottom: 7px; }
+    .subcomm-name { font-family: var(--font); font-size: 0.82rem; font-weight: 700; color: var(--ink-2); margin-bottom: 3px; }
+    .subcomm-count { font-size: 0.66rem; color: var(--muted); }
+
+    /* ─── Membership Plans ─── */
+    .plans-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: start; }
+    .plan-card {
+      background: #fff; border-radius: var(--radius); padding: 24px 18px;
+      border: 2px solid var(--border); box-shadow: var(--shadow-sm);
+      position: relative; transition: transform 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .plan-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+    .plan-card.featured {
+      background: linear-gradient(160deg, var(--rust-deep) 0%, var(--rust-vivid) 100%);
+      border-color: transparent; color: #fff;
+    }
+    .plan-badge {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--amber); color: #3D2500;
+      font-size: 0.68rem; font-weight: 700; padding: 4px 14px;
+      border-radius: 999px; letter-spacing: 0.04em; white-space: nowrap;
+    }
+    .plan-name { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 8px; }
+    .plan-card.featured .plan-name { color: rgba(255,255,255,0.8); }
+    .plan-price {
+      font-family: var(--font); font-size: 2.1rem; font-weight: 800;
+      line-height: 1; margin-bottom: 2px; color: var(--ink-2);
+    }
+    .plan-card.featured .plan-price { color: #fff; }
+    .plan-was { font-size: 0.76rem; color: var(--muted); min-height: 1.1em; margin-bottom: 3px; }
+    .plan-card.featured .plan-was { color: rgba(255,255,255,0.6); }
+    .plan-save { font-size: 0.68rem; font-weight: 700; color: var(--rust); margin-bottom: 10px; }
+    .plan-card.featured .plan-save { color: #FCD34D; }
+    .plan-duration { font-size: 0.75rem; color: var(--muted); margin-bottom: 16px; line-height: 1.4; }
+    .plan-card.featured .plan-duration { color: rgba(255,255,255,0.7); }
+    .plan-features { list-style: none; flex: 1; margin-bottom: 18px; }
+    .plan-features li {
+      font-size: 0.74rem; padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 7px; align-items: flex-start; line-height: 1.35;
+    }
+    .plan-card.featured .plan-features li { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+    .plan-features li::before { content: '✓'; color: var(--rust); font-weight: 700; flex-shrink: 0; font-size: 0.8rem; }
+    .plan-card.featured .plan-features li::before { color: #FCD34D; }
+    .plans-note-block { text-align: center; font-size: 0.78rem; color: var(--muted); max-width: 700px; margin: 24px auto 0; line-height: 1.6; }
+    .plans-pricing-pill {
+      display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+      background: #fff; border: 1px solid var(--border); border-radius: 12px;
+      padding: 10px 18px; font-size: 0.84rem; font-weight: 600; color: var(--rust-deep);
+      max-width: 700px; margin: 0 auto 14px; line-height: 1.6;
+    }
+
+    /* ─── App CTA ─── */
+    .app-cta {
+      background: linear-gradient(135deg, var(--rust-deep) 0%, var(--rust-vivid) 60%, var(--amber) 100%);
+      border-radius: var(--radius); padding: 56px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px; color: #fff; position: relative; overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .app-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 75% 50%, rgba(255,255,255,0.09), transparent 55%);
+    }
+    .app-cta-text { position: relative; flex: 1; }
+    .app-cta-text h2 { font-family: var(--font); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 10px; }
+    .app-cta-text p { opacity: 0.9; font-size: 0.95rem; max-width: 420px; margin-bottom: 26px; line-height: 1.65; }
+    .app-stores { display: flex; gap: 12px; flex-wrap: wrap; }
+    .store-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(0,0,0,0.22); border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 12px; padding: 11px 18px; color: #fff; font-size: 0.84rem;
+      cursor: pointer; transition: background 0.2s; backdrop-filter: blur(6px);
+    }
+    .store-btn:hover { background: rgba(0,0,0,0.35); }
+    .store-icon { font-size: 1.5rem; }
+    .store-label small { display: block; font-size: 0.6rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.06em; }
+    .store-label strong { font-size: 0.98rem; font-weight: 700; }
+
+    /* ─── FAQ ─── */
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      padding: 18px 0; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font); font-size: 0.95rem; font-weight: 700;
+      color: var(--ink-2); gap: 16px;
+    }
+    .faq-q .faq-icon { color: var(--rust); font-size: 1.1rem; flex-shrink: 0; transition: transform 0.3s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 0 18px; font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── Contact ─── */
+    .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .contact-card {
+      background: #fff; border-radius: var(--radius); padding: 28px 22px;
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-align: center;
+    }
+    .contact-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .contact-card h4 { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
+    .contact-card p { font-size: 0.84rem; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+    .contact-card a { color: var(--rust); font-weight: 600; font-size: 0.86rem; }
+
+    /* ─── UDYAM ─── */
+    .udyam {
+      background: #fff; border-radius: var(--radius);
+      padding: 36px 44px; border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .udyam-left { display: flex; align-items: center; gap: 22px; }
+    .udyam-logo {
+      width: 180px; height: 68px; padding: 10px 14px;
+      background: #FAFAFA; border: 1px solid var(--border);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    }
+    .udyam-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .udyam h3 { font-family: var(--font); font-size: 1.2rem; font-weight: 700; color: var(--ink-2); margin-bottom: 3px; }
+    .udyam-meta { font-size: 0.72rem; color: var(--muted); margin-bottom: 8px; }
+    .udyam-reg {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      color: var(--rust-deep); background: var(--rust-pale);
+      padding: 4px 10px; border-radius: 6px;
+      border: 1px solid var(--rust-tint2); letter-spacing: 0.04em;
+    }
+    .udyam-right { font-size: 0.78rem; color: var(--muted); max-width: 280px; line-height: 1.65; }
+
+    /* ─── Footer ─── */
+    .footer {
+      background: var(--ink-2);
+      color: rgba(255,255,255,0.82);
+      padding: 60px 24px 28px;
+    }
+    .footer-grid {
+      max-width: var(--max); margin: 0 auto 36px;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 36px 32px; align-items: start;
+    }
+    .footer-brand-logo {
+      width: 56px; height: 56px; margin-bottom: 14px; line-height: 0;
+    }
+    .footer-brand-logo img {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .footer-brand-name { font-family: var(--font); font-size: 1rem; color: #fff; margin-bottom: 8px; font-weight: 700; }
+    .footer-brand-desc { font-size: 0.83rem; line-height: 1.65; max-width: 260px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 16px; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+    .social-link:hover { background: rgba(255,255,255,0.22); }
+    .footer-col h4 {
+      color: #fff; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col a { font-size: 0.84rem; opacity: 0.78; transition: opacity 0.2s; }
+    .footer-col a:hover { opacity: 1; text-decoration: underline; }
+    .footer-bottom {
+      max-width: var(--max); margin: 0 auto; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 8px 24px; font-size: 0.76rem; opacity: 0.72; line-height: 1.6;
+    }
+
+    /* ─── Floating buttons ─── */
+    .float-actions {
+      position: fixed; bottom: 22px; right: 22px; z-index: 300;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .home-float {
+      width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--rust-vivid), var(--rust));
+      color: #fff; box-shadow: var(--shadow-md);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transform: scale(0.85);
+      transition: all 0.25s;
+    }
+    .home-float.visible { opacity: 1; visibility: visible; transform: scale(1); }
+    .home-float:hover { transform: scale(1.08); background: var(--rust-deep); }
+    .home-float svg { width: 22px; height: 22px; }
+    .wa-float {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* ─── Reveal animation ─── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── Search bar ─── */
+    .search-bar {
+      background: #fff; border-radius: var(--radius);
+      padding: 22px 26px; box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border); max-width: var(--max); margin: 0 auto;
+      position: relative; z-index: 10;
+    }
+    .search-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--rust); margin-bottom: 14px; }
+    .search-fields { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 10px; align-items: end; }
+    .search-field label { font-size: 0.66rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .search-field select {
+      width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+      border-radius: 9px; font-size: 0.84rem; font-family: var(--font);
+      background: var(--bg-warm); color: var(--ink); outline: none; transition: border-color 0.2s;
+    }
+    .search-field select:focus { border-color: var(--rust); }
+
+    /* ─── Register cards ─── */
+    .register-duo { display: grid; grid-template-columns: 1fr minmax(180px, 220px) 1fr; gap: 22px; align-items: center; }
+    .register-hero {
+      border-radius: var(--radius); overflow: hidden;
+      min-height: 360px; padding: 36px; color: #fff;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      box-shadow: var(--shadow-md); position: relative;
+    }
+    .register-hero.bride { background: linear-gradient(160deg, var(--rust-light), var(--rust), var(--rust-deep)); }
+    .register-hero.groom { background: linear-gradient(160deg, var(--rust), var(--rust-deep), #6B1E00); }
+    .register-hero .emoji { font-size: 3.5rem; margin-bottom: 14px; }
+    .register-hero h3 { font-family: var(--font); font-size: 1.5rem; font-weight: 700; margin-bottom: 7px; }
+    .register-hero p { font-size: 0.88rem; opacity: 0.92; margin-bottom: 18px; line-height: 1.6; max-width: 260px; }
+    .register-hero .perks { list-style: none; margin-bottom: 20px; }
+    .register-hero .perks li { font-size: 0.82rem; opacity: 0.92; margin-bottom: 5px; }
+    .register-hero .perks li::before { content: '✓ '; font-weight: 700; }
+    .reg-phone-shot { text-align: center; }
+    .reg-phone-label { font-size: 0.78rem; font-weight: 600; color: var(--rust-deep); margin-top: 10px; text-align: center; line-height: 1.4; }
+    .phone-frame {
+      background: var(--rust-deep); border-radius: 28px; padding: 10px;
+      border: 3px solid var(--rust); box-shadow: var(--shadow-lg);
+      max-width: 220px; margin: 0 auto;
+    }
+    .phone-notch {
+      width: 64px; height: 14px; background: var(--rust-deep);
+      border-radius: 0 0 8px 8px; margin: 0 auto 6px;
+    }
+    .phone-screen {
+      position: relative; width: 100%;
+      aspect-ratio: 390 / 844; max-height: 380px;
+      border-radius: 20px; overflow: hidden; background: #fff;
+    }
+    .phone-screen img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      max-width: none; object-fit: cover; object-position: top center;
+    }
+    .app-preview-carousel {
+      display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 8px 4px 20px; scrollbar-width: none;
+    }
+    .app-preview-carousel::-webkit-scrollbar { display: none; }
+    .screen-slide { flex: 0 0 min(240px, 78vw); scroll-snap-align: center; min-width: 0; }
+    .shot-caption {
+      text-align: center; margin-top: 10px;
+      font-size: 0.82rem; font-weight: 600; color: var(--rust-deep);
+    }
+    .shot-caption small { display: block; font-weight: 500; color: var(--muted); font-size: 0.72rem; margin-top: 3px; }
+    .carousel-nav { display: flex; justify-content: center; gap: 10px; margin-top: 8px; }
+    .carousel-nav button {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 2px solid var(--rust); background: #fff; color: var(--rust-deep);
+      font-size: 1.1rem; cursor: pointer;
+    }
+    .carousel-nav button:hover { background: var(--rust-pale); }
+    .app-cta-visual { flex-shrink: 0; position: relative; z-index: 1; }
+    .app-cta-visual .phone-frame { max-width: 200px; }
+    .app-cta-visual .phone-screen { max-height: 340px; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1080px) {
+      .profiles-grid { grid-template-columns: repeat(3, 1fr); }
+      .plans-grid { grid-template-columns: repeat(3, 1fr); }
+      .subcomm-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-copy { text-align: center; }
+      .hero-desc { max-width: 100%; }
+      .hero-trust, .hero-chips, .hero-features { justify-content: center; align-items: center; }
+      .hero-badge { margin-bottom: 14px; }
+      .reg-card { max-width: 420px; margin: 0 auto; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .how-steps { grid-template-columns: repeat(3, 1fr); }
+      .how-steps::before { display: none; }
+      .register-duo { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .register-duo .reg-phone-shot { display: none; }
+      .plans-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .app-cta { flex-direction: column; text-align: center; }
+      .app-stores { justify-content: center; }
+      .nav-toggle { display: block; }
+      :root { --nav-h: 120px; }
+      .brand { max-width: min(440px, 52vw); gap: 16px; }
+      .brand-logo { width: 100px; height: 100px; }
+      .search-fields { grid-template-columns: 1fr 1fr; }
+      .profiles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 120px; }
+      .brand { gap: 12px; max-width: calc(100% - 168px); }
+      .brand-logo { width: 80px; height: 80px; }
+      .brand-name { font-size: clamp(0.95rem, 3.5vw, 1.1rem); }
+      .brand-text-wrap small { font-size: 0.58rem; letter-spacing: 0.08em; }
+      .nav-actions .btn-sm { padding: 8px 12px; font-size: 0.72rem; }
+      .nav-help-btn { padding: 8px 10px; font-size: 0.72rem; }
+      .section { padding: 60px 16px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
+      .plans-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
+      .subcomm-grid { grid-template-columns: repeat(2, 1fr); }
+      .profiles-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .udyam { padding: 24px; }
+      .udyam-left { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .app-cta { padding: 36px 22px; }
+      .search-fields { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; }
+    }
   </style>
 </head>
-<body>
-  <div class="box">
-    <h1>mana Vivaaha Vedika</h1>
-    <p>This folder is not the live site. All website files are in <a href="web_deploy/index.html">web_deploy/</a>.</p>
-    <ul>
-      <li><a href="web_deploy/index.html">Edit landing page (source)</a></li>
-      <li><a href="https://manabrahminmatri-brahmin.github.io/brahmin-vivaaha-vedika/">Live — GitHub Pages</a></li>
-      <li><a href="https://manabrahminmatri-de0ad.web.app/">Live — Firebase Hosting</a></li>
+<body class="site-locked">
+
+  <!-- ─── Navbar ─── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <div class="brand-logo">
+          <img src="app_logo.png" width="68" height="68" alt="mana Vivaaha Vedika logo" />
+        </div>
+        <div class="brand-text-wrap">
+          <small>Brahmin Matrimony</small>
+          <div class="brand-name"><span class="mana">mana</span> Vivaaha Vedika</div>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <div class="nav-help" id="navHelp">
+          <button type="button" class="nav-help-btn" id="navHelpBtn" aria-expanded="false">
+            Help <span class="nav-help-chevron">▼</span>
+          </button>
+          <div class="nav-help-menu" id="navHelpMenu">
+            <div class="nav-help-head">Customer Care</div>
+            <div class="nav-help-phone-row">
+              <p>Call Us</p>
+              <div class="nav-help-num">
+                <a href="tel:+918985936678">+91 8985936678</a>
+                <span>India</span>
+              </div>
+            </div>
+            <ul class="nav-help-links">
+              <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener"><span class="hi">💬</span> Live Help (WhatsApp)</a></li>
+              <li><a href="#contact" data-help-scroll><span class="hi">📋</span> Contact Us</a></li>
+              <li><a href="#faq" data-help-scroll><span class="hi">❓</span> FAQ</a></li>
+              <li><a href="mailto:support@manaVivaahaVedika.com"><span class="hi">✉️</span> Email Support</a></li>
+              <li><a href="privacy.html"><span class="hi">🔒</span> Privacy Policy</a></li>
+              <li><a href="terms.html"><span class="hi">📄</span> Terms &amp; Conditions</a></li>
+            </ul>
+            <p class="nav-help-foot">Support hours: 9 AM – 9 PM IST · Eluru, Andhra Pradesh</p>
+          </div>
+        </div>
+        <a class="btn btn-sm btn-ghost" href="#register" data-reg-tab="login">Log in</a>
+        <a class="btn btn-sm btn-primary" href="#register" data-reg-tab="register">Register Free</a>
+        <button class="nav-toggle" type="button" id="navToggle" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li class="nav-drawer-label">Browse</li>
+      <li><a href="#profiles">Profiles</a></li>
+      <li><a href="#app-preview">App Preview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#plans">Plans &amp; Pricing</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#community">Sub-communities</a></li>
+      <li><a href="#register">Register Free</a></li>
+      <li class="nav-drawer-label">Legal</li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms &amp; Conditions</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── Hero ─── -->
+  <header class="hero hero--gate" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-ornament a"></div>
+    <div class="hero-ornament b"></div>
+    <div class="hero-inner">
+      <div class="hero-grid">
+        <!-- Copy -->
+        <div class="hero-copy">
+          <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
+          <h1>Find Your <span class="accent">Perfect</span><br/>Brahmin Match</h1>
+          <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
+          <p class="hero-desc">Free registration, Ashtakoot compatibility, sub-community filters, and family-friendly profiles — all in one place.</p>
+          <ul class="hero-features">
+            <li>Free registration (₹0) · OTP-verified mobile &amp; secure MPIN</li>
+            <li>Ashtakoot compatibility · sub-community &amp; advanced filters</li>
+            <li>Interests, photo requests &amp; chat with accepted matches</li>
+            <li>Premium Platinum plans from ₹99/month</li>
+          </ul>
+          <div class="hero-trust">
+            <span>✓ OTP Verified</span>
+            <span>✓ Family Managed</span>
+            <span>✓ Privacy First</span>
+            <span>✓ UDYAM Registered</span>
+          </div>
+          <div class="hero-chips">
+            <span class="hero-chip">☸ Ashtakoot</span>
+            <span class="hero-chip">🔐 MPIN Login</span>
+            <span class="hero-chip">👨‍👩‍👧 Family Profiles</span>
+            <span class="hero-chip">💌 Send Interest</span>
+            <span class="hero-chip">📸 Photo Requests</span>
+            <span class="hero-chip">🔍 Sub-community Filters</span>
+          </div>
+        </div>
+        <!-- Registration Card -->
+        <div class="reg-card" id="register">
+          <div class="reg-tabs" role="tablist">
+            <button type="button" class="reg-tab active" data-panel="register" role="tab" aria-selected="true">New Registration</button>
+            <button type="button" class="reg-tab" data-panel="login" role="tab" aria-selected="false">Member Login</button>
+          </div>
+          <!-- Register panel -->
+          <div class="reg-panel active" id="regPanelRegister">
+            <div class="reg-card-head">Create a Matrimony Profile</div>
+            <form class="reg-form" id="heroRegForm" novalidate>
+              <div class="reg-field">
+                <label for="regCreatedFor">Profile created for</label>
+                <select id="regCreatedFor" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Self</option><option>Father</option><option>Mother</option>
+                  <option>Brother</option><option>Sister</option><option>Guardian</option>
+                </select>
+              </div>
+              <div class="reg-field">
+                <label for="regProfileType">Registering a</label>
+                <select id="regProfileType" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Bride</option><option>Groom</option>
+                </select>
+              </div>
+              <div class="reg-field">
+                <label for="regFirstName">First name</label>
+                <input type="text" id="regFirstName" placeholder="Enter first name" autocomplete="given-name" required />
+              </div>
+              <div class="reg-field">
+                <label for="regLastName">Last name</label>
+                <input type="text" id="regLastName" placeholder="Enter last name" autocomplete="family-name" required />
+              </div>
+              <div class="reg-field">
+                <label for="regMobile">Mobile number</label>
+                <div class="reg-phone-row">
+                  <select aria-label="Country code"><option value="+91">+91</option></select>
+                  <input type="tel" id="regMobile" placeholder="10-digit mobile" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" required />
+                </div>
+              </div>
+              <label class="reg-check">
+                <input type="checkbox" id="regAgree" required />
+                <span>I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</span>
+              </label>
+              <button type="submit" class="btn btn-primary reg-submit">Continue →</button>
+              <p class="reg-note">Next: install the app to complete OTP &amp; MPIN setup.</p>
+            </form>
+          </div>
+          <!-- Login panel -->
+          <div class="reg-panel" id="regPanelLogin" hidden>
+            <div class="reg-card-head">Already Registered? Log In</div>
+            <form class="reg-form" id="heroLoginForm" novalidate>
+              <p class="login-hint">Enter your registered mobile number. Sign in with your <strong>MPIN</strong> inside the app.</p>
+              <div class="reg-field">
+                <label for="loginMobile">Registered mobile</label>
+                <div class="reg-phone-row">
+                  <select aria-label="Country code"><option value="+91">+91</option></select>
+                  <input type="tel" id="loginMobile" placeholder="10-digit mobile" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" required />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary reg-submit">Log in with MPIN in App →</button>
+              <p class="reg-note">Opens the app. Use <strong>Forgot MPIN?</strong> on the sign-in screen if needed. <a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Install app</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.7);margin-top:24px;display:none;" id="gateHint">Fill in the form above to continue. Need help? Use the <strong>Help</strong> menu.</p>
+    </div>
+  </header>
+
+  <!-- ─── Main Content (locked until registration) ─── -->
+  <main id="siteContent" class="site-content is-locked" aria-hidden="true">
+
+  <!-- Quick Search -->
+  <div style="padding: 0 24px; background: var(--bg-warm);">
+    <div class="wrap">
+      <div class="search-bar reveal" style="margin-top: -30px;">
+        <div class="search-title">🔍 Quick Profile Search</div>
+        <div class="search-fields">
+          <div class="search-field">
+            <label>Looking for</label>
+            <select><option>Bride</option><option>Groom</option></select>
+          </div>
+          <div class="search-field">
+            <label>Age range</label>
+            <select><option>21–25 yrs</option><option>26–30 yrs</option><option>31–35 yrs</option><option>36–40 yrs</option></select>
+          </div>
+          <div class="search-field">
+            <label>Sub-community</label>
+            <select><option>Any</option><option>Niyogi</option><option>Vaidiki</option><option>Dravida</option><option>Velanadu</option><option>Telaganya</option></select>
+          </div>
+          <div class="search-field">
+            <label>City / District</label>
+            <select><option>Anywhere AP/TS</option><option>Vijayawada</option><option>Hyderabad</option><option>Visakhapatnam</option><option>Tirupati</option><option>Guntur</option></select>
+          </div>
+          <div class="search-field">
+            <label>Education</label>
+            <select><option>Any</option><option>B.E / B.Tech</option><option>M.Tech</option><option>MBBS / MD</option><option>CA / CS</option><option>MBA</option></select>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="#profiles" style="margin-top:20px;height:44px;">Search</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <section class="section alt" id="stats">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Community</span>
+        <div class="divider"></div>
+        <h2>Growing with Trust</h2>
+        <p>Thousands of Brahmin families choose mana Vivaaha Vedika for a serious matrimony search.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card reveal"><div class="num" data-target="10000" data-suffix="+">0</div><div class="label">Registered Members</div></div>
+        <div class="stat-card reveal"><div class="num" data-target="2500" data-suffix="+">0</div><div class="label">Active Profiles</div></div>
+        <div class="stat-card reveal"><div class="num" data-target="500" data-suffix="+">0</div><div class="label">Successful Matches</div></div>
+        <div class="stat-card reveal"><div class="num">24×7</div><div class="label">WhatsApp Support</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Profiles -->
+  <section class="section" id="profiles">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Today's Matches</span>
+        <div class="divider"></div>
+        <h2>Featured Profiles</h2>
+        <p>Sample profiles for preview — open the app to browse and connect with real members.</p>
+      </div>
+      <div class="profiles-tabs reveal">
+        <button class="tab-btn active" onclick="filterProfiles('all',this)">All Profiles</button>
+        <button class="tab-btn" onclick="filterProfiles('bride',this)">Brides 👰</button>
+        <button class="tab-btn" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
+        <button class="tab-btn" onclick="filterProfiles('premium',this)">Premium ✦</button>
+        <button class="tab-btn" onclick="filterProfiles('new',this)">New Joins</button>
+      </div>
+      <div class="profiles-grid" id="profilesGrid">
+        <div class="profile-card reveal" data-type="bride"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDE8D8,#FFD0B5);">👰<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0182</div><div class="profile-name">Sowmya Sharma</div><div class="profile-age">26 yrs · 5'4" · Vijayawada</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Velanadu</div></div><div class="profile-tags"><span class="profile-tag">M.Tech</span><span class="profile-tag">Software Engineer</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDE8D8,#FFC5A0);">🤵<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0341</div><div class="profile-name">Karthik Subramanyam</div><div class="profile-age">29 yrs · 5'10" · Hyderabad</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Mulakanadu</div></div><div class="profile-tags"><span class="profile-tag">B.E + MBA</span><span class="profile-tag">IT Manager</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#FFE0CC,#FFCBA4);">👰<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0227</div><div class="profile-name">Padmavathi Rao</div><div class="profile-age">24 yrs · 5'2" · Tirupati</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Telaganya</div></div><div class="profile-tags"><span class="profile-tag">MBBS</span><span class="profile-tag">Doctor</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom premium new"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDD9C0,#FFBF94);">🤵<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0512</div><div class="profile-name">Venkata Ramana</div><div class="profile-age">31 yrs · 5'8" · Visakhapatnam</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Velanadu</div></div><div class="profile-tags"><span class="profile-tag">CA</span><span class="profile-tag">Finance Director</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride new"><div class="profile-avatar" style="background:linear-gradient(145deg,#FEF3C7,#FDE68A);">👰<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0604</div><div class="profile-name">Ananya Krishnamurthy</div><div class="profile-age">27 yrs · 5'5" · Guntur</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Dravida · Konaseema</div></div><div class="profile-tags"><span class="profile-tag">MBA</span><span class="profile-tag">Bank Manager</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom new"><div class="profile-avatar" style="background:linear-gradient(145deg,#DBF0FB,#BFDBFE);">🤵<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0689</div><div class="profile-name">Srinivasa Murthy</div><div class="profile-age">28 yrs · 5'9" · Nellore</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Aruvela (6000)</div></div><div class="profile-tags"><span class="profile-tag">M.Pharm</span><span class="profile-tag">Govt Employee</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#FCE7F3,#FBCFE8);">👰<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0733</div><div class="profile-name">Lalitha Devi</div><div class="profile-age">25 yrs · 5'3" · Kurnool</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Mulakanadu</div></div><div class="profile-tags"><span class="profile-tag">B.Ed + M.A</span><span class="profile-tag">Teacher</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#D1FAE5,#A7F3D0);">🤵<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0801</div><div class="profile-name">Prasad Narayana</div><div class="profile-age">32 yrs · 5'11" · Chennai</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Nandavarika</div></div><div class="profile-tags"><span class="profile-tag">MBBS + MS</span><span class="profile-tag">Surgeon</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+      </div>
+      <div style="text-align:center;margin-top:32px;" class="reveal">
+        <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View All Profiles in App →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Preview (screenshots) -->
+  <section class="section alt" id="app-preview">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">App Preview</span>
+        <div class="divider"></div>
+        <h2>See mana Vivaaha Vedika in Action</h2>
+        <p>Real screens from the Android app — sign in, browse matches, manage interests, upgrade to Platinum, and update your profile.</p>
+      </div>
+      <div class="carousel-wrap reveal">
+        <div class="app-preview-carousel" id="appCarousel">
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-signin.png" alt="Sign in — registration and MPIN login" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Sign in<small>Register · MPIN · Forgot MPIN</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-home.png" alt="Home — matches and spotlight" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Home<small>Today's matches · Spotlight</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-profile.png" alt="Profile detail" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Profile<small>Details · Send interest</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-interests.png" alt="Interests hub" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Interests<small>Received · Sent · Messages</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-premium.png" alt="Platinum plans" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Premium<small>Free · Platinum plans</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-my-profile.png" alt="My profile" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">My profile<small>Photo · Completion</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-edit-profile.png" alt="Edit profile wizard" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Edit profile<small>6-section wizard</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-settings.png" alt="Settings" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Settings<small>Account · Support</small></p>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button type="button" onclick="scrollAppCarousel(-1)" aria-label="Previous screenshot">‹</button>
+          <button type="button" onclick="scrollAppCarousel(1)" aria-label="Next screenshot">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Key Features</span>
+        <div class="divider"></div>
+        <h2>Everything You Need in One App</h2>
+        <p>Built specifically for Telugu Brahmin families — traditions, compatibility, and privacy, all together.</p>
+      </div>
+      <div class="features-grid">
+        <article class="feature-card reveal"><div class="feature-icon">☸</div><h3>Ashtakoot Compatibility</h3><p>Vedic 8-parameter matching on profiles with birth details — scores out of 36 points, shown on every profile.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">🔐</div><h3>Secure MPIN Login</h3><p>OTP-verified registration followed by your private MPIN — and optional biometric login — to keep your account safe.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">👨‍👩‍👧</div><h3>Family-Managed Profiles</h3><p>Parents and guardians can co-manage the profile and matrimony search — the way families prefer it.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">🛡</div><h3>Privacy Controls</h3><p>Mask photos, identity, and chat until you approve. Privacy settings apply consistently across all lists and chat.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">💬</div><h3>Direct Communication</h3><p>Send interest, photo requests, and chat with accepted matches. Manage everything from the Interests hub.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">📱</div><h3>Mobile OTP Verification</h3><p>Every account is tied to a verified Indian mobile number at registration for authentic, trustworthy profiles.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sub-community -->
+  <section class="section" id="community">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Brahmin Community</span>
+        <div class="divider"></div>
+        <h2>Search by Sub-community</h2>
+        <p>Filter matches by Telugu Brahmin sub-communities — Niyogi, Vaidiki, and Dravida — plus regional traditions and branches.</p>
+      </div>
+      <div class="subcomm-grid">
+        <div class="subcomm-card reveal"><span class="subcomm-pill">Sub-community</span><div class="subcomm-icon">📜</div><div class="subcomm-name">Niyogi</div><div class="subcomm-count">Filter in app</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill">Sub-community</span><div class="subcomm-icon">🪔</div><div class="subcomm-name">Vaidiki</div><div class="subcomm-count">Filter in app</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill">Sub-community</span><div class="subcomm-icon">🕉</div><div class="subcomm-name">Dravida</div><div class="subcomm-count">Filter in app</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill regional">Region</span><div class="subcomm-icon">🌾</div><div class="subcomm-name">Velanadu</div><div class="subcomm-count">Niyogi &amp; Vaidiki</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill regional">Region</span><div class="subcomm-icon">🏛</div><div class="subcomm-name">Telaganya</div><div class="subcomm-count">Telangana tradition</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill regional">Region</span><div class="subcomm-icon">⛰</div><div class="subcomm-name">Mulakanadu</div><div class="subcomm-count">Rayalaseema</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill regional">Region</span><div class="subcomm-icon">🌊</div><div class="subcomm-name">Veginadu</div><div class="subcomm-count">Coastal Andhra</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill branch">Branch</span><div class="subcomm-icon">⭐</div><div class="subcomm-name">Aruvela (6000)</div><div class="subcomm-count">Under Niyogi</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill branch">Branch</span><div class="subcomm-icon">🪷</div><div class="subcomm-name">Nandavarika</div><div class="subcomm-count">Under Niyogi</div></div>
+        <div class="subcomm-card reveal"><span class="subcomm-pill">Sect Filter</span><div class="subcomm-icon">🌟</div><div class="subcomm-name">Smartha &amp; more</div><div class="subcomm-count">Sect filter in app</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section alt" id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Simple Steps</span>
+        <div class="divider"></div>
+        <h2>How mana Vivaaha Vedika Works</h2>
+        <p>From download to first conversation — everything in five clear steps.</p>
+      </div>
+      <div class="how-steps">
+        <div class="step-card reveal"><div class="step-num">1</div><h3>Download &amp; Register</h3><p>Install from Google Play, verify your mobile with OTP, and set your secure MPIN.</p></div>
+        <div class="step-card reveal"><div class="step-num">2</div><h3>Complete Profile</h3><p>Add birth details, sub-community, gothram, family, education, photos, and partner preferences.</p></div>
+        <div class="step-card reveal"><div class="step-num">3</div><h3>Browse &amp; Match</h3><p>Search and filter profiles; view Ashtakoot scores; send interest and photo requests.</p></div>
+        <div class="step-card reveal"><div class="step-num">4</div><h3>Upgrade to Platinum</h3><p>Unlock photos, contacts, WhatsApp messaging, Discover 3D, and more — pay via Razorpay in the app.</p></div>
+        <div class="step-card reveal"><div class="step-num">5</div><h3>Connect &amp; Meet</h3><p>Chat with accepted matches; use WhatsApp when interest is mutual; get support anytime.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Register -->
+  <section class="section" id="get-started">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Get Started Free</span>
+        <div class="divider"></div>
+        <h2>Bride &amp; Groom Registration</h2>
+        <p>Create your profile free in the app — OTP verification and MPIN setup in minutes.</p>
+      </div>
+      <div class="register-duo reveal">
+        <article class="register-hero bride">
+          <div class="emoji">👰</div>
+          <h3>Register as Bride</h3>
+          <p>వధువు గా నమోదు — For brides and families seeking a suitable Brahmin groom.</p>
+          <ul class="perks">
+            <li>Free registration (₹0)</li>
+            <li>Ashtakoot compatibility scores</li>
+            <li>Family-managed &amp; privacy controls</li>
+            <li>Premium from ₹99/month</li>
+          </ul>
+          <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Create Bride Profile Free</a>
+        </article>
+        <div class="reg-phone-shot">
+          <div class="phone-frame">
+            <div class="phone-notch" aria-hidden="true"></div>
+            <div class="phone-screen">
+              <img src="assets/screenshots/screen-signin.png" alt="App welcome — registration or MPIN login" width="390" height="844" loading="lazy" decoding="async" />
+            </div>
+          </div>
+          <p class="reg-phone-label">mana Vivaaha Vedika<br/><span style="font-size:0.72rem;color:var(--muted);font-weight:400;">Download on Google Play</span></p>
+        </div>
+        <article class="register-hero groom">
+          <div class="emoji">🤵</div>
+          <h3>Register as Groom</h3>
+          <p>వరుడు గా నమోదు — For grooms and families seeking a suitable Brahmin bride.</p>
+          <ul class="perks">
+            <li>Free registration (₹0)</li>
+            <li>Search, filter &amp; send interest</li>
+            <li>Receive interest requests</li>
+            <li>OTP + secure MPIN login</li>
+          </ul>
+          <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Create Groom Profile Free</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Membership Plans -->
+  <section class="section alt" id="plans">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Membership Plans</span>
+        <div class="divider"></div>
+        <h2>Choose the Right Plan</h2>
+        <p>Registration is always free. Upgrade to Platinum inside the app to unlock every feature — same plans and prices as in mana Vivaaha Vedika.</p>
+      </div>
+      <div class="plans-pricing-pill reveal">
+        Free ₹0 &nbsp;·&nbsp; Platinum 1 month ₹99 &nbsp;·&nbsp; 3 months ₹297 &nbsp;·&nbsp; 6 months ₹594 &nbsp;·&nbsp; 12 months ₹1,188
+      </div>
+      <div class="plans-grid reveal">
+        <!-- Free -->
+        <div class="plan-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">₹0</div>
+          <div class="plan-was">&nbsp;</div>
+          <div class="plan-duration">Browse profiles, upgrade to connect</div>
+          <ul class="plan-features">
+            <li>View all profile details</li>
+            <li>View "About Me" section</li>
+            <li>Basic sorting &amp; filtering</li>
+            <li>Edit profile anytime</li>
+            <li>Receive interest requests</li>
+            <li style="opacity:0.5;font-size:0.7rem;">Photos blurred (Platinum to unlock)</li>
+          </ul>
+          <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%;justify-content:center;">Register Free</a>
+        </div>
+        <!-- 1 Month -->
+        <div class="plan-card">
+          <div class="plan-name">Platinum 1 Month</div>
+          <div class="plan-price">₹99</div>
+          <div class="plan-was"><s>₹499</s></div>
+          <div class="plan-save">Save ₹400</div>
+          <div class="plan-duration">Full access · 30 days</div>
+          <ul class="plan-features">
+            <li>Unlimited contact requests</li>
+            <li>Direct WhatsApp messaging</li>
+            <li>View contact information</li>
+            <li>Priority profile visibility</li>
+            <li>Send interest</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
+          </ul>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%;justify-content:center;">Get 1 Month in App</a>
+        </div>
+        <!-- 3 Months — Featured -->
+        <div class="plan-card featured">
+          <div class="plan-badge">🌟 Most Popular</div>
+          <div class="plan-name">Platinum 3 Months</div>
+          <div class="plan-price">₹297</div>
+          <div class="plan-was"><s>₹1,497</s></div>
+          <div class="plan-save">Save ₹1,200</div>
+          <div class="plan-duration">Full access · 90 days</div>
+          <ul class="plan-features">
+            <li>Unlimited contact requests</li>
+            <li>Direct WhatsApp messaging</li>
+            <li>View contact information</li>
+            <li>Priority profile visibility</li>
+            <li>Community Heads access</li>
+            <li>Discover 3D feature</li>
+            <li>Profile highlighter</li>
+            <li>Read receipts</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
+          </ul>
+          <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%;justify-content:center;">Get 3 Months in App</a>
+        </div>
+        <!-- 6 Months -->
+        <div class="plan-card">
+          <div class="plan-name">Platinum 6 Months</div>
+          <div class="plan-price">₹594</div>
+          <div class="plan-was"><s>₹2,994</s></div>
+          <div class="plan-save">Save ₹2,400</div>
+          <div class="plan-duration">Full access · 180 days</div>
+          <ul class="plan-features">
+            <li>Unlimited contact requests</li>
+            <li>Direct WhatsApp messaging</li>
+            <li>View contact information</li>
+            <li>Priority profile visibility</li>
+            <li>Community Heads access</li>
+            <li>Discover 3D feature</li>
+            <li>Profile highlighter</li>
+            <li>Read receipts</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
+          </ul>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%;justify-content:center;">Get 6 Months in App</a>
+        </div>
+        <!-- 12 Months -->
+        <div class="plan-card">
+          <div class="plan-name">Platinum 12 Months</div>
+          <div class="plan-price">₹1,188</div>
+          <div class="plan-was"><s>₹5,988</s></div>
+          <div class="plan-save">Save ₹4,800</div>
+          <div class="plan-duration">Full access · 365 days</div>
+          <ul class="plan-features">
+            <li>Unlimited contact requests</li>
+            <li>Direct WhatsApp messaging</li>
+            <li>View contact information</li>
+            <li>Priority profile visibility</li>
+            <li>Community Heads access</li>
+            <li>Discover 3D feature</li>
+            <li>Profile highlighter</li>
+            <li>Read receipts</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
+          </ul>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%;justify-content:center;">Get 12 Months in App</a>
+        </div>
+      </div>
+      <p class="plans-note-block reveal">All plans include the same 12 premium features. Duration only changes how long your membership stays active. Upgrade anytime from Settings → Premium. Prices exclude 18% GST added at checkout.</p>
+    </div>
+  </section>
+
+  <!-- App Download CTA -->
+  <section class="section">
+    <div class="wrap">
+      <div class="app-cta reveal">
+        <div class="app-cta-text">
+          <h2>Download mana Vivaaha Vedika</h2>
+          <p>Free to download and register on Android. Upgrade to Platinum inside the app when you're ready to connect with matches.</p>
+          <div class="app-stores">
+            <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
+              <span class="store-icon">▶</span>
+              <span class="store-label"><small>Get it on</small><strong>Google Play</strong></span>
+            </a>
+            <div class="store-btn" style="opacity:0.6;cursor:default;">
+              <span class="store-icon">🍎</span>
+              <span class="store-label"><small>Coming soon on</small><strong>App Store</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="app-cta-visual" aria-hidden="true">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="assets/screenshots/screen-home.png" alt="" width="390" height="844" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section alt" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
+        <div class="divider"></div>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about mana Vivaaha Vedika.</p>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What makes mana Vivaaha Vedika special?<span class="faq-icon">+</span></div><div class="faq-a">We combine traditional Vedic compatibility with modern discovery and privacy-first controls. Curated interests, structured requests, and real-time updates — in one place built specifically for Telugu Brahmin families.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is registration really free?<span class="faq-icon">+</span></div><div class="faq-a">Yes. Registration is ₹0. You can view profile details, read About Me, use basic filters, edit your profile, and receive interest requests. Profile photos stay blurred until you upgrade to Platinum (₹99 / 1 month, ₹297 / 3 months, ₹594 / 6 months, ₹1,188 / 12 months). Prices exclude 18% GST.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How does MPIN login work?<span class="faq-icon">+</span></div><div class="faq-a">After OTP verification at registration, you set a 4-digit MPIN in the app. All future logins use this MPIN (or biometric on supported devices). If you forget it, use Forgot MPIN on the sign-in screen.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do Interests work?<span class="faq-icon">+</span></div><div class="faq-a">Use Send Interest from a profile. Received interests appear in the Received tab; sent interests are in the Sent tab with status tracking. You can withdraw or send a reminder for pending sent items from the Sent tab.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is included in every Platinum plan?<span class="faq-icon">+</span></div><div class="faq-a">All Platinum durations include: unlimited contact requests, direct WhatsApp messaging, advanced compatibility matching, priority profile visibility, contact information, Community Heads details, community reference requests, send interest, profile highlighter, read receipts, advanced filters, and incognito mode.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is Discover 3D?<span class="faq-icon">+</span></div><div class="faq-a">Discover 3D is a Platinum feature. Active Platinum members can open it from the Home tab using the floating Discover 3D control to browse compatible profiles in an immersive interface.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I contact support?<span class="faq-icon">+</span></div><div class="faq-a">In the app: Settings → Support → Chat with Support. WhatsApp: +91 8985936678 · Email: support@manaVivaahaVedika.com · Phone: +91 8985936678. Support hours: 9 AM – 9 PM IST from Eluru, Andhra Pradesh.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Get in Touch</span>
+        <div class="divider"></div>
+        <h2>We're Here to Help</h2>
+        <p>Same support options as Settings → Help &amp; Support in the app.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card reveal"><div class="contact-icon">💬</div><h4>In-App Chat</h4><p>Settings → Support → Chat with Support — fastest inside the app.</p><a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Open App</a></div>
+        <div class="contact-card reveal"><div class="contact-icon">📱</div><h4>WhatsApp</h4><p>Direct WhatsApp support — same number as in the app.</p><a href="https://wa.me/918985936678" target="_blank" rel="noopener">+91 8985936678</a></div>
+        <div class="contact-card reveal"><div class="contact-icon">📧</div><h4>Email</h4><p>Write to us anytime — we respond within 24 hours.</p><a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a></div>
+        <div class="contact-card reveal"><div class="contact-icon">📞</div><h4>Phone</h4><p>Call us during support hours: 9 AM – 9 PM IST.</p><a href="tel:+918985936678">+91 8985936678</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UDYAM -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="udyam reveal">
+        <div class="udyam-left">
+          <div class="udyam-logo">
+            <img src="assets/msme-logo.png" width="152" height="48" alt="MSME — Micro, Small &amp; Medium Enterprises" loading="lazy" />
+          </div>
+          <div>
+            <h3>MSME Registered Enterprise</h3>
+            <p class="udyam-meta">Government of India — Ministry of MSME</p>
+            <span class="udyam-reg">UDYAM-AP-19-0068132</span>
+          </div>
+        </div>
+        <p class="udyam-right">Registered under Udyam for transparent, accountable matrimony services — so you can search with complete confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ─── Footer ─── -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">
+          <img src="app_logo.png" width="56" height="56" alt="mana Vivaaha Vedika" />
+        </div>
+        <div class="footer-brand-name">mana Vivaaha Vedika</div>
+        <p class="footer-brand-desc">మన వివాహ వేదిక — Where Tradition Meets Technology. Trusted Telugu Brahmin matrimony from Eluru, Andhra Pradesh.</p>
+        <div class="footer-social">
+          <a class="social-link" href="https://wa.me/918985936678" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+          <a class="social-link" href="mailto:support@manaVivaahaVedika.com" title="Email">✉️</a>
+          <a class="social-link" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" title="Google Play">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#profiles">Browse Profiles</a></li>
+          <li><a href="#app-preview">App Preview</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#community">Sub-community</a></li>
+          <li><a href="#plans">Membership Plans</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#register">Register Free</a></li>
         </ul>
       </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener">WhatsApp: +91 8985936678</a></li>
+          <li><a href="mailto:support@manaVivaahaVedika.com">Email Support</a></li>
+          <li><a href="tel:+918985936678">Call: +91 8985936678</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Download Android App</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 mana Vivaaha Vedika · UDYAM-AP-19-0068132 · All rights reserved.</p>
+      <p>© 2026 మన వివాహ వేదిక · Eluru, Andhra Pradesh</p>
+    </div>
+  </footer>
+
+  <!-- ─── Floating Buttons ─── -->
+  <div class="float-actions">
+    <button type="button" class="home-float" id="homeFloat" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/>
+      </svg>
+    </button>
+    <a class="wa-float" href="https://wa.me/918985936678" target="_blank" rel="noopener" aria-label="WhatsApp support">💬</a>
+  </div>
+
+  <script>
+  (function () {
+    var PLAY = 'https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin';
+
+    // ── Scroll effects
+    var nav = document.getElementById('nav');
+    var homeFloat = document.getElementById('homeFloat');
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      if (nav) nav.classList.toggle('scrolled', y > 20);
+      if (homeFloat) homeFloat.classList.toggle('visible', y > 400);
+    }, { passive: true });
+    if (homeFloat) homeFloat.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ── Nav toggle
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    function closeNav() { if (!links) return; links.classList.remove('open'); document.body.classList.remove('menu-open'); if (toggle) toggle.setAttribute('aria-expanded', 'false'); }
+    function openNav() { closeHelpMenu(); if (!links) return; links.classList.add('open'); document.body.classList.add('menu-open'); if (toggle) toggle.setAttribute('aria-expanded', 'true'); }
+    if (toggle) toggle.addEventListener('click', function (e) { e.stopPropagation(); links.classList.contains('open') ? closeNav() : openNav(); });
+    if (links) links.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+    document.addEventListener('click', function (e) { if (links && links.classList.contains('open') && !links.contains(e.target) && toggle && !toggle.contains(e.target)) closeNav(); });
+
+    // ── Help dropdown
+    var navHelp = document.getElementById('navHelp');
+    var navHelpBtn = document.getElementById('navHelpBtn');
+    function closeHelpMenu() { if (!navHelp) return; navHelp.classList.remove('open'); if (navHelpBtn) navHelpBtn.setAttribute('aria-expanded', 'false'); }
+    if (navHelpBtn) navHelpBtn.addEventListener('click', function (e) { e.stopPropagation(); closeNav(); var open = navHelp.classList.toggle('open'); navHelpBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+    document.addEventListener('click', function (e) { if (navHelp && !navHelp.contains(e.target)) closeHelpMenu(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeHelpMenu(); closeNav(); } });
+    if (navHelp) navHelp.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeHelpMenu); });
+
+    // ── Counters
+    function animateCounter(el) {
+      var target = parseInt(el.dataset.target, 10);
+      var suffix = el.dataset.suffix || '';
+      var t0 = null, dur = 1800;
+      function step(ts) { if (!t0) t0 = ts; var p = Math.min((ts - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.floor(e * target).toLocaleString('en-IN') + suffix; if (p < 1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    }
+
+    // ── Intersection Observer
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          entry.target.querySelectorAll && entry.target.querySelectorAll('.num[data-target]').forEach(function (n) { if (!n.dataset.done) { n.dataset.done = '1'; animateCounter(n); } });
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+    // ── Unlock
+    var siteContent = document.getElementById('siteContent');
+    function unlockSite(scroll) {
+      sessionStorage.setItem('mvv_unlocked', '1');
+      document.body.classList.remove('site-locked');
+      document.body.classList.add('site-unlocked');
+      if (siteContent) { siteContent.classList.remove('is-locked'); siteContent.removeAttribute('aria-hidden'); }
+      if (scroll && siteContent) requestAnimationFrame(function () { siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    }
+    if (sessionStorage.getItem('mvv_unlocked') === '1') unlockSite(false);
+
+    // ── Tabs
+    function setTab(panel) {
+      var isLogin = panel === 'login';
+      document.querySelectorAll('.reg-tab').forEach(function (t) {
+        var active = t.getAttribute('data-panel') === panel;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      var rp = document.getElementById('regPanelRegister');
+      var lp = document.getElementById('regPanelLogin');
+      if (rp) { rp.classList.toggle('active', !isLogin); rp.hidden = isLogin; }
+      if (lp) { lp.classList.toggle('active', isLogin); lp.hidden = !isLogin; }
+    }
+    document.querySelectorAll('.reg-tab').forEach(function (t) { t.addEventListener('click', function () { setTab(t.getAttribute('data-panel')); }); });
+    document.querySelectorAll('[data-reg-tab]').forEach(function (b) { b.addEventListener('click', function () { var p = b.getAttribute('data-reg-tab'); if (p) setTab(p); }); });
+
+    // ── Mobile input
+    function digitsOnly(el) { return el ? el.value.replace(/\D/g, '').slice(0, 10) : ''; }
+    function validMobile(d) { return d.length === 10 && /^[6-9]/.test(d); }
+    ['regMobile','loginMobile'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', function () { el.value = digitsOnly(el); el.setCustomValidity(''); });
+    });
+
+    // ── Registration form
+    var heroReg = document.getElementById('heroRegForm');
+    if (heroReg) heroReg.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!heroReg.checkValidity()) { heroReg.reportValidity(); return; }
+      var mob = document.getElementById('regMobile');
+      var agree = document.getElementById('regAgree');
+      if (!validMobile(digitsOnly(mob))) { mob.setCustomValidity('Enter a valid 10-digit Indian mobile number.'); mob.reportValidity(); return; }
+      mob.setCustomValidity('');
+      if (agree && !agree.checked) { agree.reportValidity(); return; }
+      unlockSite(true);
+      window.open(PLAY, '_blank', 'noopener');
+    });
+
+    // ── Login form
+    var heroLogin = document.getElementById('heroLoginForm');
+    if (heroLogin) heroLogin.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var mob = document.getElementById('loginMobile');
+      if (!validMobile(digitsOnly(mob))) { mob.setCustomValidity('Enter your registered 10-digit mobile number.'); mob.reportValidity(); return; }
+      mob.setCustomValidity('');
+      unlockSite(true);
+      window.open(PLAY, '_blank', 'noopener');
+    });
+
+    // ── Locked nav links
+    document.querySelectorAll('.nav-links a, .footer a').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        if (!document.body.classList.contains('site-locked')) return;
+        var href = link.getAttribute('href') || '';
+        if (href.charAt(0) !== '#') return;
+        if (href === '#register' || href === '#top') return;
+        if (href === '#faq' || href === '#contact') {
+          e.preventDefault(); unlockSite(false);
+          requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+          return;
+        }
+        e.preventDefault();
+        setTab('register');
+        var reg = document.getElementById('register');
+        if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+
+    // Help menu scroll links
+    if (navHelp) navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        closeHelpMenu();
+        if (document.body.classList.contains('site-locked')) {
+          var href = link.getAttribute('href');
+          if (href && href.charAt(0) === '#') {
+            e.preventDefault(); unlockSite(false);
+            requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+          }
+        }
+      });
+    });
+
+    // ── FAQ
+    window.toggleFaq = function (el) {
+      var item = el.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    };
+
+    window.scrollAppCarousel = function (dir) {
+      var el = document.getElementById('appCarousel');
+      if (!el) return;
+      var slide = el.querySelector('.screen-slide');
+      var gap = 20;
+      var w = slide ? slide.offsetWidth + gap : 260;
+      el.scrollBy({ left: dir * w, behavior: 'smooth' });
+    };
+
+    // ── Profile filter
+    window.filterProfiles = function (type, btn) {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.profile-card').forEach(function (c) {
+        c.style.display = (type === 'all' || (c.dataset.type || '').includes(type)) ? '' : 'none';
+      });
+    };
+  })();
+  </script>
 </body>
 </html>
