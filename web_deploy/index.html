@@ -91,6 +91,47 @@
     }
     .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
 
+    /* ─── Home topic tabs (app-like screens) ─── */
+    .topic-tabs {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 150;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 20px;
+      background: rgba(253, 250, 247, 0.98);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(196, 75, 10, 0.06);
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .topic-tabs::-webkit-scrollbar { height: 4px; }
+    .topic-tab-btn {
+      flex-shrink: 0;
+      border: 1.5px solid rgba(252, 86, 3, 0.28);
+      background: #fff;
+      color: var(--orange-dark);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-family: var(--font);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .topic-tab-btn:hover {
+      background: var(--rust-pale);
+      border-color: var(--orange);
+    }
+    .topic-tab-btn.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+    .topic-panel-hidden { display: none !important; }
+
     /* ─── Buttons ─── */
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
@@ -1031,8 +1072,19 @@
   <!-- ─── Main Content (locked until registration) ─── -->
   <main id="siteContent" class="site-content is-locked" aria-hidden="true">
 
+  <nav class="topic-tabs" id="homeTopicTabs" aria-label="Explore topics">
+    <button type="button" class="topic-tab-btn active" data-topic="explore">Explore</button>
+    <button type="button" class="topic-tab-btn" data-topic="profiles">Browse Profiles</button>
+    <button type="button" class="topic-tab-btn" data-topic="app-preview">App Preview</button>
+    <button type="button" class="topic-tab-btn" data-topic="features">Features</button>
+    <button type="button" class="topic-tab-btn" data-topic="community">Sub-community</button>
+    <button type="button" class="topic-tab-btn" data-topic="plans">Membership Plans</button>
+    <button type="button" class="topic-tab-btn" data-topic="how">How It Works</button>
+    <button type="button" class="topic-tab-btn" data-topic="register">Register Free</button>
+  </nav>
+
   <!-- Quick Search -->
-  <div style="padding: 0 24px; background: var(--bg-warm);">
+  <div id="homeExplore" style="padding: 0 24px; background: var(--bg-warm);">
     <div class="wrap">
       <div class="search-bar reveal" style="margin-top: -30px;">
         <div class="search-title">🔍 Quick Profile Search</div>
@@ -1418,7 +1470,7 @@
   </section>
 
   <!-- App Download CTA -->
-  <section class="section">
+  <section class="section" id="download">
     <div class="wrap">
       <div class="app-cta reveal">
         <div class="app-cta-text">
@@ -1487,7 +1539,7 @@
   </section>
 
   <!-- UDYAM -->
-  <section class="section alt">
+  <section class="section alt" id="udyam">
     <div class="wrap">
       <div class="udyam reveal">
         <div class="udyam-left">
@@ -1622,6 +1674,116 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
+    // ── Home topic tabs (one screen per Explore topic)
+    var topicPanels = {
+      explore: ['homeExplore', 'stats'],
+      profiles: ['profiles'],
+      'app-preview': ['app-preview'],
+      features: ['features'],
+      community: ['community'],
+      plans: ['plans', 'download'],
+      how: ['how'],
+      register: ['get-started']
+    };
+    var hashToTopic = {
+      profiles: 'profiles',
+      'app-preview': 'app-preview',
+      features: 'features',
+      community: 'community',
+      plans: 'plans',
+      how: 'how',
+      register: 'register',
+      'get-started': 'register',
+      stats: 'explore',
+      download: 'plans',
+    };
+    var allTopicPanelIds = [];
+    Object.keys(topicPanels).forEach(function (t) {
+      topicPanels[t].forEach(function (id) {
+        if (allTopicPanelIds.indexOf(id) === -1) allTopicPanelIds.push(id);
+      });
+    });
+    ['faq', 'contact', 'udyam'].forEach(function (id) {
+      if (allTopicPanelIds.indexOf(id) === -1) allTopicPanelIds.push(id);
+    });
+
+    function revealInPanel(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+      el.querySelectorAll('.num[data-target]').forEach(function (n) {
+        if (!n.dataset.done) { n.dataset.done = '1'; animateCounter(n); }
+      });
+    }
+
+    function setHomeTopic(topic) {
+      var ids = topicPanels[topic] || topicPanels.explore;
+      allTopicPanelIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('topic-panel-hidden', ids.indexOf(id) === -1);
+      });
+      var tabBar = document.getElementById('homeTopicTabs');
+      if (tabBar) {
+        tabBar.querySelectorAll('.topic-tab-btn').forEach(function (btn) {
+          var active = btn.getAttribute('data-topic') === topic;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+      }
+      ids.forEach(revealInPanel);
+      var first = document.getElementById(ids[0]);
+      if (first && siteContent && document.body.classList.contains('site-unlocked')) {
+        requestAnimationFrame(function () {
+          var tabsH = tabBar ? tabBar.offsetHeight : 0;
+          var top = first.getBoundingClientRect().top + window.scrollY - varNavH() - tabsH - 8;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        });
+      }
+    }
+    function varNavH() {
+      var v = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+      return parseInt(v, 10) || 140;
+    }
+    function topicFromHash(hash) {
+      if (!hash || hash.charAt(0) !== '#') return null;
+      return hashToTopic[hash.slice(1)] || null;
+    }
+    var homeTopicTabs = document.getElementById('homeTopicTabs');
+    if (homeTopicTabs) {
+      homeTopicTabs.querySelectorAll('.topic-tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setHomeTopic(btn.getAttribute('data-topic') || 'explore');
+        });
+      });
+    }
+    function showSinglePanel(id) {
+      allTopicPanelIds.forEach(function (pid) {
+        var el = document.getElementById(pid);
+        if (el) el.classList.toggle('topic-panel-hidden', pid !== id);
+      });
+      var tabBar = document.getElementById('homeTopicTabs');
+      if (tabBar) tabBar.querySelectorAll('.topic-tab-btn').forEach(function (btn) { btn.classList.remove('active'); });
+      revealInPanel(id);
+    }
+    function applyTopicNav(href, e) {
+      if (!href || href.charAt(0) !== '#') return false;
+      var id = href.slice(1);
+      if (id === 'faq' || id === 'contact' || id === 'udyam') {
+        if (e) e.preventDefault();
+        if (document.body.classList.contains('site-locked')) unlockSite(false);
+        showSinglePanel(id);
+        return true;
+      }
+      var topic = hashToTopic[id];
+      if (!topic && id === 'homeExplore') topic = 'explore';
+      if (!topic) return false;
+      if (e) e.preventDefault();
+      if (document.body.classList.contains('site-locked')) unlockSite(false);
+      setHomeTopic(topic);
+      return true;
+    }
+
     // ── Unlock
     var siteContent = document.getElementById('siteContent');
     function unlockSite(scroll) {
@@ -1629,9 +1791,19 @@
       document.body.classList.remove('site-locked');
       document.body.classList.add('site-unlocked');
       if (siteContent) { siteContent.classList.remove('is-locked'); siteContent.removeAttribute('aria-hidden'); }
-      if (scroll && siteContent) requestAnimationFrame(function () { siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      if (scroll && siteContent) {
+        requestAnimationFrame(function () {
+          siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setHomeTopic(topicFromHash(location.hash) || 'explore');
+        });
+      }
     }
-    if (sessionStorage.getItem('mvv_unlocked') === '1') unlockSite(false);
+    if (sessionStorage.getItem('mvv_unlocked') === '1') {
+      unlockSite(false);
+      setHomeTopic(topicFromHash(location.hash) || 'explore');
+    } else {
+      setHomeTopic('explore');
+    }
 
     // ── Tabs
     function setTab(panel) {
@@ -1682,22 +1854,26 @@
       window.open(PLAY, '_blank', 'noopener');
     });
 
-    // ── Locked nav links
-    document.querySelectorAll('.nav-links a, .footer a').forEach(function (link) {
+    // ── In-page nav → topic tabs
+    document.querySelectorAll('.nav-links a, .footer a, #siteContent a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
-        if (!document.body.classList.contains('site-locked')) return;
         var href = link.getAttribute('href') || '';
-        if (href.charAt(0) !== '#') return;
-        if (href === '#register' || href === '#top') return;
-        if (href === '#faq' || href === '#contact') {
-          e.preventDefault(); unlockSite(false);
-          requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        if (href === '#register' || href === '#top') {
+          if (href === '#register' && document.body.classList.contains('site-locked')) {
+            e.preventDefault();
+            setTab('register');
+            var reg = document.getElementById('register');
+            if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
           return;
         }
+        if (applyTopicNav(href, e)) return;
+        if (!document.body.classList.contains('site-locked')) return;
+        if (href.charAt(0) !== '#') return;
         e.preventDefault();
         setTab('register');
-        var reg = document.getElementById('register');
-        if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var regHero = document.getElementById('register');
+        if (regHero) regHero.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     });
 
@@ -1705,14 +1881,14 @@
     if (navHelp) navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         closeHelpMenu();
-        if (document.body.classList.contains('site-locked')) {
-          var href = link.getAttribute('href');
-          if (href && href.charAt(0) === '#') {
-            e.preventDefault(); unlockSite(false);
-            requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-          }
-        }
+        var href = link.getAttribute('href');
+        if (href && applyTopicNav(href, e)) return;
       });
+    });
+
+    window.addEventListener('hashchange', function () {
+      var t = topicFromHash(location.hash);
+      if (t && document.body.classList.contains('site-unlocked')) setHomeTopic(t);
     });
 
     // ── FAQ
