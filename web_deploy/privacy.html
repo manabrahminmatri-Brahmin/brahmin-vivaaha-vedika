@@ -107,9 +107,22 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.95);
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      background: #fff;
+      font-size: 0.8rem;
+      color: var(--orange-dark);
       font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover {
+      color: var(--orange);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
     }
     .hero {
       background: var(--orange);
@@ -240,7 +253,7 @@
       .top-brand-logo { width: 80px; height: 80px; }
       .top-brand-text small { font-size: 0.58rem; letter-spacing: 0.08em; }
       .top-brand-name { font-size: clamp(0.95rem, 3.5vw, 1.1rem); }
-      .back-link { font-size: 0.85rem; }
+      .back-link { padding: 8px 12px; font-size: 0.72rem; }
       .hero { padding: 34px 16px 30px; margin: var(--page-gap) 16px 20px; }
     }
   </style>
