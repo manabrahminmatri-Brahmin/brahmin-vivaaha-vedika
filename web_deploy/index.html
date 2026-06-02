@@ -90,35 +90,6 @@
       margin-bottom: 14px;
     }
     .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
-    .screen-tabs {
-      position: sticky;
-      top: var(--nav-h);
-      z-index: 120;
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 14px 24px 10px;
-      background: rgba(253, 250, 247, 0.96);
-      border-bottom: 1px solid rgba(196, 75, 10, 0.12);
-      scrollbar-width: thin;
-    }
-    .screen-tab-btn {
-      border: 1.5px solid rgba(252, 86, 3, 0.24);
-      background: #fff;
-      color: var(--orange-dark);
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .screen-tab-btn.active {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
-    }
-    .screen-panel-hidden { display: none !important; }
 
     /* ─── Buttons ─── */
     .btn {
@@ -1059,15 +1030,9 @@
 
   <!-- ─── Main Content (locked until registration) ─── -->
   <main id="siteContent" class="site-content is-locked" aria-hidden="true">
-  <div class="screen-tabs" id="homeScreenTabs" aria-label="Home screens">
-    <button type="button" class="screen-tab-btn active" data-screen="discover">Discover</button>
-    <button type="button" class="screen-tab-btn" data-screen="features">Features</button>
-    <button type="button" class="screen-tab-btn" data-screen="pricing">Pricing</button>
-    <button type="button" class="screen-tab-btn" data-screen="support">Support</button>
-  </div>
 
   <!-- Quick Search -->
-  <div id="quickSearchSection" style="padding: 0 24px; background: var(--bg-warm);">
+  <div style="padding: 0 24px; background: var(--bg-warm);">
     <div class="wrap">
       <div class="search-bar reveal" style="margin-top: -30px;">
         <div class="search-title">🔍 Quick Profile Search</div>
@@ -1453,7 +1418,7 @@
   </section>
 
   <!-- App Download CTA -->
-  <section class="section" id="download">
+  <section class="section">
     <div class="wrap">
       <div class="app-cta reveal">
         <div class="app-cta-text">
@@ -1522,7 +1487,7 @@
   </section>
 
   <!-- UDYAM -->
-  <section class="section alt" id="trust">
+  <section class="section alt">
     <div class="wrap">
       <div class="udyam reveal">
         <div class="udyam-left">
@@ -1657,55 +1622,6 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
-    // ── Home screen tabs (app-like sections)
-    var homeScreenMap = {
-      discover: ['quickSearchSection', 'stats', 'profiles'],
-      features: ['app-preview', 'features', 'community', 'how'],
-      pricing: ['get-started', 'plans', 'download'],
-      support: ['faq', 'contact', 'trust']
-    };
-    var sectionToScreen = {};
-    Object.keys(homeScreenMap).forEach(function (screen) {
-      homeScreenMap[screen].forEach(function (id) { sectionToScreen[id] = screen; });
-    });
-    function setHomeScreen(screen) {
-      var ids = homeScreenMap[screen] || homeScreenMap.discover;
-      Object.keys(homeScreenMap).forEach(function (name) {
-        homeScreenMap[name].forEach(function (id) {
-          var el = document.getElementById(id);
-          if (!el) return;
-          el.classList.toggle('screen-panel-hidden', ids.indexOf(id) === -1);
-        });
-      });
-      var tabWrap = document.getElementById('homeScreenTabs');
-      if (tabWrap) {
-        tabWrap.querySelectorAll('.screen-tab-btn').forEach(function (btn) {
-          btn.classList.toggle('active', btn.getAttribute('data-screen') === screen);
-        });
-      }
-      // Ensure reveal items in newly shown sections are marked visible.
-      ids.forEach(function (id) {
-        var sec = document.getElementById(id);
-        if (sec) sec.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
-      });
-    }
-    var homeTabs = document.getElementById('homeScreenTabs');
-    if (homeTabs) {
-      homeTabs.querySelectorAll('.screen-tab-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          setHomeScreen(btn.getAttribute('data-screen') || 'discover');
-        });
-      });
-    }
-    function ensureScreenForHash(hash) {
-      if (!hash || hash.charAt(0) !== '#') return;
-      var id = hash.slice(1);
-      var targetScreen = sectionToScreen[id];
-      if (targetScreen) setHomeScreen(targetScreen);
-    }
-    setHomeScreen('discover');
-    ensureScreenForHash(location.hash || '');
-
     // ── Unlock
     var siteContent = document.getElementById('siteContent');
     function unlockSite(scroll) {
@@ -1769,16 +1685,12 @@
     // ── Locked nav links
     document.querySelectorAll('.nav-links a, .footer a').forEach(function (link) {
       link.addEventListener('click', function (e) {
+        if (!document.body.classList.contains('site-locked')) return;
         var href = link.getAttribute('href') || '';
-        if (!document.body.classList.contains('site-locked')) {
-          ensureScreenForHash(href);
-          return;
-        }
         if (href.charAt(0) !== '#') return;
         if (href === '#register' || href === '#top') return;
         if (href === '#faq' || href === '#contact') {
           e.preventDefault(); unlockSite(false);
-          ensureScreenForHash(href);
           requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
           return;
         }
@@ -1793,15 +1705,12 @@
     if (navHelp) navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         closeHelpMenu();
-        var href = link.getAttribute('href');
         if (document.body.classList.contains('site-locked')) {
+          var href = link.getAttribute('href');
           if (href && href.charAt(0) === '#') {
             e.preventDefault(); unlockSite(false);
-            ensureScreenForHash(href);
             requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
           }
-        } else if (href && href.charAt(0) === '#') {
-          ensureScreenForHash(href);
         }
       });
     });
