@@ -2313,40 +2313,6 @@
         });
       }
 
-      // Help dropdown
-      var navHelp = document.getElementById('navHelp');
-      var navHelpBtn = document.getElementById('navHelpBtn');
-      function closeHelpMenu() {
-        if (!navHelp || !navHelpBtn) return;
-        navHelp.classList.remove('open');
-        navHelpBtn.setAttribute('aria-expanded', 'false');
-      }
-      if (navHelp && navHelpBtn) {
-        navHelpBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          var open = navHelp.classList.toggle('open');
-          navHelpBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-        document.addEventListener('click', function (e) {
-          if (!navHelp.contains(e.target)) closeHelpMenu();
-        });
-        document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') closeHelpMenu();
-        });
-        navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
-          link.addEventListener('click', function () {
-            closeHelpMenu();
-            if (document.body.classList.contains('site-locked')) {
-              var reg = document.getElementById('register');
-              if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          });
-        });
-        navHelp.querySelectorAll('.nav-help-links a').forEach(function (link) {
-          link.addEventListener('click', function () { closeHelpMenu(); });
-        });
-      }
-
       function animateCounter(el) {
         var target = parseInt(el.dataset.target, 10);
         var suffix = el.dataset.suffix || '';
@@ -2518,13 +2484,61 @@
           if (!document.body.classList.contains('site-locked')) return;
           var href = link.getAttribute('href') || '';
           if (href.charAt(0) !== '#') return;
-          if (href === '#register' || href === '#top' || href === '#faq' || href === '#contact') return;
+          if (href === '#register' || href === '#top') return;
+          if (href === '#faq' || href === '#contact') {
+            e.preventDefault();
+            unlockSite(false);
+            requestAnimationFrame(function () {
+              var target = document.querySelector(href);
+              if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            return;
+          }
           e.preventDefault();
           setRegTab('register');
           var reg = document.getElementById('register');
           if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
       });
+
+      // Help dropdown (always available in header)
+      var navHelp = document.getElementById('navHelp');
+      var navHelpBtn = document.getElementById('navHelpBtn');
+      function closeHelpMenu() {
+        if (!navHelp || !navHelpBtn) return;
+        navHelp.classList.remove('open');
+        navHelpBtn.setAttribute('aria-expanded', 'false');
+      }
+      if (navHelp && navHelpBtn) {
+        navHelpBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var open = navHelp.classList.toggle('open');
+          navHelpBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', function (e) {
+          if (!navHelp.contains(e.target)) closeHelpMenu();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeHelpMenu();
+        });
+        navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            closeHelpMenu();
+            var href = link.getAttribute('href');
+            if (document.body.classList.contains('site-locked') && href && href.charAt(0) === '#') {
+              e.preventDefault();
+              unlockSite(false);
+              requestAnimationFrame(function () {
+                var target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              });
+            }
+          });
+        });
+        navHelp.querySelectorAll('.nav-help-links a').forEach(function (link) {
+          link.addEventListener('click', function () { closeHelpMenu(); });
+        });
+      }
 
       // FAQ accordion
       window.toggleFaq = function (el) {
