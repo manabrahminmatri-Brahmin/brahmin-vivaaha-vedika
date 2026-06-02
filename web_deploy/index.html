@@ -37,9 +37,13 @@
       --max: 1180px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Poppins', system-ui, sans-serif;
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+    }
+    body,
+    button, input, select, textarea, optgroup, option {
+      font-family: 'Poppins', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -90,7 +94,7 @@
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 0.9rem;
       border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-      white-space: nowrap; font-family: 'Poppins', sans-serif;
+      white-space: nowrap;
     }
     .btn:hover { transform: translateY(-2px); }
     .btn-primary {
@@ -176,7 +180,7 @@
     .search-field label { font-size: 0.72rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
     .search-field select, .search-field input {
       width: 100%; padding: 11px 14px; border: 1.5px solid var(--orange-border);
-      border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.85rem;
+      border-radius: 10px; font-size: 0.85rem;
       background: var(--bg); color: var(--text); outline: none;
       transition: border-color 0.2s;
     }
@@ -192,8 +196,9 @@
       text-transform: uppercase; color: var(--orange); margin-bottom: 12px; display: block;
     }
     .section-head h2 {
-      font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700;
-      color: var(--orange-dark); line-height: 1.25; margin-bottom: 12px;
+      font-size: clamp(1.75rem, 4.2vw, 2.4rem); font-weight: 700;
+      color: var(--orange-dark); line-height: 1.2; margin-bottom: 12px;
+      font-family: 'Poppins', sans-serif;
     }
     .section-head p { color: var(--muted); font-size: 1rem; }
     .plans-intro { max-width: 720px; margin: 0 auto 14px; line-height: 1.65; }
@@ -232,7 +237,7 @@
     .tab-btn {
       padding: 10px 22px; border-radius: 999px; border: 1.5px solid var(--orange-border);
       background: var(--surface); color: var(--muted); font-size: 0.85rem; font-weight: 600;
-      cursor: pointer; transition: all 0.2s; font-family: 'Poppins', sans-serif;
+      cursor: pointer; transition: all 0.2s;
     }
     .tab-btn.active, .tab-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
     .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -333,7 +338,7 @@
     .pref-field label { font-size: 0.75rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.06em; }
     .pref-field select, .pref-field input {
       width: 100%; padding: 13px 16px; border: 1.5px solid var(--orange-border);
-      border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 0.9rem;
+      border-radius: 12px; font-size: 0.9rem;
       background: var(--bg); color: var(--text); outline: none; transition: border-color 0.2s;
     }
     .pref-field select:focus, .pref-field input:focus { border-color: var(--orange); }
@@ -409,7 +414,7 @@
       position: relative; overflow: hidden;
     }
     .platinum::before { content: '✦'; position: absolute; top: 24px; right: 32px; font-size: 8rem; opacity: 0.1; color: #fff; }
-    .platinum h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .platinum h2 { font-size: clamp(1.75rem, 4.2vw, 2.4rem); font-weight: 700; color: #fff; margin-bottom: 12px; }
     .platinum > p { opacity: 0.92; margin-bottom: 32px; max-width: 520px; }
     .platinum-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .platinum-features li {
@@ -463,7 +468,7 @@
     .carousel-nav button {
       width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--orange);
       background: var(--surface); color: var(--orange); font-size: 1.2rem; cursor: pointer;
-      transition: background 0.2s, color 0.2s; font-family: 'Poppins', sans-serif;
+      transition: background 0.2s, color 0.2s;
     }
     .carousel-nav button:hover { background: var(--orange); color: #fff; }
 
@@ -522,7 +527,7 @@
       background: radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1), transparent 60%);
     }
     .app-cta-text { position: relative; }
-    .app-cta-text h2 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-bottom: 10px; }
+    .app-cta-text h2 { font-size: clamp(1.75rem, 4.2vw, 2.4rem); font-weight: 700; margin-bottom: 10px; }
     .app-cta-text p { opacity: 0.9; font-size: 0.95rem; max-width: 440px; margin-bottom: 28px; }
     .app-stores { display: flex; gap: 14px; flex-wrap: wrap; position: relative; }
     .store-btn {
@@ -546,16 +551,34 @@
     }
     .udyam-badge { display: flex; align-items: center; gap: 20px; }
     .udyam-icon {
-      width: 52px; height: 52px; border-radius: 12px;
+      flex-shrink: 0;
+      min-width: 64px;
+      height: 56px;
+      padding: 0 10px;
+      border-radius: 12px;
       background: linear-gradient(135deg, var(--orange-dark), var(--orange));
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.06em;
-      line-height: 1.1; text-align: center; padding: 4px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      white-space: nowrap;
     }
-    .udyam h3 { font-size: 0.95rem; color: var(--orange-dark); margin-bottom: 2px; font-weight: 700; }
+    .udyam h3 {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--orange-dark);
+      margin-bottom: 4px;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+    }
     .udyam .udyam-meta { color: var(--muted); font-size: 0.72rem; line-height: 1.4; }
     .udyam .reg {
-      font-family: monospace; font-size: 0.72rem; font-weight: 700; color: var(--orange-dark);
+      font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--orange-dark);
+      font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
       background: var(--orange-tint); padding: 5px 10px; border-radius: 6px; margin-top: 6px;
       display: inline-block; border: 1px solid var(--orange-border);
     }
