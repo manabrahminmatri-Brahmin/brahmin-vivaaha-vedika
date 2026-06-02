@@ -287,7 +287,20 @@
       transition: background 0.15s;
     }
     .nav-help-links a:hover { background: var(--rust-pale); color: var(--rust-deep); }
-    .nav-help-links .hi { width: 1.2rem; text-align: center; flex-shrink: 0; font-size: 1rem; }
+    .nav-help-links .hi { width: 1.2rem; text-align: center; flex-shrink: 0; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; color: var(--rust); }
+    .ui-icon { width: 1em; height: 1em; display: block; flex-shrink: 0; }
+    .ui-icon--fill { fill: currentColor; }
+    .ui-icon--stroke { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-icon { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; color: var(--rust); }
+    .contact-icon .ui-icon { width: 2.2rem; height: 2.2rem; }
+    .contact-icon--wa { color: #25D366; }
+    .feature-icon { color: var(--rust); }
+    .feature-icon .ui-icon { width: 1.5rem; height: 1.5rem; }
+    .store-icon { display: flex; align-items: center; justify-content: center; line-height: 0; }
+    .store-icon .ui-icon { width: 1.5rem; height: 1.5rem; fill: #fff; }
+    .social-link .ui-icon { width: 1.1rem; height: 1.1rem; }
+    .wa-float .ui-icon { width: 28px; height: 28px; fill: #fff; }
+    .search-title .ui-icon { width: 1em; height: 1em; color: var(--rust); }
     .nav-help-foot { padding: 10px 16px 12px; font-size: 0.68rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); background: var(--bg); }
 
     /* Mobile drawer */
@@ -577,7 +590,7 @@
     .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
     .feature-icon {
       width: 52px; height: 52px; border-radius: 14px; margin-bottom: 18px;
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      display: flex; align-items: center; justify-content: center;
       background: var(--rust-pale); border: 1px solid var(--rust-tint2);
     }
     .feature-card h3 { font-family: var(--font); font-size: 1.05rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
@@ -676,7 +689,6 @@
       cursor: pointer; transition: background 0.2s; backdrop-filter: blur(6px);
     }
     .store-btn:hover { background: rgba(0,0,0,0.35); }
-    .store-icon { font-size: 1.5rem; }
     .store-label small { display: block; font-size: 0.6rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.06em; }
     .store-label strong { font-size: 0.98rem; font-weight: 700; }
 
@@ -700,7 +712,6 @@
       background: #fff; border-radius: var(--radius); padding: 28px 22px;
       border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-align: center;
     }
-    .contact-icon { font-size: 2.2rem; margin-bottom: 12px; }
     .contact-card h4 { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
     .contact-card p { font-size: 0.84rem; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
     .contact-card a { color: var(--rust); font-weight: 600; font-size: 0.86rem; }
@@ -810,7 +821,7 @@
       border: 1px solid var(--border); max-width: var(--max); margin: 0 auto;
       position: relative; z-index: 10;
     }
-    .search-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--rust); margin-bottom: 14px; }
+    .search-title { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--rust); margin-bottom: 14px; }
     .search-fields { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 10px; align-items: end; }
     .search-field label { font-size: 0.66rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
     .search-field select {
@@ -937,6 +948,24 @@
 </head>
 <body class="site-locked">
 
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <symbol id="ico-whatsapp" viewBox="0 0 32 32"><path fill="currentColor" d="M19.1 17.4c-.3-.2-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.2-.7.9-.8 1-.1.2-.3.2-.6.1-.3-.2-1.1-.4-2.1-1.3-.8-.7-1.3-1.5-1.5-1.8-.2-.3 0-.5.1-.6.1-.1.2-.3.4-.4.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.4-.2.2-.9.8-.9 2s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.5 1.5.6.6.2 1.2.2 1.7.1.5-.1 1.6-.7 1.8-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.6-.4Z"/><path fill="currentColor" d="M16 .9C7.7.9 1 7.6 1 15.9c0 2.6.7 5.2 2 7.4L1 31.1l7.9-2.1c2.1 1.2 4.5 1.8 7.1 1.8 8.3 0 15-6.7 15-15S24.3.9 16 .9Zm0 27.1c-2.3 0-4.5-.6-6.4-1.8l-.5-.3-4.7 1.2 1.2-4.6-.3-.5c-1.2-1.9-1.8-4.1-1.8-6.3 0-6.9 5.6-12.5 12.5-12.5S28.5 8.8 28.5 15.7 22.9 28 16 28Z"/></symbol>
+    <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="ico-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7-11-7Z"/></symbol>
+    <symbol id="ico-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.7 13.3c-.1-2.1 1.7-3.1 1.8-3.2-1-.1-2-.6-2.6-1.5-.6-.9-.5-2.1-.4-2.7.1-.6.7-1.9 1.2-2.3.5-.4 1.3-.7 2-.7.8 0 1.1.1 1.6.1.5 0 1.2-.4 2-.4.8 0 1.5.4 2 .9.9.8 1.2 2 1.2 2.1-.1 0-2.3.1-2.3 2.9 0 2.3 2 2.9 2 2.9-.1.3-.3.9-.7 1.8-.6 1.2-1.3 2.4-2.3 2.4-1 .1-1.3-.6-2.5-.6-1.2 0-1.5.6-2.4.6-.9 0-1.6-1.2-2.2-2.4ZM13.7 6.8c.5-.6.9-1.4.8-2.2-.8 0-1.7.5-2.2 1.1-.5.6-1 1.4-.9 2.2.9.1 1.8-.5 2.3-1.1Z"/></symbol>
+    <symbol id="ico-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M6.6 3h2.2l1.4 3.5-1.9 1.1a13 13 0 0 0 5.1 5.1l1.1-1.9L18.5 13v2.2a1.8 1.8 0 0 1-1.6 1.8 16 16 0 0 1-7.1-1.2A16 16 0 0 1 4.8 8.7 1.8 1.8 0 0 1 6.6 7Z"/></symbol>
+    <symbol id="ico-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 5h16v10H8l-4 4V5Z"/></symbol>
+    <symbol id="ico-contact" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+    <symbol id="ico-faq" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M9.5 9.2a2.7 2.7 0 0 1 4.8 1.4c0 1.7-2.3 2-2.3 3.6M12 17h.01"/></symbol>
+    <symbol id="ico-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M8 11V8a4 4 0 1 1 8 0v3"/></symbol>
+    <symbol id="ico-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 4h8l4 4v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M14 4v4h4M9 13h6M9 17h6"/></symbol>
+    <symbol id="ico-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="m16 16 5 5"/></symbol>
+    <symbol id="ico-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3 19 6v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3Z"/></symbol>
+    <symbol id="ico-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M3 19c0-3 2.7-5 6-5s6 2 6 5M16 11h1a3 3 0 0 1 3 3v1M16 16h4"/></symbol>
+    <symbol id="ico-star" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="m12 3 2.4 5.8 6.3.5-4.8 4.1 1.5 6.2L12 16.8 8.6 19.6l1.5-6.2L5.3 9.3l6.3-.5L12 3Z"/></symbol>
+    <symbol id="ico-mobile" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M10 17h4"/></symbol>
+  </svg>
+
   <!-- ─── Navbar ─── -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
@@ -964,12 +993,12 @@
               </div>
             </div>
             <ul class="nav-help-links">
-              <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener"><span class="hi">💬</span> Live Help (WhatsApp)</a></li>
-              <li><a href="#contact" data-help-scroll><span class="hi">📋</span> Contact Us</a></li>
-              <li><a href="#faq" data-help-scroll><span class="hi">❓</span> FAQ</a></li>
-              <li><a href="mailto:support@manaVivaahaVedika.com"><span class="hi">✉️</span> Email Support</a></li>
-              <li><a href="privacy.html"><span class="hi">🔒</span> Privacy Policy</a></li>
-              <li><a href="terms.html"><span class="hi">📄</span> Terms &amp; Conditions</a></li>
+              <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener"><span class="hi"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-whatsapp"/></svg></span> Live Help (WhatsApp)</a></li>
+              <li><a href="#contact" data-help-scroll><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-contact"/></svg></span> Contact Us</a></li>
+              <li><a href="#faq" data-help-scroll><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-faq"/></svg></span> FAQ</a></li>
+              <li><a href="mailto:support@manaVivaahaVedika.com"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mail"/></svg></span> Email Support</a></li>
+              <li><a href="privacy.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-lock"/></svg></span> Privacy Policy</a></li>
+              <li><a href="terms.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-doc"/></svg></span> Terms &amp; Conditions</a></li>
             </ul>
             <p class="nav-help-foot">Support hours: 10 AM – 6 PM IST · Eluru, Andhra Pradesh</p>
           </div>
@@ -1133,7 +1162,7 @@
   <div id="homeExplore">
     <div class="wrap">
       <div class="search-bar reveal">
-        <div class="search-title">🔍 Quick Profile Search</div>
+        <div class="search-title"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-search"/></svg> Quick Profile Search</div>
         <div class="search-fields">
           <div class="search-field">
             <label>Looking for</label>
@@ -1299,12 +1328,12 @@
         <p>Built specifically for Telugu Brahmin families — traditions, compatibility, and privacy, all together.</p>
       </div>
       <div class="features-grid">
-        <article class="feature-card reveal"><div class="feature-icon">☸</div><h3>Ashtakoot Compatibility</h3><p>Vedic 8-parameter matching on profiles with birth details — scores out of 36 points, shown on every profile.</p></article>
-        <article class="feature-card reveal"><div class="feature-icon">🔐</div><h3>Secure MPIN Login</h3><p>OTP-verified registration followed by your private MPIN — and optional biometric login — to keep your account safe.</p></article>
-        <article class="feature-card reveal"><div class="feature-icon">👨‍👩‍👧</div><h3>Family-Managed Profiles</h3><p>Parents and guardians can co-manage the profile and matrimony search — the way families prefer it.</p></article>
-        <article class="feature-card reveal"><div class="feature-icon">🛡</div><h3>Privacy Controls</h3><p>Mask photos, identity, and chat until you approve. Privacy settings apply consistently across all lists and chat.</p></article>
-        <article class="feature-card reveal"><div class="feature-icon">💬</div><h3>Direct Communication</h3><p>Send interest, photo requests, and chat with accepted matches. Manage everything from the Interests hub.</p></article>
-        <article class="feature-card reveal"><div class="feature-icon">📱</div><h3>Mobile OTP Verification</h3><p>Every account is tied to a verified Indian mobile number at registration for authentic, trustworthy profiles.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-star"/></svg></div><h3>Ashtakoot Compatibility</h3><p>Vedic 8-parameter matching on profiles with birth details — scores out of 36 points, shown on every profile.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-lock"/></svg></div><h3>Secure MPIN Login</h3><p>OTP-verified registration followed by your private MPIN — and optional biometric login — to keep your account safe.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-users"/></svg></div><h3>Family-Managed Profiles</h3><p>Parents and guardians can co-manage the profile and matrimony search — the way families prefer it.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-shield"/></svg></div><h3>Privacy Controls</h3><p>Mask photos, identity, and chat until you approve. Privacy settings apply consistently across all lists and chat.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-chat"/></svg></div><h3>Direct Communication</h3><p>Send interest, photo requests, and chat with accepted matches. Manage everything from the Interests hub.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mobile"/></svg></div><h3>Mobile OTP Verification</h3><p>Every account is tied to a verified Indian mobile number at registration for authentic, trustworthy profiles.</p></article>
       </div>
     </div>
   </section>
@@ -1524,11 +1553,11 @@
           <p>Free to download and register on Android. Upgrade to Platinum inside the app when you're ready to connect with matches.</p>
           <div class="app-stores">
             <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">
-              <span class="store-icon">▶</span>
+              <span class="store-icon"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-play"/></svg></span>
               <span class="store-label"><small>Get it on</small><strong>Google Play</strong></span>
             </a>
             <div class="store-btn" style="opacity:0.6;cursor:default;">
-              <span class="store-icon">🍎</span>
+              <span class="store-icon"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-apple"/></svg></span>
               <span class="store-label"><small>Coming soon on</small><strong>App Store</strong></span>
             </div>
           </div>
@@ -1576,10 +1605,10 @@
         <p>Same support options as Settings → Help &amp; Support in the app.</p>
       </div>
       <div class="contact-grid">
-        <div class="contact-card reveal"><div class="contact-icon">💬</div><h4>In-App Chat</h4><p>Settings → Support → Chat with Support — fastest inside the app.</p><a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Open App</a></div>
-        <div class="contact-card reveal"><div class="contact-icon">📱</div><h4>WhatsApp</h4><p>Direct WhatsApp support — same number as in the app.</p><a href="https://wa.me/918985936678" target="_blank" rel="noopener">+91 8985936678</a></div>
-        <div class="contact-card reveal"><div class="contact-icon">📧</div><h4>Email</h4><p>Write to us anytime — we respond within 24 hours.</p><a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a></div>
-        <div class="contact-card reveal"><div class="contact-icon">📞</div><h4>Phone</h4><p>Call us during support hours: 10 AM – 6 PM IST.</p><a href="tel:+918985936678">+91 8985936678</a></div>
+        <div class="contact-card reveal"><div class="contact-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-chat"/></svg></div><h4>In-App Chat</h4><p>Settings → Support → Chat with Support — fastest inside the app.</p><a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Open App</a></div>
+        <div class="contact-card reveal"><div class="contact-icon contact-icon--wa"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-whatsapp"/></svg></div><h4>WhatsApp</h4><p>Direct WhatsApp support — same number as in the app.</p><a href="https://wa.me/918985936678" target="_blank" rel="noopener">+91 8985936678</a></div>
+        <div class="contact-card reveal"><div class="contact-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mail"/></svg></div><h4>Email</h4><p>Write to us anytime — we respond within 24 hours.</p><a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a></div>
+        <div class="contact-card reveal"><div class="contact-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-phone"/></svg></div><h4>Phone</h4><p>Call us during support hours: 10 AM – 6 PM IST.</p><a href="tel:+918985936678">+91 8985936678</a></div>
       </div>
     </div>
   </section>
@@ -1615,9 +1644,9 @@
         <div class="footer-brand-name">mana Vivaaha Vedika</div>
         <p class="footer-brand-desc">మన వివాహ వేదిక — Where Tradition Meets Technology. Trusted Telugu Brahmin matrimony from Eluru, Andhra Pradesh.</p>
         <div class="footer-social">
-          <a class="social-link" href="https://wa.me/918985936678" target="_blank" rel="noopener" title="WhatsApp">💬</a>
-          <a class="social-link" href="mailto:support@manaVivaahaVedika.com" title="Email">✉️</a>
-          <a class="social-link" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" title="Google Play">▶</a>
+          <a class="social-link" href="https://wa.me/918985936678" target="_blank" rel="noopener" title="WhatsApp"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-whatsapp"/></svg></a>
+          <a class="social-link" href="mailto:support@manaVivaahaVedika.com" title="Email"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mail"/></svg></a>
+          <a class="social-link" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" title="Google Play"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-play"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
@@ -1663,7 +1692,7 @@
         <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/>
       </svg>
     </button>
-    <a class="wa-float" href="https://wa.me/918985936678" target="_blank" rel="noopener" aria-label="WhatsApp support">💬</a>
+    <a class="wa-float" href="https://wa.me/918985936678" target="_blank" rel="noopener" aria-label="WhatsApp support"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-whatsapp"/></svg></a>
   </div>
 
   <script>
