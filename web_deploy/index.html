@@ -8,7 +8,9 @@
   <title>mana Vivaaha Vedika — Premium Brahmin Matrimony</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="app_logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     /* ─── Design Tokens ─── */
     :root {
@@ -36,8 +38,7 @@
       --radius-sm:  12px;
       --nav-h:      76px;
       --max:        1160px;
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body:    'DM Sans', system-ui, sans-serif;
+      --font: 'Poppins', sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,22 +46,30 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: var(--font-body);
+      font-family: var(--font);
       background: var(--bg);
       color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
+    button, input, select, textarea, optgroup {
+      font-family: var(--font);
+    }
 
     a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
+    img { display: block; max-width: 100%; height: auto; }
+    .brand-logo img,
+    .footer-brand-logo img {
+      max-width: none;
+      object-fit: contain;
+    }
 
     /* ─── Utility ─── */
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
     .eyebrow {
       display: inline-block;
-      font-family: var(--font-body);
+      font-family: var(--font);
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.16em;
@@ -70,7 +79,7 @@
     }
     .section-head { text-align: center; max-width: 600px; margin: 0 auto 52px; }
     .section-head h2 {
-      font-family: var(--font-display);
+      font-family: var(--font);
       font-size: clamp(1.85rem, 4vw, 2.75rem);
       font-weight: 700;
       color: var(--ink-2);
@@ -83,7 +92,7 @@
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 13px 26px; border-radius: 999px;
-      font-family: var(--font-body); font-weight: 600; font-size: 0.88rem;
+      font-family: var(--font); font-weight: 600; font-size: 0.88rem;
       border: none; cursor: pointer; transition: all 0.22s; white-space: nowrap;
     }
     .btn:hover { transform: translateY(-2px); }
@@ -123,19 +132,18 @@
     }
     .brand { display: flex; align-items: center; gap: 11px; }
     .brand-logo {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--rust-vivid), var(--rust-deep));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(196,75,10,0.3);
+      width: 52px; height: 52px; flex-shrink: 0;
+      line-height: 0;
+      filter: drop-shadow(0 3px 10px rgba(196, 75, 10, 0.25));
     }
+    .brand-logo img { width: 52px; height: 52px; border-radius: 12px; }
     .brand-text-wrap { line-height: 1.2; }
     .brand-text-wrap small {
       display: block; font-size: 0.58rem; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust);
     }
     .brand-name {
-      font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+      font-family: var(--font); font-size: 1rem; font-weight: 700;
       color: var(--ink-2); white-space: nowrap;
     }
     .nav-actions { display: flex; gap: 8px; align-items: center; }
@@ -147,7 +155,7 @@
       display: inline-flex; align-items: center; gap: 5px;
       padding: 9px 16px; border-radius: 999px;
       border: 1.5px solid var(--border); background: #fff;
-      color: var(--ink-2); font-family: var(--font-body);
+      color: var(--ink-2); font-family: var(--font);
       font-size: 0.8rem; font-weight: 600; cursor: pointer;
       transition: all 0.2s;
     }
@@ -243,7 +251,7 @@
     }
     .hero-badge::before { content: '✦'; color: var(--amber); }
     .hero h1 {
-      font-family: var(--font-display);
+      font-family: var(--font);
       font-size: clamp(2rem, 5vw, 3.4rem);
       font-weight: 800; line-height: 1.1;
       color: var(--ink-2); letter-spacing: -0.01em;
@@ -297,14 +305,14 @@
     }
     .reg-tab {
       padding: 13px 12px; border: none; background: var(--rust-pale);
-      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+      font-family: var(--font); font-size: 0.82rem; font-weight: 600;
       color: var(--muted); cursor: pointer; transition: all 0.2s;
     }
     .reg-tab.active { background: #fff; color: var(--rust-deep); box-shadow: inset 0 -2.5px 0 var(--rust); }
     .reg-card-head {
       background: linear-gradient(135deg, var(--rust-deep), var(--rust-vivid));
       color: #fff; padding: 15px 22px; text-align: center;
-      font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+      font-family: var(--font); font-size: 1rem; font-weight: 700;
     }
     .reg-form { padding: 20px 22px 18px; }
     .reg-field { margin-bottom: 14px; }
@@ -315,7 +323,7 @@
     }
     .reg-field select, .reg-field input {
       width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
-      border-radius: 10px; font-size: 0.9rem; font-family: var(--font-body);
+      border-radius: 10px; font-size: 0.9rem; font-family: var(--font);
       background: var(--bg-warm); color: var(--ink); outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -359,7 +367,7 @@
       height: 3px; background: linear-gradient(90deg, var(--rust-vivid), var(--amber));
     }
     .stat-card .num {
-      font-family: var(--font-display);
+      font-family: var(--font);
       font-size: clamp(2.2rem, 4vw, 3rem);
       font-weight: 800; color: var(--rust); line-height: 1;
       margin-bottom: 6px;
@@ -372,7 +380,7 @@
       padding: 8px 18px; border-radius: 999px;
       border: 1.5px solid var(--border); background: #fff;
       color: var(--muted); font-size: 0.82rem; font-weight: 600;
-      font-family: var(--font-body); cursor: pointer; transition: all 0.2s;
+      font-family: var(--font); cursor: pointer; transition: all 0.2s;
     }
     .tab-btn.active, .tab-btn:hover { background: var(--rust); color: #fff; border-color: var(--rust); }
     .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
@@ -394,7 +402,7 @@
     .badge-free { background: rgba(255,255,255,0.92); color: var(--muted); border: 1px solid var(--border); }
     .profile-body { padding: 16px 18px 18px; }
     .profile-id { font-size: 0.66rem; color: var(--muted); margin-bottom: 3px; letter-spacing: 0.04em; }
-    .profile-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 2px; }
+    .profile-name { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 2px; }
     .profile-age { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
     .profile-subcomm {
       padding: 9px 12px; background: var(--rust-pale);
@@ -429,11 +437,11 @@
     .step-num {
       width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 18px;
       background: linear-gradient(135deg, var(--rust-vivid), var(--rust-deep));
-      color: #fff; font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+      color: #fff; font-family: var(--font); font-size: 1.5rem; font-weight: 800;
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 6px 20px rgba(196,75,10,0.35);
     }
-    .step-card h3 { font-family: var(--font-display); font-size: 0.98rem; font-weight: 700; color: var(--ink-2); margin-bottom: 7px; }
+    .step-card h3 { font-family: var(--font); font-size: 0.98rem; font-weight: 700; color: var(--ink-2); margin-bottom: 7px; }
     .step-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
 
     /* ─── Features Grid ─── */
@@ -449,7 +457,7 @@
       display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
       background: var(--rust-pale); border: 1px solid var(--rust-tint2);
     }
-    .feature-card h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
+    .feature-card h3 { font-family: var(--font); font-size: 1.05rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
     .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
 
     /* ─── Sub-community ─── */
@@ -470,7 +478,7 @@
     .subcomm-pill.regional { color: #7C2D12; background: #FFF7ED; border-color: #FDBA74; }
     .subcomm-pill.branch { color: #92400E; background: #FFFBEB; border-color: #FCD34D; }
     .subcomm-icon { font-size: 1.7rem; margin-bottom: 7px; }
-    .subcomm-name { font-family: var(--font-display); font-size: 0.82rem; font-weight: 700; color: var(--ink-2); margin-bottom: 3px; }
+    .subcomm-name { font-family: var(--font); font-size: 0.82rem; font-weight: 700; color: var(--ink-2); margin-bottom: 3px; }
     .subcomm-count { font-size: 0.66rem; color: var(--muted); }
 
     /* ─── Membership Plans ─── */
@@ -495,7 +503,7 @@
     .plan-name { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 8px; }
     .plan-card.featured .plan-name { color: rgba(255,255,255,0.8); }
     .plan-price {
-      font-family: var(--font-display); font-size: 2.1rem; font-weight: 800;
+      font-family: var(--font); font-size: 2.1rem; font-weight: 800;
       line-height: 1; margin-bottom: 2px; color: var(--ink-2);
     }
     .plan-card.featured .plan-price { color: #fff; }
@@ -535,7 +543,7 @@
       background: radial-gradient(circle at 75% 50%, rgba(255,255,255,0.09), transparent 55%);
     }
     .app-cta-text { position: relative; flex: 1; }
-    .app-cta-text h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 10px; }
+    .app-cta-text h2 { font-family: var(--font); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 10px; }
     .app-cta-text p { opacity: 0.9; font-size: 0.95rem; max-width: 420px; margin-bottom: 26px; line-height: 1.65; }
     .app-stores { display: flex; gap: 12px; flex-wrap: wrap; }
     .store-btn {
@@ -555,7 +563,7 @@
     .faq-q {
       padding: 18px 0; cursor: pointer;
       display: flex; justify-content: space-between; align-items: center;
-      font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+      font-family: var(--font); font-size: 0.95rem; font-weight: 700;
       color: var(--ink-2); gap: 16px;
     }
     .faq-q .faq-icon { color: var(--rust); font-size: 1.1rem; flex-shrink: 0; transition: transform 0.3s; }
@@ -570,7 +578,7 @@
       border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-align: center;
     }
     .contact-icon { font-size: 2.2rem; margin-bottom: 12px; }
-    .contact-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
+    .contact-card h4 { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
     .contact-card p { font-size: 0.84rem; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
     .contact-card a { color: var(--rust); font-weight: 600; font-size: 0.86rem; }
 
@@ -589,7 +597,7 @@
       border-radius: 10px; display: flex; align-items: center; justify-content: center;
     }
     .udyam-logo img { width: 100%; height: 100%; object-fit: contain; }
-    .udyam h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--ink-2); margin-bottom: 3px; }
+    .udyam h3 { font-family: var(--font); font-size: 1.2rem; font-weight: 700; color: var(--ink-2); margin-bottom: 3px; }
     .udyam-meta { font-size: 0.72rem; color: var(--muted); margin-bottom: 8px; }
     .udyam-reg {
       display: inline-block; font-size: 0.7rem; font-weight: 700;
@@ -611,12 +619,14 @@
       gap: 36px 32px; align-items: start;
     }
     .footer-brand-logo {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--rust-vivid), var(--rust-deep));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; margin-bottom: 14px;
+      width: 56px; height: 56px; margin-bottom: 14px; line-height: 0;
     }
-    .footer-brand-name { font-family: var(--font-display); font-size: 1rem; color: #fff; margin-bottom: 8px; font-weight: 700; }
+    .footer-brand-logo img {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .footer-brand-name { font-family: var(--font); font-size: 1rem; color: #fff; margin-bottom: 8px; font-weight: 700; }
     .footer-brand-desc { font-size: 0.83rem; line-height: 1.65; max-width: 260px; }
     .footer-social { display: flex; gap: 10px; margin-top: 16px; }
     .social-link {
@@ -682,7 +692,7 @@
     .search-field label { font-size: 0.66rem; font-weight: 600; color: var(--muted); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
     .search-field select {
       width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
-      border-radius: 9px; font-size: 0.84rem; font-family: var(--font-body);
+      border-radius: 9px; font-size: 0.84rem; font-family: var(--font);
       background: var(--bg-warm); color: var(--ink); outline: none; transition: border-color 0.2s;
     }
     .search-field select:focus { border-color: var(--rust); }
@@ -698,21 +708,53 @@
     .register-hero.bride { background: linear-gradient(160deg, var(--rust-light), var(--rust), var(--rust-deep)); }
     .register-hero.groom { background: linear-gradient(160deg, var(--rust), var(--rust-deep), #6B1E00); }
     .register-hero .emoji { font-size: 3.5rem; margin-bottom: 14px; }
-    .register-hero h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 7px; }
+    .register-hero h3 { font-family: var(--font); font-size: 1.5rem; font-weight: 700; margin-bottom: 7px; }
     .register-hero p { font-size: 0.88rem; opacity: 0.92; margin-bottom: 18px; line-height: 1.6; max-width: 260px; }
     .register-hero .perks { list-style: none; margin-bottom: 20px; }
     .register-hero .perks li { font-size: 0.82rem; opacity: 0.92; margin-bottom: 5px; }
     .register-hero .perks li::before { content: '✓ '; font-weight: 700; }
     .reg-phone-shot { text-align: center; }
-    .reg-phone-shot .phone-mock {
-      width: 100%; max-width: 200px; aspect-ratio: 9/19;
-      background: linear-gradient(160deg, var(--rust-pale), var(--rust-tint));
-      border-radius: 30px; margin: 0 auto;
-      border: 3px solid var(--rust-tint2); box-shadow: var(--shadow-md);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 4rem;
+    .reg-phone-label { font-size: 0.78rem; font-weight: 600; color: var(--rust-deep); margin-top: 10px; text-align: center; line-height: 1.4; }
+    .phone-frame {
+      background: var(--rust-deep); border-radius: 28px; padding: 10px;
+      border: 3px solid var(--rust); box-shadow: var(--shadow-lg);
+      max-width: 220px; margin: 0 auto;
     }
-    .reg-phone-label { font-size: 0.78rem; font-weight: 600; color: var(--rust-deep); margin-top: 10px; text-align: center; }
+    .phone-notch {
+      width: 64px; height: 14px; background: var(--rust-deep);
+      border-radius: 0 0 8px 8px; margin: 0 auto 6px;
+    }
+    .phone-screen {
+      position: relative; width: 100%;
+      aspect-ratio: 390 / 844; max-height: 380px;
+      border-radius: 20px; overflow: hidden; background: #fff;
+    }
+    .phone-screen img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      max-width: none; object-fit: cover; object-position: top center;
+    }
+    .app-preview-carousel {
+      display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 8px 4px 20px; scrollbar-width: none;
+    }
+    .app-preview-carousel::-webkit-scrollbar { display: none; }
+    .screen-slide { flex: 0 0 min(240px, 78vw); scroll-snap-align: center; min-width: 0; }
+    .shot-caption {
+      text-align: center; margin-top: 10px;
+      font-size: 0.82rem; font-weight: 600; color: var(--rust-deep);
+    }
+    .shot-caption small { display: block; font-weight: 500; color: var(--muted); font-size: 0.72rem; margin-top: 3px; }
+    .carousel-nav { display: flex; justify-content: center; gap: 10px; margin-top: 8px; }
+    .carousel-nav button {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 2px solid var(--rust); background: #fff; color: var(--rust-deep);
+      font-size: 1.1rem; cursor: pointer;
+    }
+    .carousel-nav button:hover { background: var(--rust-pale); }
+    .app-cta-visual { flex-shrink: 0; position: relative; z-index: 1; }
+    .app-cta-visual .phone-frame { max-width: 200px; }
+    .app-cta-visual .phone-screen { max-height: 340px; }
 
     /* ─── Responsive ─── */
     @media (max-width: 1080px) {
@@ -766,7 +808,9 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a class="brand" href="#top">
-        <div class="brand-logo">🪷</div>
+        <div class="brand-logo">
+          <img src="app_logo.png" width="52" height="52" alt="mana Vivaaha Vedika logo" />
+        </div>
         <div class="brand-text-wrap">
           <small>Brahmin Matrimony</small>
           <div class="brand-name">mana Vivaaha Vedika</div>
@@ -805,6 +849,7 @@
     <ul class="nav-links" id="navLinks">
       <li class="nav-drawer-label">Browse</li>
       <li><a href="#profiles">Profiles</a></li>
+      <li><a href="#app-preview">App Preview</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#plans">Plans &amp; Pricing</a></li>
       <li><a href="#how">How It Works</a></li>
@@ -1007,8 +1052,84 @@
     </div>
   </section>
 
+  <!-- App Preview (screenshots) -->
+  <section class="section alt" id="app-preview">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">App Preview</span>
+        <div class="divider"></div>
+        <h2>See mana Vivaaha Vedika in Action</h2>
+        <p>Real screens from the Android app — sign in, browse matches, manage interests, upgrade to Platinum, and update your profile.</p>
+      </div>
+      <div class="carousel-wrap reveal">
+        <div class="app-preview-carousel" id="appCarousel">
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-signin.png" alt="Sign in — registration and MPIN login" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Sign in<small>Register · MPIN · Forgot MPIN</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-home.png" alt="Home — matches and spotlight" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Home<small>Today's matches · Spotlight</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-profile.png" alt="Profile detail" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Profile<small>Details · Send interest</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-interests.png" alt="Interests hub" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Interests<small>Received · Sent · Messages</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-premium.png" alt="Platinum plans" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Premium<small>Free · Platinum plans</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-my-profile.png" alt="My profile" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">My profile<small>Photo · Completion</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-edit-profile.png" alt="Edit profile wizard" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Edit profile<small>6-section wizard</small></p>
+          </div>
+          <div class="screen-slide">
+            <div class="phone-frame">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen"><img src="assets/screenshots/screen-settings.png" alt="Settings" width="390" height="844" loading="lazy" decoding="async" /></div>
+            </div>
+            <p class="shot-caption">Settings<small>Account · Support</small></p>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <button type="button" onclick="scrollAppCarousel(-1)" aria-label="Previous screenshot">‹</button>
+          <button type="button" onclick="scrollAppCarousel(1)" aria-label="Next screenshot">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Key Features -->
-  <section class="section alt" id="features">
+  <section class="section" id="features">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Key Features</span>
@@ -1093,7 +1214,12 @@
           <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Create Bride Profile Free</a>
         </article>
         <div class="reg-phone-shot">
-          <div class="phone-mock">🪷</div>
+          <div class="phone-frame">
+            <div class="phone-notch" aria-hidden="true"></div>
+            <div class="phone-screen">
+              <img src="assets/screenshots/screen-signin.png" alt="App welcome — registration or MPIN login" width="390" height="844" loading="lazy" decoding="async" />
+            </div>
+          </div>
           <p class="reg-phone-label">mana Vivaaha Vedika<br/><span style="font-size:0.72rem;color:var(--muted);font-weight:400;">Download on Google Play</span></p>
         </div>
         <article class="register-hero groom">
@@ -1246,6 +1372,14 @@
             </div>
           </div>
         </div>
+        <div class="app-cta-visual" aria-hidden="true">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="assets/screenshots/screen-home.png" alt="" width="390" height="844" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1314,7 +1448,9 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-logo">🪷</div>
+        <div class="footer-brand-logo">
+          <img src="app_logo.png" width="56" height="56" alt="mana Vivaaha Vedika" />
+        </div>
         <div class="footer-brand-name">mana Vivaaha Vedika</div>
         <p class="footer-brand-desc">మన వివాహ వేదిక — Where Tradition Meets Technology. Trusted Telugu Brahmin matrimony from Eluru, Andhra Pradesh.</p>
         <div class="footer-social">
@@ -1327,6 +1463,7 @@
         <h4>Explore</h4>
         <ul>
           <li><a href="#profiles">Browse Profiles</a></li>
+          <li><a href="#app-preview">App Preview</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#community">Sub-community</a></li>
           <li><a href="#plans">Membership Plans</a></li>
@@ -1521,6 +1658,15 @@
       var wasOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('open'); });
       if (!wasOpen) item.classList.add('open');
+    };
+
+    window.scrollAppCarousel = function (dir) {
+      var el = document.getElementById('appCarousel');
+      if (!el) return;
+      var slide = el.querySelector('.screen-slide');
+      var gap = 20;
+      var w = slide ? slide.offsetWidth + gap : 260;
+      el.scrollBy({ left: dir * w, behavior: 'smooth' });
     };
 
     // ── Profile filter
