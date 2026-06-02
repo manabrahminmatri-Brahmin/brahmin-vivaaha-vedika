@@ -56,7 +56,20 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    img { display: block; max-width: 100%; height: auto; }
+    img { display: block; max-width: 100%; height: auto; vertical-align: middle; }
+    .brand-logo-wrap img,
+    .hero-logo-wrap img,
+    .footer-brand img {
+      max-width: none;
+      object-fit: contain;
+    }
+    .brand-logo-wrap img { width: 64px; height: 64px; }
+    .hero-logo-wrap img { width: 72px; height: 72px; }
+    .footer-brand img {
+      width: 64px; height: 64px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(252, 86, 3, 0.25);
+    }
     a { color: inherit; text-decoration: none; }
     .mana { font-weight: 700; }
 
@@ -94,8 +107,82 @@
       list-style: none; font-size: 0.85rem; font-weight: 500; color: var(--muted);
     }
     .nav-links a:hover { color: var(--orange); }
-    .nav-actions { display: flex; gap: 10px; align-items: center; }
-    .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--orange-dark); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+    .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--orange-dark); padding: 4px; }
+    .nav-help { position: relative; }
+    .nav-help-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 16px; border-radius: 999px;
+      border: 1.5px solid var(--orange-border);
+      background: #fff; color: var(--orange-dark);
+      font-family: inherit; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .nav-help-btn:hover,
+    .nav-help.open .nav-help-btn {
+      background: var(--orange-tint);
+      border-color: var(--orange);
+      box-shadow: 0 4px 14px rgba(252, 86, 3, 0.12);
+    }
+    .nav-help-chevron {
+      font-size: 0.65rem; opacity: 0.85;
+      transition: transform 0.2s;
+    }
+    .nav-help.open .nav-help-chevron { transform: rotate(180deg); }
+    .nav-help-menu {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      width: min(300px, calc(100vw - 32px));
+      background: #fff; color: var(--text);
+      border-radius: 14px;
+      border: 1px solid var(--orange-border);
+      box-shadow: 0 20px 48px rgba(26, 20, 16, 0.14);
+      padding: 0; overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(-6px);
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+      z-index: 300;
+    }
+    .nav-help.open .nav-help-menu {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .nav-help-head {
+      padding: 14px 18px 10px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--orange-border);
+      background: var(--orange-tint);
+    }
+    .nav-help-phones {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--orange-border);
+    }
+    .nav-help-phones p {
+      font-size: 0.72rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    .nav-help-phone {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 8px 0; font-size: 0.88rem; font-weight: 600; color: var(--text);
+    }
+    .nav-help-phone span { font-size: 0.75rem; font-weight: 500; color: var(--muted); }
+    .nav-help-phone a { color: var(--orange); font-weight: 700; }
+    .nav-help-phone a:hover { text-decoration: underline; }
+    .nav-help-links { list-style: none; padding: 8px 0; }
+    .nav-help-links li a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 18px; font-size: 0.88rem; font-weight: 500;
+      color: var(--text); transition: background 0.15s, color 0.15s;
+    }
+    .nav-help-links li a:hover {
+      background: var(--orange-tint); color: var(--orange-dark);
+      text-decoration: none;
+    }
+    .nav-help-links .hi { font-size: 1.1rem; width: 1.35rem; text-align: center; flex-shrink: 0; }
+    .nav-help-foot {
+      padding: 10px 18px 14px; font-size: 0.7rem; color: var(--muted);
+      line-height: 1.45; border-top: 1px solid var(--orange-border);
+      background: #fafafa;
+    }
 
     /* ── Buttons ── */
     .btn {
@@ -200,8 +287,9 @@
     }
     .reg-card {
       background: #fff; border-radius: var(--radius-sm);
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.22); overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18); overflow: hidden;
       color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.85);
     }
     .reg-card-head {
       background: linear-gradient(135deg, var(--orange-dark), var(--orange));
@@ -246,6 +334,66 @@
       margin-top: 10px; font-size: 0.7rem; color: var(--muted); text-align: center;
       line-height: 1.45;
     }
+    .reg-tabs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-bottom: 1px solid var(--orange-border);
+      background: var(--orange-tint);
+    }
+    .reg-tab {
+      padding: 12px 10px; border: none; background: transparent;
+      font-family: inherit; font-size: 0.82rem; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: background 0.2s, color 0.2s;
+    }
+    .reg-tab.active {
+      background: #fff; color: var(--orange-dark);
+      box-shadow: inset 0 -3px 0 var(--orange);
+    }
+    .reg-panel { display: none; }
+    .reg-panel.active { display: block; }
+    .reg-panel[hidden] { display: none !important; }
+    .reg-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 16px 0 4px; font-size: 0.72rem; color: var(--muted);
+    }
+    .reg-divider::before, .reg-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--orange-border);
+    }
+    .login-hint {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.5;
+      margin: 0 0 14px; text-align: center;
+    }
+    .gate-hint {
+      text-align: center; font-size: 0.85rem; opacity: 0.92;
+      margin-top: 20px; max-width: 28rem; margin-left: auto; margin-right: auto;
+    }
+    body.site-locked .nav-links a:not([href="#register"]):not([href="#top"]):not([href*="privacy"]):not([href*="terms"]):not([href="#faq"]):not([href="#contact"]) {
+      opacity: 0.45; pointer-events: none;
+    }
+    body.site-locked .nav-links { display: none; }
+    body.site-unlocked .nav-links { display: flex; }
+    .site-content.is-locked { display: none; }
+    .site-content.is-locked + .gate-spacer { display: none; }
+    .unlock-toast {
+      display: none; text-align: center; padding: 14px 20px;
+      background: rgba(255,255,255,0.15); border-radius: 12px;
+      margin-top: 16px; font-size: 0.85rem; font-weight: 500;
+    }
+    body.site-unlocked .unlock-toast { display: block; }
+    .hero--gate { min-height: calc(100vh - var(--nav-h)); display: flex; align-items: center; }
+    .hero--gate .hero-grid { width: 100%; }
+    body.site-unlocked .hero--gate { min-height: auto; padding-bottom: 32px; }
+    body.site-unlocked .hero-copy .hero-features { display: grid; }
+    body.site-unlocked .hero-highlights { display: flex; }
+    body.site-locked .hero-copy .hero-features,
+    body.site-locked .hero-highlights,
+    body.site-locked .trust-badges { display: none; }
+    body.site-locked .hero .tagline { max-width: 100%; text-align: center; margin-left: auto; margin-right: auto; }
+    @media (max-width: 960px) {
+      body.site-locked .hero-grid { grid-template-columns: 1fr; }
+      body.site-locked .hero-grid .reg-card { order: -1; }
+      body.site-locked .hero-copy { text-align: center; }
+      body.site-locked .hero-brand-row { justify-content: center; }
+    }
     .hero-highlights {
       margin-top: 32px; padding-top: 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -262,8 +410,11 @@
       background: var(--surface); border-radius: 20px;
       box-shadow: var(--shadow-lg);
       padding: 24px 28px;
-      max-width: var(--max); margin: -40px auto 0;
+      max-width: var(--max); margin: 0 auto;
       position: relative; z-index: 10;
+    }
+    .site-content > .search-bar-section:first-child .search-bar-wrap {
+      margin-top: -32px;
     }
     .search-bar-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--orange); margin-bottom: 16px; }
     .search-fields { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 12px; align-items: end; }
@@ -561,11 +712,15 @@
       padding: 16px 4px 32px; scrollbar-width: none;
     }
     .carousel::-webkit-scrollbar { display: none; }
-    .screen-slide { flex: 0 0 260px; scroll-snap-align: center; }
+    .screen-slide {
+      flex: 0 0 min(260px, 78vw); scroll-snap-align: center;
+      min-width: 0;
+    }
     .phone-frame {
       background: var(--orange-dark); border-radius: 32px; padding: 10px;
       box-shadow: var(--shadow-lg); border: 3px solid var(--orange);
       width: 100%; max-width: 260px; margin: 0 auto;
+      min-width: 0;
     }
     .phone-frame--sm { max-width: 200px; padding: 8px; border-radius: 26px; }
     .phone-frame--md { max-width: 240px; }
@@ -574,13 +729,25 @@
       border-radius: 0 0 10px 10px; margin: 0 auto 6px;
     }
     .phone-screen {
-      aspect-ratio: 9 / 19.5; border-radius: 22px; overflow: hidden;
-      background: #fff; line-height: 0;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 390 / 844;
+      max-height: 420px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #f0f2f5;
+      line-height: 0;
     }
-    .phone-frame--sm .phone-screen { border-radius: 18px; }
+    .phone-frame--sm .phone-screen { border-radius: 18px; max-height: 340px; }
+    .phone-frame--md .phone-screen { max-height: 400px; }
     .phone-screen img {
-      display: block; width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: top center;
     }
     .shot-caption {
       text-align: center; margin-top: 12px; font-size: 0.85rem; font-weight: 600;
@@ -612,12 +779,25 @@
       gap: 24px; align-items: center;
     }
     .plans-with-shot {
-      display: grid; grid-template-columns: minmax(200px, 260px) 1fr;
+      display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
       gap: 28px; align-items: start; margin-top: 8px;
     }
+    .plans-with-shot .plans-grid { min-width: 0; }
+    .register-layout > * { min-width: 0; }
+    .register-shot { justify-self: center; width: 100%; max-width: 220px; }
     .plans-shot-sticky { position: sticky; top: calc(var(--nav-h) + 16px); }
-    .app-cta-visual { flex-shrink: 0; position: relative; align-self: center; }
-    .app-cta-visual .phone-frame { max-width: 220px; }
+    .app-cta-visual {
+      flex-shrink: 0; position: relative; align-self: center;
+      width: 100%; max-width: 220px; min-width: 0;
+    }
+    .app-cta-visual .phone-frame { max-width: 220px; margin: 0 auto; }
+    .carousel-wrap { overflow: hidden; }
+    .features-dual-shot .phone-frame,
+    .dual-shot .phone-frame,
+    .how-shots .phone-frame,
+    .app-flows-shots .phone-frame {
+      max-width: 100%;
+    }
 
     /* ── Community / Sub-community ── */
     .gotra-grid {
@@ -866,13 +1046,17 @@
       @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
       .pref-grid { grid-template-columns: 1fr; }
       .search-fields { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
-      .nav-links.open {
+      body.site-unlocked .nav-links { display: none; }
+      .nav-links.open,
+      body.site-unlocked .nav-links.open {
         display: flex; flex-direction: column; position: absolute;
         top: var(--nav-h); left: 0; right: 0; background: var(--surface);
         padding: 20px 24px; box-shadow: var(--shadow); gap: 16px;
+        max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
       }
+      body.site-locked .nav-links.open { display: flex; }
       .nav-toggle { display: block; }
+      .nav-help-menu { right: 0; left: auto; }
       .profiles-grid { grid-template-columns: repeat(2, 1fr); }
       .blog-grid { grid-template-columns: 1fr; }
     }
@@ -903,7 +1087,7 @@
     }
   </style>
 </head>
-<body>
+<body class="site-locked">
 
   <!-- ── Navbar ── -->
   <nav class="nav" id="nav">
@@ -919,26 +1103,54 @@
       </a>
       <button class="nav-toggle" type="button" id="navToggle" aria-label="Menu">☰</button>
       <ul class="nav-links" id="navLinks">
+        <li class="nav-links-mobile-help"><strong style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Browse</strong></li>
         <li><a href="#profiles">Profiles</a></li>
-        <li><a href="#app-preview">App</a></li>
+        <li><a href="#app-preview">App Preview</a></li>
         <li><a href="#features">Features</a></li>
-        <li><a href="#how">How It Works</a></li>
         <li><a href="#plans">Plans</a></li>
+        <li><a href="#how">How It Works</a></li>
         <li><a href="#register">Register</a></li>
+        <li class="nav-links-mobile-help"><strong style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;">Help</strong></li>
+        <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener">Live Help (WhatsApp)</a></li>
+        <li><a href="#contact">Contact Us</a></li>
         <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:support@manaVivaahaVedika.com">Email Support</a></li>
         <li><a href="privacy.html">Privacy</a></li>
         <li><a href="terms.html">Terms</a></li>
       </ul>
       <div class="nav-actions">
-        <a class="btn btn-sm btn-outline-dark" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">📲 Open App</a>
-        <a class="btn btn-sm btn-primary" href="#register">Register Free</a>
+        <div class="nav-help" id="navHelp">
+          <button type="button" class="nav-help-btn" id="navHelpBtn" aria-expanded="false" aria-haspopup="true" aria-controls="navHelpMenu">
+            Help <span class="nav-help-chevron" aria-hidden="true">▼</span>
+          </button>
+          <div class="nav-help-menu" id="navHelpMenu" role="menu" aria-labelledby="navHelpBtn">
+            <div class="nav-help-head">Customer care</div>
+            <div class="nav-help-phones">
+              <p>Call us</p>
+              <div class="nav-help-phone">
+                <span>India</span>
+                <a href="tel:+918985936678">+91 8985936678</a>
+              </div>
+            </div>
+            <ul class="nav-help-links">
+              <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener" role="menuitem"><span class="hi" aria-hidden="true">💬</span> Live Help (WhatsApp)</a></li>
+              <li><a href="#contact" role="menuitem" data-help-scroll><span class="hi" aria-hidden="true">📋</span> Contact Us</a></li>
+              <li><a href="#faq" role="menuitem" data-help-scroll><span class="hi" aria-hidden="true">❓</span> FAQ</a></li>
+              <li><a href="mailto:support@manaVivaahaVedika.com" role="menuitem"><span class="hi" aria-hidden="true">✉️</span> Email Support</a></li>
+              <li><a href="privacy.html" role="menuitem"><span class="hi" aria-hidden="true">🔒</span> Privacy Policy</a></li>
+              <li><a href="terms.html" role="menuitem"><span class="hi" aria-hidden="true">📄</span> Terms &amp; Conditions</a></li>
+            </ul>
+            <p class="nav-help-foot">Support hours: 9:00 AM – 9:00 PM IST · Eluru, Andhra Pradesh</p>
+          </div>
+        </div>
+        <a class="btn btn-sm btn-outline-dark" href="#register" id="navLoginBtn" data-reg-tab="login">Log in</a>
+        <a class="btn btn-sm btn-primary" href="#register" id="navRegisterBtn" data-reg-tab="register">Register Free</a>
       </div>
     </div>
   </nav>
 
-  <!-- ── Hero ── -->
-  <header class="hero" id="top">
+  <!-- ── Hero (registration / login gate) ── -->
+  <header class="hero hero--gate" id="top">
     <div class="hero-ornament a" aria-hidden="true"></div>
     <div class="hero-ornament b" aria-hidden="true"></div>
     <div class="hero-ornament c" aria-hidden="true"></div>
@@ -955,7 +1167,7 @@
             </div>
           </div>
           <p class="telugu">మన వివాహ వేదిక</p>
-          <p class="tagline">The trusted matrimony platform for Telugu Brahmins — register free, match by sub-community, and connect with families the traditional way.</p>
+          <p class="tagline">Trusted Telugu Brahmin matrimony — free registration, sub-community matching, and family-friendly profiles.</p>
           <ul class="hero-features">
             <li>Free registration (₹0) · OTP-verified mobile &amp; secure MPIN</li>
             <li>Ashtakoot compatibility · sub-community &amp; advanced filters</li>
@@ -970,55 +1182,79 @@
           </div>
         </div>
         <div class="reg-card" id="register">
-          <div class="reg-card-head">Create a Matrimony Profile</div>
-          <form class="reg-form" id="heroRegForm" action="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" method="get" target="_blank" rel="noopener">
-            <div class="reg-field">
-              <label for="regCreatedFor">Profile created for</label>
-              <select id="regCreatedFor" name="created_for" required>
-                <option value="" disabled selected>Select</option>
-                <option>Self</option>
-                <option>Father</option>
-                <option>Mother</option>
-                <option>Brother</option>
-                <option>Sister</option>
-                <option>Guardian</option>
-                <option>Relative</option>
-              </select>
-            </div>
-            <div class="reg-field">
-              <label for="regProfileType">I am registering a</label>
-              <select id="regProfileType" name="profile_type" required>
-                <option value="" disabled selected>Select</option>
-                <option>Bride</option>
-                <option>Groom</option>
-              </select>
-            </div>
-            <div class="reg-field">
-              <label for="regFirstName">First name</label>
-              <input type="text" id="regFirstName" name="first_name" placeholder="Enter first name" autocomplete="given-name" required />
-            </div>
-            <div class="reg-field">
-              <label for="regLastName">Last name</label>
-              <input type="text" id="regLastName" name="last_name" placeholder="Enter last name" autocomplete="family-name" required />
-            </div>
-            <div class="reg-field">
-              <label for="regMobile">Mobile number</label>
-              <div class="reg-phone-row">
-                <select id="regCountry" name="country_code" aria-label="Country code">
-                  <option value="+91">+91</option>
+          <div class="reg-tabs" role="tablist" aria-label="Register or log in">
+            <button type="button" class="reg-tab active" role="tab" aria-selected="true" aria-controls="regPanelRegister" id="regTabRegister" data-panel="register">New registration</button>
+            <button type="button" class="reg-tab" role="tab" aria-selected="false" aria-controls="regPanelLogin" id="regTabLogin" data-panel="login">Member login</button>
+          </div>
+          <div class="reg-panel active" id="regPanelRegister" role="tabpanel" aria-labelledby="regTabRegister">
+            <div class="reg-card-head">Create a Matrimony Profile</div>
+            <form class="reg-form" id="heroRegForm" novalidate>
+              <div class="reg-field">
+                <label for="regCreatedFor">Profile created for</label>
+                <select id="regCreatedFor" name="created_for" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Self</option>
+                  <option>Father</option>
+                  <option>Mother</option>
+                  <option>Brother</option>
+                  <option>Sister</option>
+                  <option>Guardian</option>
+                  <option>Relative</option>
                 </select>
-                <input type="tel" id="regMobile" name="mobile" placeholder="Enter 10-digit mobile" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" required />
               </div>
-            </div>
-            <label class="reg-check">
-              <input type="checkbox" id="regAgree" name="agree" required />
-              <span>By clicking Register Free, I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
-            </label>
-            <button type="submit" class="btn btn-primary reg-submit">Register Free →</button>
-            <p class="reg-note">Complete OTP verification &amp; MPIN setup in the mana Vivaaha Vedika Android app after install.</p>
-          </form>
+              <div class="reg-field">
+                <label for="regProfileType">I am registering a</label>
+                <select id="regProfileType" name="profile_type" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Bride</option>
+                  <option>Groom</option>
+                </select>
+              </div>
+              <div class="reg-field">
+                <label for="regFirstName">First name</label>
+                <input type="text" id="regFirstName" name="first_name" placeholder="Enter first name" autocomplete="given-name" required />
+              </div>
+              <div class="reg-field">
+                <label for="regLastName">Last name</label>
+                <input type="text" id="regLastName" name="last_name" placeholder="Enter last name" autocomplete="family-name" required />
+              </div>
+              <div class="reg-field">
+                <label for="regMobile">Mobile number</label>
+                <div class="reg-phone-row">
+                  <select id="regCountry" name="country_code" aria-label="Country code">
+                    <option value="+91">+91</option>
+                  </select>
+                  <input type="tel" id="regMobile" name="mobile" placeholder="Enter 10-digit mobile" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" required />
+                </div>
+              </div>
+              <label class="reg-check">
+                <input type="checkbox" id="regAgree" name="agree" required />
+                <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+              </label>
+              <button type="submit" class="btn btn-primary reg-submit">Continue →</button>
+              <p class="reg-note">Next: browse profiles on this site, then install the app for OTP verification &amp; MPIN setup.</p>
+            </form>
+          </div>
+          <div class="reg-panel" id="regPanelLogin" role="tabpanel" aria-labelledby="regTabLogin" hidden>
+            <div class="reg-card-head">Already registered? Log in</div>
+            <form class="reg-form" id="heroLoginForm" novalidate>
+              <p class="login-hint">Enter the mobile number linked to your profile. You sign in with your <strong>MPIN</strong> inside the mana Vivaaha Vedika app.</p>
+              <div class="reg-field">
+                <label for="loginMobile">Registered mobile</label>
+                <div class="reg-phone-row">
+                  <select id="loginCountry" aria-label="Country code">
+                    <option value="+91">+91</option>
+                  </select>
+                  <input type="tel" id="loginMobile" name="login_mobile" placeholder="Enter 10-digit mobile" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" required />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary reg-submit">Log in with MPIN in App →</button>
+              <p class="reg-note">Opens the app on your phone. Use <strong>Forgot MPIN?</strong> on the sign-in screen if needed. <a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Install app</a></p>
+            </form>
+          </div>
         </div>
       </div>
+      <p class="gate-hint">Fill in the form above to continue. Need assistance? Use <strong>Help</strong> in the header.</p>
       <div class="hero-highlights topic-row" aria-label="Key features">
         <span>☸ Ashtakoot</span>
         <span>🔐 MPIN Login</span>
@@ -1031,8 +1267,10 @@
     </div>
   </header>
 
+  <main id="siteContent" class="site-content is-locked" aria-hidden="true">
+
   <!-- ── Quick Search Bar ── -->
-  <div style="padding: 0 24px; background: var(--orange-tint);">
+  <div class="search-bar-section" style="padding: 0 24px; background: var(--orange-tint);">
     <div class="wrap">
       <div class="search-bar-wrap reveal">
         <div class="search-bar-title">🔍 Quick Profile Search</div>
@@ -1982,6 +2220,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- ── Footer ── -->
   <footer class="footer">
     <div class="footer-grid">
@@ -2073,6 +2313,40 @@
         });
       }
 
+      // Help dropdown
+      var navHelp = document.getElementById('navHelp');
+      var navHelpBtn = document.getElementById('navHelpBtn');
+      function closeHelpMenu() {
+        if (!navHelp || !navHelpBtn) return;
+        navHelp.classList.remove('open');
+        navHelpBtn.setAttribute('aria-expanded', 'false');
+      }
+      if (navHelp && navHelpBtn) {
+        navHelpBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var open = navHelp.classList.toggle('open');
+          navHelpBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', function (e) {
+          if (!navHelp.contains(e.target)) closeHelpMenu();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeHelpMenu();
+        });
+        navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
+          link.addEventListener('click', function () {
+            closeHelpMenu();
+            if (document.body.classList.contains('site-locked')) {
+              var reg = document.getElementById('register');
+              if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        });
+        navHelp.querySelectorAll('.nav-help-links a').forEach(function (link) {
+          link.addEventListener('click', function () { closeHelpMenu(); });
+        });
+      }
+
       function animateCounter(el) {
         var target = parseInt(el.dataset.target, 10);
         var suffix = el.dataset.suffix || '';
@@ -2123,36 +2397,134 @@
         });
       };
 
-      // Hero registration → Play Store (validate, then open app)
-      var heroReg = document.getElementById('heroRegForm');
-      if (heroReg) {
-        heroReg.addEventListener('submit', function (e) {
-          var mobile = document.getElementById('regMobile');
-          var agree = document.getElementById('regAgree');
-          if (mobile) {
-            var digits = mobile.value.replace(/\D/g, '');
-            if (digits.length !== 10 || !/^[6-9]/.test(digits)) {
-              e.preventDefault();
-              mobile.setCustomValidity('Enter a valid 10-digit Indian mobile number.');
-              mobile.reportValidity();
-              return;
-            }
-            mobile.setCustomValidity('');
-          }
-          if (agree && !agree.checked) {
-            e.preventDefault();
-            agree.reportValidity();
-            return;
-          }
+      var PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin';
+      var siteContent = document.getElementById('siteContent');
+
+      function digitsOnly(el) {
+        if (!el) return '';
+        return el.value.replace(/\D/g, '').slice(0, 10);
+      }
+      function isValidMobile(digits) {
+        return digits.length === 10 && /^[6-9]/.test(digits);
+      }
+      function bindMobileInput(id) {
+        var input = document.getElementById(id);
+        if (!input) return;
+        input.addEventListener('input', function () {
+          input.value = digitsOnly(input);
+          input.setCustomValidity('');
         });
-        var regMobileInput = document.getElementById('regMobile');
-        if (regMobileInput) {
-          regMobileInput.addEventListener('input', function () {
-            regMobileInput.value = regMobileInput.value.replace(/\D/g, '').slice(0, 10);
-            regMobileInput.setCustomValidity('');
+      }
+      bindMobileInput('regMobile');
+      bindMobileInput('loginMobile');
+
+      function unlockSite(scrollToContent) {
+        sessionStorage.setItem('mvv_unlocked', '1');
+        document.body.classList.remove('site-locked');
+        document.body.classList.add('site-unlocked');
+        if (siteContent) {
+          siteContent.classList.remove('is-locked');
+          siteContent.removeAttribute('aria-hidden');
+        }
+        if (scrollToContent && siteContent) {
+          requestAnimationFrame(function () {
+            siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
         }
       }
+
+      if (sessionStorage.getItem('mvv_unlocked') === '1') {
+        unlockSite(false);
+      }
+
+      function setRegTab(panelName) {
+        var isLogin = panelName === 'login';
+        document.querySelectorAll('.reg-tab').forEach(function (tab) {
+          var active = tab.getAttribute('data-panel') === panelName;
+          tab.classList.toggle('active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        var regPanel = document.getElementById('regPanelRegister');
+        var loginPanel = document.getElementById('regPanelLogin');
+        if (regPanel) {
+          regPanel.classList.toggle('active', !isLogin);
+          regPanel.hidden = isLogin;
+        }
+        if (loginPanel) {
+          loginPanel.classList.toggle('active', isLogin);
+          loginPanel.hidden = !isLogin;
+        }
+      }
+
+      document.querySelectorAll('.reg-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          setRegTab(tab.getAttribute('data-panel') || 'register');
+        });
+      });
+      document.querySelectorAll('[data-reg-tab]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          var tab = btn.getAttribute('data-reg-tab');
+          if (tab) {
+            setRegTab(tab);
+          }
+        });
+      });
+
+      var heroReg = document.getElementById('heroRegForm');
+      if (heroReg) {
+        heroReg.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var mobile = document.getElementById('regMobile');
+          var agree = document.getElementById('regAgree');
+          if (!heroReg.checkValidity()) {
+            heroReg.reportValidity();
+            return;
+          }
+          var digits = digitsOnly(mobile);
+          if (!isValidMobile(digits)) {
+            mobile.setCustomValidity('Enter a valid 10-digit Indian mobile number.');
+            mobile.reportValidity();
+            return;
+          }
+          mobile.setCustomValidity('');
+          if (agree && !agree.checked) {
+            agree.reportValidity();
+            return;
+          }
+          unlockSite(true);
+          window.open(PLAY_STORE, '_blank', 'noopener');
+        });
+      }
+
+      var heroLogin = document.getElementById('heroLoginForm');
+      if (heroLogin) {
+        heroLogin.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var mobile = document.getElementById('loginMobile');
+          var digits = digitsOnly(mobile);
+          if (!isValidMobile(digits)) {
+            mobile.setCustomValidity('Enter the mobile number registered on your profile.');
+            mobile.reportValidity();
+            return;
+          }
+          mobile.setCustomValidity('');
+          unlockSite(true);
+          window.open(PLAY_STORE, '_blank', 'noopener');
+        });
+      }
+
+      document.querySelectorAll('.nav-links a, .footer a').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          if (!document.body.classList.contains('site-locked')) return;
+          var href = link.getAttribute('href') || '';
+          if (href.charAt(0) !== '#') return;
+          if (href === '#register' || href === '#top' || href === '#faq' || href === '#contact') return;
+          e.preventDefault();
+          setRegTab('register');
+          var reg = document.getElementById('register');
+          if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
 
       // FAQ accordion
       window.toggleFaq = function (el) {
