@@ -1,5 +1,7 @@
 # Publish web_deploy/ to GitHub Pages on every push to main.
 # Site URL: https://manabrahminmatri-brahmin.github.io/brahmin-vivaaha-vedika/
+# Repo Settings -> Pages -> Build and deployment -> Source: GitHub Actions (not "Deploy from branch").
+# If branch deploy is used, run scripts/sync-web-deploy-to-root.ps1 so root index.html matches web_deploy/.
 
 name: Deploy GitHub Pages
 

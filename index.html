@@ -91,6 +91,52 @@
     }
     .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
 
+    /* ─── Home topic tabs (app-like screens) ─── */
+    .topic-tabs {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 150;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 20px;
+      background: rgba(253, 250, 247, 0.98);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(196, 75, 10, 0.06);
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .topic-tabs::-webkit-scrollbar { height: 4px; }
+    .topic-tab-btn {
+      flex-shrink: 0;
+      border: 1.5px solid rgba(252, 86, 3, 0.28);
+      background: #fff;
+      color: var(--orange-dark);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-family: var(--font);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .topic-tab-btn:hover {
+      background: var(--rust-pale);
+      border-color: var(--orange);
+    }
+    .topic-tab-btn.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+    .topic-panel-hidden { display: none !important; }
+  #homeExplore {
+    padding: 20px 24px 0;
+    background: var(--bg-warm);
+  }
+  #homeExplore .search-bar { margin-top: 0; }
+
     /* ─── Buttons ─── */
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
@@ -320,30 +366,54 @@
       color: var(--ink-3); line-height: 1.7;
       max-width: 420px; margin-bottom: 24px;
     }
-    .hero-features { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
-    .hero-features li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 0.88rem; color: var(--ink-3); line-height: 1.5;
+    .hero-highlights {
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: min(420px, 52vh);
+      overflow-y: auto;
+      padding-right: 6px;
+      scrollbar-width: thin;
     }
-    .hero-features li::before {
-      content: '✓'; flex-shrink: 0; margin-top: 1px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--rust-tint); color: var(--rust);
-      font-size: 0.65rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
+    .hero-highlights::-webkit-scrollbar { width: 5px; }
+    .hero-highlights::-webkit-scrollbar-thumb {
+      background: rgba(252, 86, 3, 0.35);
+      border-radius: 999px;
     }
-    .hero-trust { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
-    .hero-trust span {
-      font-size: 0.7rem; font-weight: 600;
-      padding: 5px 12px; border-radius: 999px;
-      background: #fff; border: 1px solid var(--border);
-      color: var(--ink-3); letter-spacing: 0.04em;
+    .hero-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
     }
-    .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
-    .hero-chip {
-      font-size: 0.75rem; font-weight: 500; padding: 6px 13px;
-      border-radius: 999px; background: var(--rust-pale);
-      border: 1px solid var(--rust-tint2); color: var(--rust-deep);
+    .hero-point::before {
+      content: '✓';
+      flex-shrink: 0;
+      margin-top: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--rust-tint);
+      color: var(--rust);
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-point-body { min-width: 0; }
+    .hero-point-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink-2);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .hero-point-text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
     }
 
     /* ─── Reg Card ─── */
@@ -820,7 +890,7 @@
       .hero-grid { grid-template-columns: 1fr; gap: 32px; }
       .hero-copy { text-align: center; }
       .hero-desc { max-width: 100%; }
-      .hero-trust, .hero-chips, .hero-features { justify-content: center; align-items: center; }
+      .hero-highlights { max-width: 100%; max-height: none; margin-left: auto; margin-right: auto; text-align: left; }
       .hero-badge { margin-bottom: 14px; }
       .reg-card { max-width: 420px; margin: 0 auto; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -901,11 +971,10 @@
               <li><a href="privacy.html"><span class="hi">🔒</span> Privacy Policy</a></li>
               <li><a href="terms.html"><span class="hi">📄</span> Terms &amp; Conditions</a></li>
             </ul>
-            <p class="nav-help-foot">Support hours: 9 AM – 9 PM IST · Eluru, Andhra Pradesh</p>
+            <p class="nav-help-foot">Support hours: 10 AM – 6 PM IST · Eluru, Andhra Pradesh</p>
           </div>
         </div>
         <a class="btn btn-sm btn-ghost" href="#register" data-reg-tab="login">Log in</a>
-        <a class="btn btn-sm btn-primary" href="#register" data-reg-tab="register">Register Free</a>
         <button class="nav-toggle" type="button" id="navToggle" aria-label="Open menu">☰</button>
       </div>
     </div>
@@ -936,26 +1005,44 @@
           <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
           <h1>Find Your <span class="accent">Perfect</span><br/>Brahmin Match</h1>
           <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
-          <p class="hero-desc">Free registration, Ashtakoot compatibility, sub-community filters, and family-friendly profiles — all in one place.</p>
-          <ul class="hero-features">
-            <li>Free registration (₹0) · OTP-verified mobile &amp; secure MPIN</li>
-            <li>Ashtakoot compatibility · sub-community &amp; advanced filters</li>
-            <li>Interests, photo requests &amp; chat with accepted matches</li>
-            <li>Premium Platinum plans from ₹99/month</li>
-          </ul>
-          <div class="hero-trust">
-            <span>✓ OTP Verified</span>
-            <span>✓ Family Managed</span>
-            <span>✓ Privacy First</span>
-            <span>✓ UDYAM Registered</span>
-          </div>
-          <div class="hero-chips">
-            <span class="hero-chip">☸ Ashtakoot</span>
-            <span class="hero-chip">🔐 MPIN Login</span>
-            <span class="hero-chip">👨‍👩‍👧 Family Profiles</span>
-            <span class="hero-chip">💌 Send Interest</span>
-            <span class="hero-chip">📸 Photo Requests</span>
-            <span class="hero-chip">🔍 Sub-community Filters</span>
+          <p class="hero-desc">Everything you need for a meaningful Brahmin matrimony journey — in one trusted app.</p>
+          <div class="hero-highlights">
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Free Registration (₹0)</h3>
+                <p class="hero-point-text">OTP-verified mobile number &amp; secure MPIN login.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Smart Compatibility Matching</h3>
+                <p class="hero-point-text">Ashtakoot matching, sub-community preferences &amp; advanced filters.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Family-Managed Profiles</h3>
+                <p class="hero-point-text">Secure profile management with privacy controls.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Connect with Confidence</h3>
+                <p class="hero-point-text">Interests, photo requests &amp; chat after mutual acceptance.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Premium Platinum Membership</h3>
+                <p class="hero-point-text">Full access to premium features from ₹99/month.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Trusted &amp; Secure Platform</h3>
+                <p class="hero-point-text">OTP Verified • Family Friendly • Privacy Focused • UDYAM Registered</p>
+              </div>
+            </article>
           </div>
         </div>
         <!-- Registration Card -->
@@ -1031,10 +1118,21 @@
   <!-- ─── Main Content (locked until registration) ─── -->
   <main id="siteContent" class="site-content is-locked" aria-hidden="true">
 
+  <nav class="topic-tabs" id="homeTopicTabs" aria-label="Explore topics">
+    <button type="button" class="topic-tab-btn active" data-topic="explore">Explore</button>
+    <button type="button" class="topic-tab-btn" data-topic="profiles">Browse Profiles</button>
+    <button type="button" class="topic-tab-btn" data-topic="app-preview">App Preview</button>
+    <button type="button" class="topic-tab-btn" data-topic="features">Features</button>
+    <button type="button" class="topic-tab-btn" data-topic="community">Sub-community</button>
+    <button type="button" class="topic-tab-btn" data-topic="plans">Membership Plans</button>
+    <button type="button" class="topic-tab-btn" data-topic="how">How It Works</button>
+    <button type="button" class="topic-tab-btn" data-topic="register">Register Free</button>
+  </nav>
+
   <!-- Quick Search -->
-  <div style="padding: 0 24px; background: var(--bg-warm);">
+  <div id="homeExplore">
     <div class="wrap">
-      <div class="search-bar reveal" style="margin-top: -30px;">
+      <div class="search-bar reveal">
         <div class="search-title">🔍 Quick Profile Search</div>
         <div class="search-fields">
           <div class="search-field">
@@ -1418,7 +1516,7 @@
   </section>
 
   <!-- App Download CTA -->
-  <section class="section">
+  <section class="section" id="download">
     <div class="wrap">
       <div class="app-cta reveal">
         <div class="app-cta-text">
@@ -1463,7 +1561,7 @@
         <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do Interests work?<span class="faq-icon">+</span></div><div class="faq-a">Use Send Interest from a profile. Received interests appear in the Received tab; sent interests are in the Sent tab with status tracking. You can withdraw or send a reminder for pending sent items from the Sent tab.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is included in every Platinum plan?<span class="faq-icon">+</span></div><div class="faq-a">All Platinum durations include: unlimited contact requests, direct WhatsApp messaging, advanced compatibility matching, priority profile visibility, contact information, Community Heads details, community reference requests, send interest, profile highlighter, read receipts, advanced filters, and incognito mode.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is Discover 3D?<span class="faq-icon">+</span></div><div class="faq-a">Discover 3D is a Platinum feature. Active Platinum members can open it from the Home tab using the floating Discover 3D control to browse compatible profiles in an immersive interface.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I contact support?<span class="faq-icon">+</span></div><div class="faq-a">In the app: Settings → Support → Chat with Support. WhatsApp: +91 8985936678 · Email: support@manaVivaahaVedika.com · Phone: +91 8985936678. Support hours: 9 AM – 9 PM IST from Eluru, Andhra Pradesh.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I contact support?<span class="faq-icon">+</span></div><div class="faq-a">In the app: Settings → Support → Chat with Support. WhatsApp: +91 8985936678 · Email: support@manaVivaahaVedika.com · Phone: +91 8985936678. Support hours: 10 AM – 6 PM IST from Eluru, Andhra Pradesh.</div></div>
       </div>
     </div>
   </section>
@@ -1481,13 +1579,13 @@
         <div class="contact-card reveal"><div class="contact-icon">💬</div><h4>In-App Chat</h4><p>Settings → Support → Chat with Support — fastest inside the app.</p><a href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">Open App</a></div>
         <div class="contact-card reveal"><div class="contact-icon">📱</div><h4>WhatsApp</h4><p>Direct WhatsApp support — same number as in the app.</p><a href="https://wa.me/918985936678" target="_blank" rel="noopener">+91 8985936678</a></div>
         <div class="contact-card reveal"><div class="contact-icon">📧</div><h4>Email</h4><p>Write to us anytime — we respond within 24 hours.</p><a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a></div>
-        <div class="contact-card reveal"><div class="contact-icon">📞</div><h4>Phone</h4><p>Call us during support hours: 9 AM – 9 PM IST.</p><a href="tel:+918985936678">+91 8985936678</a></div>
+        <div class="contact-card reveal"><div class="contact-icon">📞</div><h4>Phone</h4><p>Call us during support hours: 10 AM – 6 PM IST.</p><a href="tel:+918985936678">+91 8985936678</a></div>
       </div>
     </div>
   </section>
 
   <!-- UDYAM -->
-  <section class="section alt">
+  <section class="section alt" id="udyam">
     <div class="wrap">
       <div class="udyam reveal">
         <div class="udyam-left">
@@ -1622,6 +1720,116 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
+    // ── Home topic tabs (one screen per Explore topic)
+    var topicPanels = {
+      explore: ['homeExplore', 'stats'],
+      profiles: ['profiles'],
+      'app-preview': ['app-preview'],
+      features: ['features'],
+      community: ['community'],
+      plans: ['plans', 'download'],
+      how: ['how'],
+      register: ['get-started']
+    };
+    var hashToTopic = {
+      profiles: 'profiles',
+      'app-preview': 'app-preview',
+      features: 'features',
+      community: 'community',
+      plans: 'plans',
+      how: 'how',
+      register: 'register',
+      'get-started': 'register',
+      stats: 'explore',
+      download: 'plans',
+    };
+    var allTopicPanelIds = [];
+    Object.keys(topicPanels).forEach(function (t) {
+      topicPanels[t].forEach(function (id) {
+        if (allTopicPanelIds.indexOf(id) === -1) allTopicPanelIds.push(id);
+      });
+    });
+    ['faq', 'contact', 'udyam'].forEach(function (id) {
+      if (allTopicPanelIds.indexOf(id) === -1) allTopicPanelIds.push(id);
+    });
+
+    function revealInPanel(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+      el.querySelectorAll('.num[data-target]').forEach(function (n) {
+        if (!n.dataset.done) { n.dataset.done = '1'; animateCounter(n); }
+      });
+    }
+
+    function setHomeTopic(topic) {
+      var ids = topicPanels[topic] || topicPanels.explore;
+      allTopicPanelIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('topic-panel-hidden', ids.indexOf(id) === -1);
+      });
+      var tabBar = document.getElementById('homeTopicTabs');
+      if (tabBar) {
+        tabBar.querySelectorAll('.topic-tab-btn').forEach(function (btn) {
+          var active = btn.getAttribute('data-topic') === topic;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+      }
+      ids.forEach(revealInPanel);
+      var first = document.getElementById(ids[0]);
+      if (first && siteContent && document.body.classList.contains('site-unlocked')) {
+        requestAnimationFrame(function () {
+          var tabsH = tabBar ? tabBar.offsetHeight : 0;
+          var top = first.getBoundingClientRect().top + window.scrollY - varNavH() - tabsH - 8;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        });
+      }
+    }
+    function varNavH() {
+      var v = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+      return parseInt(v, 10) || 140;
+    }
+    function topicFromHash(hash) {
+      if (!hash || hash.charAt(0) !== '#') return null;
+      return hashToTopic[hash.slice(1)] || null;
+    }
+    var homeTopicTabs = document.getElementById('homeTopicTabs');
+    if (homeTopicTabs) {
+      homeTopicTabs.querySelectorAll('.topic-tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setHomeTopic(btn.getAttribute('data-topic') || 'explore');
+        });
+      });
+    }
+    function showSinglePanel(id) {
+      allTopicPanelIds.forEach(function (pid) {
+        var el = document.getElementById(pid);
+        if (el) el.classList.toggle('topic-panel-hidden', pid !== id);
+      });
+      var tabBar = document.getElementById('homeTopicTabs');
+      if (tabBar) tabBar.querySelectorAll('.topic-tab-btn').forEach(function (btn) { btn.classList.remove('active'); });
+      revealInPanel(id);
+    }
+    function applyTopicNav(href, e) {
+      if (!href || href.charAt(0) !== '#') return false;
+      var id = href.slice(1);
+      if (id === 'faq' || id === 'contact' || id === 'udyam') {
+        if (e) e.preventDefault();
+        if (document.body.classList.contains('site-locked')) unlockSite(false);
+        showSinglePanel(id);
+        return true;
+      }
+      var topic = hashToTopic[id];
+      if (!topic && id === 'homeExplore') topic = 'explore';
+      if (!topic) return false;
+      if (e) e.preventDefault();
+      if (document.body.classList.contains('site-locked')) unlockSite(false);
+      setHomeTopic(topic);
+      return true;
+    }
+
     // ── Unlock
     var siteContent = document.getElementById('siteContent');
     function unlockSite(scroll) {
@@ -1629,9 +1837,19 @@
       document.body.classList.remove('site-locked');
       document.body.classList.add('site-unlocked');
       if (siteContent) { siteContent.classList.remove('is-locked'); siteContent.removeAttribute('aria-hidden'); }
-      if (scroll && siteContent) requestAnimationFrame(function () { siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      if (scroll && siteContent) {
+        requestAnimationFrame(function () {
+          siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setHomeTopic(topicFromHash(location.hash) || 'explore');
+        });
+      }
     }
-    if (sessionStorage.getItem('mvv_unlocked') === '1') unlockSite(false);
+    if (sessionStorage.getItem('mvv_unlocked') === '1') {
+      unlockSite(false);
+      setHomeTopic(topicFromHash(location.hash) || 'explore');
+    } else {
+      setHomeTopic('explore');
+    }
 
     // ── Tabs
     function setTab(panel) {
@@ -1682,22 +1900,26 @@
       window.open(PLAY, '_blank', 'noopener');
     });
 
-    // ── Locked nav links
-    document.querySelectorAll('.nav-links a, .footer a').forEach(function (link) {
+    // ── In-page nav → topic tabs
+    document.querySelectorAll('.nav-links a, .footer a, #siteContent a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
-        if (!document.body.classList.contains('site-locked')) return;
         var href = link.getAttribute('href') || '';
-        if (href.charAt(0) !== '#') return;
-        if (href === '#register' || href === '#top') return;
-        if (href === '#faq' || href === '#contact') {
-          e.preventDefault(); unlockSite(false);
-          requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        if (href === '#register' || href === '#top') {
+          if (href === '#register' && document.body.classList.contains('site-locked')) {
+            e.preventDefault();
+            setTab('register');
+            var reg = document.getElementById('register');
+            if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
           return;
         }
+        if (applyTopicNav(href, e)) return;
+        if (!document.body.classList.contains('site-locked')) return;
+        if (href.charAt(0) !== '#') return;
         e.preventDefault();
         setTab('register');
-        var reg = document.getElementById('register');
-        if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var regHero = document.getElementById('register');
+        if (regHero) regHero.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     });
 
@@ -1705,14 +1927,14 @@
     if (navHelp) navHelp.querySelectorAll('[data-help-scroll]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         closeHelpMenu();
-        if (document.body.classList.contains('site-locked')) {
-          var href = link.getAttribute('href');
-          if (href && href.charAt(0) === '#') {
-            e.preventDefault(); unlockSite(false);
-            requestAnimationFrame(function () { var t = document.querySelector(href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-          }
-        }
+        var href = link.getAttribute('href');
+        if (href && applyTopicNav(href, e)) return;
       });
+    });
+
+    window.addEventListener('hashchange', function () {
+      var t = topicFromHash(location.hash);
+      if (t && document.body.classList.contains('site-unlocked')) setHomeTopic(t);
     });
 
     // ── FAQ
