@@ -36,7 +36,8 @@
       --shadow-lg:  0 20px 60px rgba(100,30,5,0.18);
       --radius:     20px;
       --radius-sm:  12px;
-      --nav-h:      76px;
+      --nav-h:      92px;
+      --brand-logo-size: 68px;
       --max:        1160px;
       --font: 'Poppins', sans-serif;
     }
@@ -126,27 +127,41 @@
     }
     .nav.scrolled { box-shadow: var(--shadow-sm); }
     .nav-inner {
-      max-width: var(--max); margin: 0 auto; padding: 0 24px;
+      max-width: var(--max); margin: 0 auto; padding: 0 20px;
       height: 100%; display: flex; align-items: center;
-      justify-content: space-between; gap: 12px;
+      justify-content: space-between; gap: 14px;
     }
-    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand {
+      display: flex; align-items: center; gap: 14px;
+      min-width: 0; flex: 1 1 auto; max-width: min(420px, 52vw);
+    }
     .brand-logo {
-      width: 52px; height: 52px; flex-shrink: 0;
-      line-height: 0;
-      filter: drop-shadow(0 3px 10px rgba(196, 75, 10, 0.25));
+      width: var(--brand-logo-size); height: var(--brand-logo-size);
+      flex-shrink: 0; line-height: 0;
+      filter: drop-shadow(0 4px 14px rgba(196, 75, 10, 0.28));
     }
-    .brand-logo img { width: 52px; height: 52px; border-radius: 12px; }
-    .brand-text-wrap { line-height: 1.2; }
+    .brand-logo img {
+      width: var(--brand-logo-size); height: var(--brand-logo-size);
+      border-radius: 14px; object-fit: contain;
+    }
+    .brand-text-wrap { line-height: 1.15; min-width: 0; }
     .brand-text-wrap small {
-      display: block; font-size: 0.58rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--rust);
+      display: block; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.11em; text-transform: uppercase; color: var(--rust);
+      margin-bottom: 2px;
     }
     .brand-name {
-      font-family: var(--font); font-size: 1rem; font-weight: 700;
-      color: var(--ink-2); white-space: nowrap;
+      font-family: var(--font);
+      font-size: clamp(1.05rem, 2.4vw, 1.32rem);
+      font-weight: 700; line-height: 1.2;
+      color: var(--ink-2);
+      letter-spacing: -0.02em;
     }
-    .nav-actions { display: flex; gap: 8px; align-items: center; }
+    .brand-name .mana { color: var(--rust); font-weight: 800; }
+    .nav-actions {
+      display: flex; gap: 8px; align-items: center;
+      flex-shrink: 0; margin-left: auto;
+    }
     .nav-toggle { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--rust-deep); padding: 4px; }
 
     /* Help menu */
@@ -781,10 +796,17 @@
       .app-cta { flex-direction: column; text-align: center; }
       .app-stores { justify-content: center; }
       .nav-toggle { display: block; }
+      :root { --nav-h: 88px; --brand-logo-size: 60px; }
+      .brand { max-width: min(360px, 48vw); }
       .search-fields { grid-template-columns: 1fr 1fr; }
       .profiles-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 600px) {
+      :root { --nav-h: 80px; --brand-logo-size: 54px; }
+      .brand { gap: 10px; max-width: calc(100% - 168px); }
+      .brand-text-wrap small { font-size: 0.58rem; letter-spacing: 0.08em; }
+      .nav-actions .btn-sm { padding: 8px 12px; font-size: 0.72rem; }
+      .nav-help-btn { padding: 8px 10px; font-size: 0.72rem; }
       .section { padding: 60px 16px; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .features-grid { grid-template-columns: 1fr; }
@@ -809,11 +831,11 @@
     <div class="nav-inner">
       <a class="brand" href="#top">
         <div class="brand-logo">
-          <img src="app_logo.png" width="52" height="52" alt="mana Vivaaha Vedika logo" />
+          <img src="app_logo.png" width="68" height="68" alt="mana Vivaaha Vedika logo" />
         </div>
         <div class="brand-text-wrap">
           <small>Brahmin Matrimony</small>
-          <div class="brand-name">mana Vivaaha Vedika</div>
+          <div class="brand-name"><span class="mana">mana</span> Vivaaha Vedika</div>
         </div>
       </a>
       <div class="nav-actions">
