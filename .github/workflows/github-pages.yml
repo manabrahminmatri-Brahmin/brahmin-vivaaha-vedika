@@ -8,13 +8,6 @@ on:
     branches:
       - main
       - master
-    paths:
-      - 'web_deploy/**'
-      - 'index.html'
-      - 'privacy.html'
-      - 'assets/**'
-      - 'favicon.png'
-      - '.github/workflows/github-pages.yml'
   workflow_dispatch:
 
 permissions:
