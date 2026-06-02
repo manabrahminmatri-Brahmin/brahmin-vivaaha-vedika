@@ -288,7 +288,20 @@
     .profile-body { padding: 18px 20px 20px; }
     .profile-id { font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
     .profile-name { font-size: 1rem; font-weight: 700; color: var(--orange-dark); margin-bottom: 2px; }
-    .profile-age { font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; }
+    .profile-age { font-size: 0.82rem; color: var(--muted); margin-bottom: 10px; }
+    .profile-subcommunity {
+      display: flex; flex-direction: column; gap: 3px;
+      margin-bottom: 12px; padding: 10px 12px;
+      background: var(--orange-tint); border: 1px solid var(--orange-border);
+      border-radius: 10px;
+    }
+    .profile-subcommunity-label {
+      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--orange);
+    }
+    .profile-subcommunity-value {
+      font-size: 0.84rem; font-weight: 600; color: var(--orange-dark); line-height: 1.35;
+    }
     .profile-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
     .profile-tag {
       font-size: 0.68rem; font-weight: 600; padding: 4px 10px;
@@ -521,17 +534,28 @@
     .app-cta-visual { flex-shrink: 0; position: relative; align-self: center; }
     .app-cta-visual .phone-frame { max-width: 220px; }
 
-    /* ── Community / Gotras ── */
+    /* ── Community / Sub-community ── */
     .gotra-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
     .gotra-card {
-      background: var(--surface); border-radius: var(--radius-sm); padding: 20px 16px;
+      background: var(--surface); border-radius: var(--radius-sm); padding: 18px 14px 16px;
       text-align: center; border: 1px solid var(--orange-border); box-shadow: var(--shadow);
       transition: transform 0.2s;
+      display: flex; flex-direction: column; align-items: center;
     }
     .gotra-card:hover { transform: translateY(-4px); border-color: var(--orange); }
+    .community-type {
+      display: inline-block; font-size: 0.6rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--orange); background: var(--orange-tint);
+      border: 1px solid var(--orange-border); padding: 4px 10px;
+      border-radius: 999px; margin-bottom: 10px; line-height: 1.2;
+    }
+    .community-type--region { color: var(--orange-dark); background: #fff; }
+    .community-type--branch { color: #9a3412; background: #fff7ed; border-color: #fdba74; }
+    .community-type--sect { color: #7c2d12; background: #ffedd5; border-color: #fb923c; }
     .gotra-icon { font-size: 1.8rem; margin-bottom: 8px; }
-    .gotra-name { font-size: 0.82rem; font-weight: 700; color: var(--orange-dark); margin-bottom: 4px; }
-    .gotra-count { font-size: 0.7rem; color: var(--muted); }
+    .gotra-name { font-size: 0.82rem; font-weight: 700; color: var(--orange-dark); margin-bottom: 4px; line-height: 1.3; }
+    .gotra-count { font-size: 0.68rem; color: var(--muted); line-height: 1.4; }
 
     /* ── Blog / Tips ── */
     .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -598,29 +622,28 @@
       border: 2px solid var(--orange-border); box-shadow: var(--shadow);
     }
     .udyam-badge { display: flex; align-items: center; gap: 25px; }
-    .udyam-icon {
+    .udyam-logo-wrap {
       flex-shrink: 0;
-      width: 72px;
-      height: 72px;
+      width: clamp(148px, 22vw, 200px);
+      height: 76px;
       box-sizing: border-box;
-      padding: 12px 14px;
+      padding: 10px 12px;
       margin: 0;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--orange-dark), var(--orange));
-      color: #fff;
-      display: inline-flex;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--orange-border);
+      box-shadow: 0 4px 14px rgba(252, 86, 3, 0.08);
+      display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      line-height: 1.15;
-      text-align: center;
+      line-height: 0;
     }
-    .udyam-icon span {
+    .udyam-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
       display: block;
-      max-width: 100%;
     }
     .udyam h3 {
       font-size: clamp(1.1rem, 2.5vw, 1.35rem);
@@ -871,14 +894,15 @@
             </select>
           </div>
           <div class="search-field">
-            <label>Gotra / Sub-caste</label>
+            <label>Sub-community</label>
             <select>
-              <option>Any Gotra</option>
-              <option>Vishwamitra</option>
-              <option>Bharadwaja</option>
-              <option>Kasyapa</option>
-              <option>Vasistha</option>
-              <option>Atri</option>
+              <option>Any Sub-community</option>
+              <option>Niyogi</option>
+              <option>Vaidiki</option>
+              <option>Dravida</option>
+              <option>Velanadu</option>
+              <option>Telaganya</option>
+              <option>Mulakanadu</option>
             </select>
           </div>
           <div class="search-field">
@@ -968,8 +992,11 @@
             <div class="profile-id">MVV-B-2024-0182</div>
             <div class="profile-name">Sowmya Sharma</div>
             <div class="profile-age">26 yrs · 5'4" · Vijayawada</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Niyogi · Velanadu</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Bharadwaja Gotra</span>
               <span class="profile-tag">M.Tech</span>
               <span class="profile-tag">Software Engineer</span>
             </div>
@@ -989,8 +1016,11 @@
             <div class="profile-id">MVV-G-2024-0341</div>
             <div class="profile-name">Karthik Subramanyam</div>
             <div class="profile-age">29 yrs · 5'10" · Hyderabad</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Vaidiki · Mulakanadu</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Kasyapa Gotra</span>
               <span class="profile-tag">B.E + MBA</span>
               <span class="profile-tag">IT Manager</span>
             </div>
@@ -1011,8 +1041,11 @@
             <div class="profile-id">MVV-B-2024-0227</div>
             <div class="profile-name">Padmavathi Rao</div>
             <div class="profile-age">24 yrs · 5'2" · Tirupati</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Niyogi · Telaganya</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Vasistha Gotra</span>
               <span class="profile-tag">MBBS</span>
               <span class="profile-tag">Doctor</span>
             </div>
@@ -1033,8 +1066,11 @@
             <div class="profile-id">MVV-G-2024-0512</div>
             <div class="profile-name">Venkata Ramana</div>
             <div class="profile-age">31 yrs · 5'8" · Visakhapatnam</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Vaidiki · Velanadu</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Atri Gotra</span>
               <span class="profile-tag">CA</span>
               <span class="profile-tag">Finance Director</span>
             </div>
@@ -1054,8 +1090,11 @@
             <div class="profile-id">MVV-B-2024-0604</div>
             <div class="profile-name">Ananya Krishnamurthy</div>
             <div class="profile-age">27 yrs · 5'5" · Guntur</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Dravida · Konaseema</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Vishwamitra Gotra</span>
               <span class="profile-tag">MBA</span>
               <span class="profile-tag">Bank Manager</span>
             </div>
@@ -1075,8 +1114,11 @@
             <div class="profile-id">MVV-G-2024-0689</div>
             <div class="profile-name">Srinivasa Murthy</div>
             <div class="profile-age">28 yrs · 5'9" · Nellore</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Niyogi · Aruvela (6000)</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Bharadwaja Gotra</span>
               <span class="profile-tag">M.Pharm</span>
               <span class="profile-tag">Govt Employee</span>
             </div>
@@ -1097,8 +1139,11 @@
             <div class="profile-id">MVV-B-2024-0733</div>
             <div class="profile-name">Lalitha Devi</div>
             <div class="profile-age">25 yrs · 5'3" · Kurnool</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Vaidiki · Mulakanadu</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Kasyapa Gotra</span>
               <span class="profile-tag">B.Ed + M.A</span>
               <span class="profile-tag">Teacher</span>
             </div>
@@ -1119,8 +1164,11 @@
             <div class="profile-id">MVV-G-2024-0801</div>
             <div class="profile-name">Prasad Narayana</div>
             <div class="profile-age">32 yrs · 5'11" · Chennai</div>
+            <div class="profile-subcommunity">
+              <span class="profile-subcommunity-label">Sub-community</span>
+              <span class="profile-subcommunity-value">Niyogi · Nandavarika</span>
+            </div>
             <div class="profile-tags">
-              <span class="profile-tag">Vasistha Gotra</span>
               <span class="profile-tag">MBBS + MS</span>
               <span class="profile-tag">Surgeon</span>
             </div>
@@ -1288,7 +1336,7 @@
         <p>Use Search &amp; Filters, partner preferences in your profile wizard, and Platinum tools when you upgrade.</p>
       </div>
       <div class="why-grid">
-        <article class="why-card reveal"><div class="icon">🔍</div><h3>Search &amp; filters</h3><p>Filter by gotra, age, location, education, and more from the in-app search screen.</p></article>
+        <article class="why-card reveal"><div class="icon">🔍</div><h3>Search &amp; filters</h3><p>Filter by sub-community (sect &amp; sub-sect), age, location, education, and more from the in-app search screen.</p></article>
         <article class="why-card reveal"><div class="icon">💌</div><h3>Interests</h3><p>Send Interest from a profile; track Received and Sent tabs, including withdraw and reminder on pending sent items.</p></article>
         <article class="why-card reveal"><div class="icon">📸</div><h3>Photo requests</h3><p>Request private photos — accept or decline in Received; withdraw or remind from Sent.</p></article>
         <article class="why-card reveal"><div class="icon">📨</div><h3>Messages</h3><p>Chat with accepted matches only; unread badge counts chat messages (not photo requests or wishes).</p></article>
@@ -1315,70 +1363,81 @@
           <figcaption class="shot-caption">Settings<small>Account · Preferences · Subscription · Support</small></figcaption>
         </figure>
       </div>
-      <p class="plans-footnote reveal" style="margin-top:28px;">Partner preferences (age, gotra, education, location, etc.) are set in Profile → Edit Profile in the app — not on this website.</p>
+      <p class="plans-footnote reveal" style="margin-top:28px;">Partner preferences (age, sub-community, education, location, etc.) are set in Profile → Edit Profile in the app — not on this website.</p>
     </div>
   </section>
 
-  <!-- ── Gotras / Community ── -->
+  <!-- ── Sub-community ── -->
   <section class="section alt" id="community">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Brahmin Community</span>
-        <h2>Search by Gotra &amp; Sub-community</h2>
-        <p>We support all major Brahmin gotras and sub-communities across Telugu states.</p>
+        <h2>Search by Sub-community</h2>
+        <p>Filter matches in the app by Telugu Brahmin sub-communities — Niyogi, Vaidiki, and Dravida — plus regional traditions and branches (same as Search → Filters → Sect &amp; Sub-Sect).</p>
       </div>
       <div class="gotra-grid">
         <div class="gotra-card reveal">
-          <div class="gotra-icon">🕉</div>
-          <div class="gotra-name">Vishwamitra</div>
+          <span class="community-type">Sub-community</span>
+          <div class="gotra-icon">📜</div>
+          <div class="gotra-name">Niyogi</div>
           <div class="gotra-count">Filter in app</div>
         </div>
         <div class="gotra-card reveal">
-          <div class="gotra-icon">📿</div>
-          <div class="gotra-name">Bharadwaja</div>
-          <div class="gotra-count">Filter in app</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">☸</div>
-          <div class="gotra-name">Kasyapa</div>
-          <div class="gotra-count">Filter in app</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🪷</div>
-          <div class="gotra-name">Vasistha</div>
-          <div class="gotra-count">Filter in app</div>
-        </div>
-        <div class="gotra-card reveal">
-          <div class="gotra-icon">🌺</div>
-          <div class="gotra-name">Atri</div>
-          <div class="gotra-count">Filter in app</div>
-        </div>
-        <div class="gotra-card reveal">
+          <span class="community-type">Sub-community</span>
           <div class="gotra-icon">🪔</div>
-          <div class="gotra-name">Agastya</div>
+          <div class="gotra-name">Vaidiki</div>
           <div class="gotra-count">Filter in app</div>
         </div>
         <div class="gotra-card reveal">
-          <div class="gotra-icon">🌸</div>
-          <div class="gotra-name">Gautama</div>
+          <span class="community-type">Sub-community</span>
+          <div class="gotra-icon">🕉</div>
+          <div class="gotra-name">Dravida</div>
           <div class="gotra-count">Filter in app</div>
         </div>
         <div class="gotra-card reveal">
-          <div class="gotra-icon">🔱</div>
-          <div class="gotra-name">Jamadagni</div>
-          <div class="gotra-count">Filter in app</div>
+          <span class="community-type community-type--region">Sub-community · Region</span>
+          <div class="gotra-icon">🌾</div>
+          <div class="gotra-name">Velanadu</div>
+          <div class="gotra-count">Niyogi &amp; Vaidiki</div>
         </div>
         <div class="gotra-card reveal">
+          <span class="community-type community-type--region">Sub-community · Region</span>
+          <div class="gotra-icon">🏛</div>
+          <div class="gotra-name">Telaganya</div>
+          <div class="gotra-count">Telangana tradition</div>
+        </div>
+        <div class="gotra-card reveal">
+          <span class="community-type community-type--region">Sub-community · Region</span>
+          <div class="gotra-icon">⛰</div>
+          <div class="gotra-name">Mulakanadu</div>
+          <div class="gotra-count">Rayalaseema</div>
+        </div>
+        <div class="gotra-card reveal">
+          <span class="community-type community-type--region">Sub-community · Region</span>
+          <div class="gotra-icon">🌊</div>
+          <div class="gotra-name">Veginadu</div>
+          <div class="gotra-count">Coastal Andhra</div>
+        </div>
+        <div class="gotra-card reveal">
+          <span class="community-type community-type--branch">Sub-community · Branch</span>
           <div class="gotra-icon">⭐</div>
-          <div class="gotra-name">Shandilya</div>
-          <div class="gotra-count">Filter in app</div>
+          <div class="gotra-name">Aruvela (6000)</div>
+          <div class="gotra-count">Under Niyogi</div>
         </div>
         <div class="gotra-card reveal">
+          <span class="community-type community-type--branch">Sub-community · Branch</span>
+          <div class="gotra-icon">🪷</div>
+          <div class="gotra-name">Nandavarika</div>
+          <div class="gotra-count">Under Niyogi</div>
+        </div>
+        <div class="gotra-card reveal">
+          <span class="community-type community-type--sect">Sub-community · Sect</span>
           <div class="gotra-icon">🌟</div>
-          <div class="gotra-name">Other Gotras</div>
-          <div class="gotra-count">Filter in app</div>
+          <div class="gotra-name">Smartha &amp; more</div>
+          <div class="gotra-count">Sect filter in app</div>
         </div>
       </div>
+      <p class="plans-footnote reveal" style="margin-top:20px;">Gothram is collected on your profile for tradition and matching context; search filters use sub-community (sect / sub-sect), not gotra.</p>
     </div>
   </section>
 
@@ -1399,7 +1458,7 @@
         <div class="step-card reveal">
           <div class="step-num">2</div>
           <h3>Complete your profile</h3>
-          <p>Add birth details, gotra, family, education, photos, and partner preferences in the profile wizard.</p>
+          <p>Add birth details, sub-community, gothram, family, education, photos, and partner preferences in the profile wizard.</p>
         </div>
         <div class="step-card reveal">
           <div class="step-num">3</div>
@@ -1754,7 +1813,9 @@
     <div class="wrap">
       <div class="udyam reveal">
         <div class="udyam-badge">
-          <div class="udyam-icon" aria-hidden="true"><span>MSME</span></div>
+          <div class="udyam-logo-wrap">
+            <img src="assets/msme-logo.png" width="176" height="56" alt="MSME — Micro, Small &amp; Medium Enterprises" loading="lazy" decoding="async" />
+          </div>
           <div>
             <h3>MSME Registered Enterprise</h3>
             <p class="udyam-meta">Government of India — Ministry of MSME</p>
@@ -1784,7 +1845,7 @@
           <li><a href="#profiles">Browse Profiles</a></li>
           <li><a href="#app-preview">App Preview</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#community">By Gotra</a></li>
+          <li><a href="#community">Sub-community</a></li>
           <li><a href="#register">Register Free</a></li>
           <li><a href="#plans">Membership Plans</a></li>
           <li><a href="#how">How It Works</a></li>
