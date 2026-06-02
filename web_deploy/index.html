@@ -196,6 +196,21 @@
       color: var(--orange-dark); line-height: 1.25; margin-bottom: 12px;
     }
     .section-head p { color: var(--muted); font-size: 1rem; }
+    .plans-intro { max-width: 720px; margin: 0 auto 14px; line-height: 1.65; }
+    .plans-intro strong { color: var(--orange-dark); font-weight: 600; }
+    .plans-pricing-summary {
+      font-size: 0.92rem; font-weight: 600; color: var(--orange-dark);
+      background: var(--surface); border: 1px solid var(--orange-border);
+      border-radius: 12px; padding: 12px 18px; max-width: 720px; margin: 0 auto 10px;
+      line-height: 1.5;
+    }
+    .plans-note { font-size: 0.8rem; color: var(--muted); max-width: 720px; margin: 0 auto; }
+    .plan-save { font-size: 0.72rem; font-weight: 700; color: var(--orange); margin-bottom: 12px; }
+    .plan-card.featured .plan-save { color: #fde68a; }
+    .plans-footnote {
+      text-align: center; font-size: 0.8rem; color: var(--muted);
+      margin-top: 28px; max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.55;
+    }
 
     /* ── Stats ── */
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -1229,95 +1244,122 @@
       <div class="section-head reveal">
         <span class="eyebrow">Membership Plans</span>
         <h2>Choose the right plan for you</h2>
-        <p>Start free, upgrade when you're ready to connect faster.</p>
+        <p class="plans-intro">Registration is always <strong>free</strong>. Browse profiles, view details, and receive interest requests at no cost. Upgrade to <strong>Platinum</strong> in the app to unlock clear photos, contact information, WhatsApp messaging, and every premium feature below — same plans and prices as inside mana Vivaaha Vedika.</p>
+        <p class="plans-pricing-summary">Free (₹0) · Platinum 1 month ₹99 · 3 months ₹297 · 6 months ₹594 · 12 months ₹1,188</p>
+        <p class="plans-note">Listed prices are the app’s discounted fees. Strikethrough amounts show reference pricing. Pay securely via UPI in the app.</p>
       </div>
       <div class="plans-grid">
-        <!-- Free -->
+        <!-- Free — matches MembershipPlan.free in app -->
         <div class="plan-card reveal">
           <div class="plan-name">Free</div>
           <div class="plan-price">₹0</div>
           <div class="plan-price-was">&nbsp;</div>
-          <div class="plan-duration">Browse profiles · upgrade to connect</div>
+          <div class="plan-duration">Browse profiles, upgrade to connect</div>
           <ul class="plan-features">
             <li>View all profile details</li>
-            <li>Profile photos blurred (Premium unlocks)</li>
-            <li>View About Me section</li>
+            <li>Profile photos are blurred (Premium to unlock)</li>
+            <li>View &quot;About Me&quot; section</li>
             <li>Basic sorting &amp; filtering</li>
             <li>Edit profile anytime</li>
             <li>Receive interest requests</li>
           </ul>
           <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Register Free</a>
         </div>
-        <!-- Platinum 1 Month -->
+        <!-- Platinum 1 Month — ₹99 / 30 days -->
         <div class="plan-card reveal">
           <div class="plan-name">Platinum 1 Month</div>
           <div class="plan-price">₹99</div>
           <div class="plan-price-was"><s>₹499</s></div>
-          <div class="plan-duration">30 days · full premium access</div>
+          <p class="plan-save">You save ₹400</p>
+          <div class="plan-duration">Complete access to all features · 30 days</div>
           <ul class="plan-features">
             <li>Unlimited contact requests</li>
             <li>Direct WhatsApp messaging</li>
             <li>Advanced compatibility matching</li>
             <li>Priority profile visibility</li>
             <li>View contact information</li>
-            <li>Community Heads access</li>
-            <li>Advanced filters &amp; incognito mode</li>
+            <li>Access Community Heads details</li>
+            <li>Community reference requests</li>
+            <li>Send interest</li>
+            <li>Profile highlighter</li>
+            <li>Read receipts for messages</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
           </ul>
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 1 Month</a>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 1 Month in App</a>
         </div>
-        <!-- Platinum 3 Months -->
+        <!-- Platinum 3 Months — ₹297 / 90 days · Most Popular -->
         <div class="plan-card featured reveal">
           <div class="plan-badge">🌟 Most Popular</div>
           <div class="plan-name">Platinum 3 Months</div>
           <div class="plan-price">₹297</div>
           <div class="plan-price-was"><s>₹1,497</s></div>
-          <div class="plan-duration">90 days · best value</div>
+          <p class="plan-save">You save ₹1,200</p>
+          <div class="plan-duration">3 months premium access · 90 days</div>
           <ul class="plan-features">
-            <li>All 1-month Platinum features</li>
             <li>Unlimited contact requests</li>
             <li>Direct WhatsApp messaging</li>
+            <li>Advanced compatibility matching</li>
             <li>Priority profile visibility</li>
+            <li>View contact information</li>
+            <li>Access Community Heads details</li>
+            <li>Community reference requests</li>
+            <li>Send interest</li>
             <li>Profile highlighter</li>
             <li>Read receipts for messages</li>
-            <li>Advanced filters &amp; incognito mode</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
           </ul>
-          <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 3 Months</a>
+          <a class="btn btn-light" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 3 Months in App</a>
         </div>
-        <!-- Platinum 6 Months -->
+        <!-- Platinum 6 Months — ₹594 / 180 days -->
         <div class="plan-card reveal">
           <div class="plan-name">Platinum 6 Months</div>
           <div class="plan-price">₹594</div>
           <div class="plan-price-was"><s>₹2,994</s></div>
-          <div class="plan-duration">180 days · great savings</div>
+          <p class="plan-save">You save ₹2,400</p>
+          <div class="plan-duration">6 months premium access · 180 days</div>
           <ul class="plan-features">
-            <li>All Platinum features</li>
             <li>Unlimited contact requests</li>
             <li>Direct WhatsApp messaging</li>
+            <li>Advanced compatibility matching</li>
+            <li>Priority profile visibility</li>
+            <li>View contact information</li>
+            <li>Access Community Heads details</li>
             <li>Community reference requests</li>
+            <li>Send interest</li>
             <li>Profile highlighter</li>
-            <li>Read receipts &amp; advanced filters</li>
+            <li>Read receipts for messages</li>
+            <li>Advanced filters</li>
             <li>Incognito mode</li>
           </ul>
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 6 Months</a>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 6 Months in App</a>
         </div>
-        <!-- Platinum 12 Months -->
+        <!-- Platinum 12 Months — ₹1,188 / 365 days -->
         <div class="plan-card reveal">
           <div class="plan-name">Platinum 12 Months</div>
           <div class="plan-price">₹1,188</div>
           <div class="plan-price-was"><s>₹5,988</s></div>
-          <div class="plan-duration">365 days · maximum value</div>
+          <p class="plan-save">You save ₹4,800</p>
+          <div class="plan-duration">12 months premium access · 365 days</div>
           <ul class="plan-features">
-            <li>All Platinum features</li>
             <li>Unlimited contact requests</li>
             <li>Direct WhatsApp messaging</li>
+            <li>Advanced compatibility matching</li>
             <li>Priority profile visibility</li>
-            <li>Community Heads access</li>
+            <li>View contact information</li>
+            <li>Access Community Heads details</li>
+            <li>Community reference requests</li>
+            <li>Send interest</li>
             <li>Profile highlighter</li>
-            <li>Full year premium access</li>
+            <li>Read receipts for messages</li>
+            <li>Advanced filters</li>
+            <li>Incognito mode</li>
           </ul>
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 12 Months</a>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener" style="width:100%">Get 12 Months in App</a>
         </div>
       </div>
+      <p class="plans-footnote reveal">Every Platinum plan includes the same 12 premium features. Duration only changes how long your membership stays active. Upgrade anytime from Settings → Premium in the mana Vivaaha Vedika app.</p>
     </div>
   </section>
 
@@ -1608,7 +1650,7 @@
             Is mana Vivaaha Vedika free to use?
             <span class="faq-icon">+</span>
           </div>
-          <div class="faq-answer">Yes! Registration and basic profile browsing are completely free. You can create your profile, view other profiles, and use Ashtakoot matching at no cost. Platinum membership unlocks additional features like direct WhatsApp connect and unlimited contact requests.</div>
+          <div class="faq-answer">Yes. Registration is free (₹0). You can view profile details, read the About Me section, use basic sorting and filtering, edit your profile, and receive interest requests. Profile photos stay blurred until you upgrade. Platinum plans in the app are ₹99 (1 month), ₹297 (3 months), ₹594 (6 months), or ₹1,188 (12 months).</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
@@ -1643,7 +1685,7 @@
             What is included in Platinum membership?
             <span class="faq-icon">+</span>
           </div>
-          <div class="faq-answer">Platinum members get unlimited contact requests, direct WhatsApp connection with mutual matches, priority listing, advanced search filters, incognito mode, profile boost, read receipts, Community Heads access, and Discover 3D. It's the most comprehensive matrimony experience available on the platform.</div>
+          <div class="faq-answer">All Platinum plans include the same features: unlimited contact requests, direct WhatsApp messaging, advanced compatibility matching, priority profile visibility, view contact information, access Community Heads details, community reference requests, send interest, profile highlighter, read receipts for messages, advanced filters, and incognito mode. Choose 1, 3, 6, or 12 months — prices are ₹99, ₹297, ₹594, and ₹1,188 respectively in the app.</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
