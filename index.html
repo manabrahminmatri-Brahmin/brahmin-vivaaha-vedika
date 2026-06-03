@@ -132,19 +132,18 @@
     }
     .topic-panel-hidden { display: none !important; }
     #homeScreen.home-screen-section {
-      padding: 16px 0 40px;
+      padding: 12px 0 48px;
       background: var(--bg);
       position: relative;
       overflow: visible;
-      min-height: 0;
     }
     #homeScreen .home-screen-bg {
       position: absolute;
       inset: 0;
       z-index: 0;
       background:
-        radial-gradient(ellipse 55% 70% at 90% 40%, rgba(240,120,64,0.09) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(196,75,10,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 70% at 90% 40%, rgba(240,120,64,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(196,75,10,0.05) 0%, transparent 60%),
         var(--bg);
       pointer-events: none;
     }
@@ -154,94 +153,121 @@
     }
     .home-screen-lead {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 20px;
+      max-width: 800px;
+      margin: 0 auto 24px;
+      opacity: 1;
+      transform: none;
     }
     .home-screen-lead .hero-badge { margin-bottom: 10px; }
+    .home-screen-lead h1 {
+      font-family: var(--font);
+      font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--ink-2);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .home-screen-lead h1 .accent { color: var(--rust-vivid); }
     .home-screen-lead .hero-telugu {
-      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      font-size: clamp(0.92rem, 1.8vw, 1.05rem);
       color: var(--muted);
       margin-bottom: 8px;
     }
     .home-screen-lead .hero-desc {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--ink-3);
-      line-height: 1.6;
-      max-width: 560px;
+      line-height: 1.65;
+      max-width: 580px;
       margin: 0 auto;
+    }
+    .home-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 400px);
+      gap: clamp(24px, 4vw, 48px);
+      align-items: start;
+    }
+    .home-benefits {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .home-benefits-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 16px;
     }
     #homeScreen .hero-highlights {
       max-height: none !important;
       overflow: visible !important;
-      max-width: none;
+      gap: 12px;
       margin: 0;
-      gap: 10px;
+    }
+    #homeScreen .hero-point-title {
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+    #homeScreen .hero-point-text {
+      font-size: 0.8rem;
+      line-height: 1.5;
     }
     .home-quick-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
+      gap: 8px 14px;
+      margin-top: 18px;
       padding-top: 16px;
       border-top: 1px solid var(--border);
     }
     .home-quick-links a {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--rust-deep);
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1.5px solid var(--border);
-      background: #fff;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .home-quick-links a:hover {
-      background: var(--rust-pale);
-      border-color: var(--rust);
       text-decoration: none;
     }
-    #homeScreen .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
-      gap: clamp(20px, 3vw, 40px);
-      align-items: start;
-    }
+    .home-quick-links a:hover { color: var(--rust); text-decoration: underline; }
+    .home-quick-links a::before { content: '→ '; color: var(--rust); font-weight: 700; }
     #homeScreen .reg-card {
-      position: sticky;
-      top: calc(var(--nav-h) + 52px);
-      max-height: calc(100dvh - var(--nav-h) - 64px);
-      overflow-y: auto;
-      scrollbar-width: thin;
+      position: static;
+      max-height: none;
+      overflow: visible;
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius);
     }
-    #homeScreen .reg-form { padding: 16px 18px 14px; }
-    #homeScreen .reg-field { margin-bottom: 11px; }
-    #homeScreen .reg-card-head { padding: 12px 18px; font-size: 0.95rem; }
-    #homeScreen .reg-check { font-size: 0.72rem; line-height: 1.45; }
-    .home-screen-lead h1 {
-      font-family: var(--font);
-      font-size: clamp(1.65rem, 3.5vw, 2.45rem);
-      font-weight: 800;
-      line-height: 1.15;
-      color: var(--ink-2);
-      letter-spacing: -0.01em;
-      margin-bottom: 6px;
+    #homeScreen .reg-form { padding: 18px 20px 20px; }
+    #homeScreen .reg-field { margin-bottom: 12px; }
+    #homeScreen .reg-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-    .home-screen-lead h1 .accent { color: var(--rust-vivid); }
+    #homeScreen .reg-form-row .reg-field { margin-bottom: 12px; }
+    #homeScreen .reg-card-head { padding: 14px 20px; font-size: 1rem; }
+    #homeScreen .reg-check {
+      font-size: 0.74rem;
+      line-height: 1.5;
+      margin-top: 4px;
+      padding: 10px 12px;
+      background: var(--bg-warm);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    #homeScreen .reg-submit { margin-top: 4px; }
+    #homeScreen .reg-note { margin-top: 12px; padding-bottom: 2px; }
     @media (max-width: 960px) {
-      #homeScreen .hero-grid {
+      .home-layout {
         grid-template-columns: 1fr;
         max-width: 440px;
         margin: 0 auto;
       }
-      #homeScreen .reg-card {
-        position: static;
-        max-height: none;
-        overflow: visible;
-        order: -1;
-      }
-      #homeScreen .hero-copy { order: 1; }
-      .home-screen-lead { margin-bottom: 16px; }
+      #homeScreen .reg-card { order: -1; }
+      .home-benefits { order: 1; }
+      #homeScreen .reg-form-row { grid-template-columns: 1fr; }
     }
   #homeExplore {
     padding: 20px 24px 0;
@@ -1151,14 +1177,15 @@
   <section id="homeScreen" class="section home-screen-section">
     <div class="home-screen-bg" aria-hidden="true"></div>
     <div class="wrap home-screen-inner">
-      <div class="home-screen-lead reveal">
+      <header class="home-screen-lead">
         <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
         <h1>Find Your <span class="accent">Perfect</span> Brahmin Match</h1>
         <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
-        <p class="hero-desc">Register free below, then browse profiles, compatibility scores, and Premium plans in the other tabs.</p>
-      </div>
-      <div class="hero-grid">
-        <div class="hero-copy">
+        <p class="hero-desc">Create your free profile on the right, then use the tabs above to search matches, view plans, and explore the app.</p>
+      </header>
+      <div class="home-layout">
+        <aside class="home-benefits" aria-label="Platform highlights">
+          <p class="home-benefits-title">Why mana Vivaaha Vedika</p>
           <div class="hero-highlights">
             <article class="hero-point">
               <div class="hero-point-body">
@@ -1185,8 +1212,8 @@
             <a href="#" data-home-topic="plans">Membership Plans</a>
             <a href="#" data-home-topic="how">How It Works</a>
           </nav>
-        </div>
-        <div class="reg-card" id="register">
+        </aside>
+        <div class="reg-card home-reg-card" id="register">
           <div class="reg-tabs" role="tablist">
             <button type="button" class="reg-tab active" data-panel="register" role="tab" aria-selected="true">New Registration</button>
             <button type="button" class="reg-tab" data-panel="login" role="tab" aria-selected="false">Member Login</button>
@@ -1209,13 +1236,15 @@
                   <option>Bride</option><option>Groom</option>
                 </select>
               </div>
-              <div class="reg-field">
-                <label for="regFirstName">First name</label>
-                <input type="text" id="regFirstName" placeholder="Enter first name" autocomplete="given-name" required />
-              </div>
-              <div class="reg-field">
-                <label for="regLastName">Last name</label>
-                <input type="text" id="regLastName" placeholder="Enter last name" autocomplete="family-name" required />
+              <div class="reg-form-row">
+                <div class="reg-field">
+                  <label for="regFirstName">First name</label>
+                  <input type="text" id="regFirstName" placeholder="First name" autocomplete="given-name" required />
+                </div>
+                <div class="reg-field">
+                  <label for="regLastName">Last name</label>
+                  <input type="text" id="regLastName" placeholder="Last name" autocomplete="family-name" required />
+                </div>
               </div>
               <div class="reg-field">
                 <label for="regMobile">Mobile number</label>
@@ -1914,6 +1943,10 @@
         });
       }
       ids.forEach(revealInPanel);
+      if (topic === 'home') {
+        var homeReveal = document.querySelectorAll('#homeScreen .reveal');
+        homeReveal.forEach(function (r) { r.classList.add('visible'); });
+      }
       if (topic !== 'home') {
         var first = document.getElementById(ids[0]);
         if (first && siteContent) {
@@ -1989,6 +2022,7 @@
     }
     document.body.classList.add('site-unlocked');
     setHomeTopic(topicFromHash(location.hash) || 'home');
+    document.querySelectorAll('#homeScreen .reveal').forEach(function (r) { r.classList.add('visible'); });
 
     // ── Tabs
     function setTab(panel) {
