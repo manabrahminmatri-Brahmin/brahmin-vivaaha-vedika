@@ -245,7 +245,7 @@ NEW_FAQ = """      <div class="faq-list reveal">
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">How do I contact support?<span class="faq-icon">+</span></div>
-          <div class="faq-answer">In the app: Settings → Support → Chat with Support, or use Call / WhatsApp / Email on Help &amp; Support. WhatsApp: +91 8985936678 · Email: support@manaVivaahaVedika.com. Share your profile ID and a screenshot for faster help.</div>
+          <div class="faq-answer">In the app: Settings → Support → Chat with Support, or use Call / WhatsApp / Email on Help &amp; Support. WhatsApp: +91 8985936678 · Email: support@manaVivaahaVedika.in. Share your profile ID and a screenshot for faster help.</div>
         </div>
       </div>
     </div>
@@ -269,7 +269,7 @@ text = text.replace(
           <div class="contact-icon">📧</div>
           <h4>Email Support</h4>
           <p>Send us your queries, profile help requests, or feedback anytime.</p>
-          <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
+          <a href="mailto:support@manaVivaahaVedika.in">support@manaVivaahaVedika.in</a>
         </div>
         <div class="contact-card reveal">
           <div class="contact-icon">📞</div>
@@ -296,8 +296,8 @@ text = text.replace(
         <div class="contact-card reveal">
           <div class="contact-icon">📧</div>
           <h4>Email</h4>
-          <p>support@manaVivaahaVedika.com</p>
-          <a href="mailto:support@manaVivaahaVedika.com">support@manaVivaahaVedika.com</a>
+          <p>support@manaVivaahaVedika.in</p>
+          <a href="mailto:support@manaVivaahaVedika.in">support@manaVivaahaVedika.in</a>
         </div>
         <div class="contact-card reveal">
           <div class="contact-icon">📞</div>

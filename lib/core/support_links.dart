@@ -9,7 +9,7 @@ class SupportLinks {
 
   static const String supportPhone = '+918985936678';
   static const String supportPhoneDisplay = '+91 8985936678';
-  static const String supportEmail = 'support@manaVivaahaVedika.com';
+  static const String supportEmail = 'support@manaVivaahaVedika.in';
 
   /// Official updates channel — replaces legacy Mana matrimony announcements.
   static const String whatsAppChannelUrl =

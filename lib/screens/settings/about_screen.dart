@@ -5,6 +5,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/whatsapp_channel_card.dart';
 import '../../utils/app_animations.dart';
+import '../../core/support_links.dart';
 import '../../utils/app_version.dart';
 
 enum Language { english, telugu }
@@ -347,7 +348,7 @@ class _AboutScreenState extends State<AboutScreen> {
   Future<void> _launchEmail() async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
-      path: 'support@manaVivaaha Vedika.com',
+      path: SupportLinks.supportEmail,
       query: 'subject=Inquiry about mana Vivaaha Vedika',
     );
 
