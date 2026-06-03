@@ -151,35 +151,58 @@
       position: relative;
       z-index: 1;
     }
-    .home-screen-lead {
+    .home-hero-band {
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto 24px;
-      opacity: 1;
-      transform: none;
+      max-width: 900px;
+      margin: 0 auto 20px;
+      padding: 18px 20px 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: calc(var(--nav-h) + 56px);
     }
-    .home-screen-lead .hero-badge { margin-bottom: 10px; }
-    .home-screen-lead h1 {
+    .home-hero-band .hero-badge { margin-bottom: 10px; }
+    .home-hero-band h1 {
+      display: block;
+      visibility: visible;
       font-family: var(--font);
-      font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+      font-size: clamp(1.85rem, 4vw, 2.55rem);
       font-weight: 800;
       line-height: 1.2;
       color: var(--ink-2);
       letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      margin: 0 0 8px;
     }
-    .home-screen-lead h1 .accent { color: var(--rust-vivid); }
-    .home-screen-lead .hero-telugu {
+    .home-hero-band h1 .accent { color: var(--rust-vivid); }
+    .home-hero-band .hero-telugu {
       font-size: clamp(0.92rem, 1.8vw, 1.05rem);
       color: var(--muted);
       margin-bottom: 8px;
     }
-    .home-screen-lead .hero-desc {
+    .home-hero-band .hero-desc {
       font-size: 0.88rem;
       color: var(--ink-3);
       line-height: 1.65;
-      max-width: 580px;
+      max-width: 620px;
       margin: 0 auto;
+    }
+    .home-app-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+    .home-app-pill {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--rust-deep);
+      background: var(--rust-pale);
+      border: 1px solid var(--rust-tint2);
+      border-radius: 999px;
+      padding: 5px 11px;
+      white-space: nowrap;
     }
     .home-layout {
       display: grid;
@@ -1177,32 +1200,63 @@
   <section id="homeScreen" class="section home-screen-section">
     <div class="home-screen-bg" aria-hidden="true"></div>
     <div class="wrap home-screen-inner">
-      <header class="home-screen-lead">
-        <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
+      <header class="home-hero-band" id="homeHeroLead">
+        <div class="hero-badge">Trusted Telugu Brahmin Matrimony · UDYAM MSME Registered</div>
         <h1>Find Your <span class="accent">Perfect</span> Brahmin Match</h1>
         <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
-        <p class="hero-desc">Create your free profile on the right, then use the tabs above to search matches, view plans, and explore the app.</p>
+        <p class="hero-desc">Register free with OTP verification, then complete your profile and connect through interests, chat, and Premium plans in the Android app.</p>
+        <div class="home-app-pills" aria-label="App highlights">
+          <span class="home-app-pill">Ashtakoot scores</span>
+          <span class="home-app-pill">Sub-community filters</span>
+          <span class="home-app-pill">MPIN + biometric login</span>
+          <span class="home-app-pill">Interests &amp; chat</span>
+          <span class="home-app-pill">Premium from ₹99/mo</span>
+        </div>
       </header>
       <div class="home-layout">
         <aside class="home-benefits" aria-label="Platform highlights">
-          <p class="home-benefits-title">Why mana Vivaaha Vedika</p>
+          <p class="home-benefits-title">What you get in the app</p>
           <div class="hero-highlights">
             <article class="hero-point">
               <div class="hero-point-body">
-                <h3 class="hero-point-title">Free Registration (₹0)</h3>
-                <p class="hero-point-text">OTP-verified mobile &amp; secure MPIN login in the app.</p>
+                <h3 class="hero-point-title">Free membership (₹0)</h3>
+                <p class="hero-point-text">Browse profiles, view details &amp; About Me, receive interests — photos blurred until Premium.</p>
               </div>
             </article>
             <article class="hero-point">
               <div class="hero-point-body">
-                <h3 class="hero-point-title">Ashtakoot &amp; Sub-community Filters</h3>
-                <p class="hero-point-text">Traditional matching with modern search and privacy controls.</p>
+                <h3 class="hero-point-title">Ashtakoot compatibility</h3>
+                <p class="hero-point-text">8-fold Vedic star matching with scores out of 36 on profiles with birth details.</p>
               </div>
             </article>
             <article class="hero-point">
               <div class="hero-point-body">
-                <h3 class="hero-point-title">Premium from ₹99/month</h3>
-                <p class="hero-point-text">Unlock photos, contacts, and messaging when you are ready.</p>
+                <h3 class="hero-point-title">Telugu Brahmin sub-communities</h3>
+                <p class="hero-point-text">Filter by Niyogi, Vaidiki, Dravida, Velanadu, Mulakanadu, sect &amp; partner preferences.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Family-managed profiles</h3>
+                <p class="hero-point-text">Parents or guardians can register and manage profiles for bride or groom.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Interests, photos &amp; privacy requests</h3>
+                <p class="hero-point-text">Send interest, request photos, birth details &amp; community references — you control what is shared.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Secure MPIN login</h3>
+                <p class="hero-point-text">OTP at signup, private 4-digit MPIN, optional biometric login, block &amp; report tools.</p>
+              </div>
+            </article>
+            <article class="hero-point">
+              <div class="hero-point-body">
+                <h3 class="hero-point-title">Premium (from ₹99/month)</h3>
+                <p class="hero-point-text">Clear photos, contact details, WhatsApp messaging, advanced filters, Discover 3D, incognito mode &amp; in-app support.</p>
               </div>
             </article>
           </div>
@@ -1457,6 +1511,9 @@
         <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-shield"/></svg></div><h3>Privacy Controls</h3><p>Mask photos, identity, and chat until you approve. Privacy settings apply consistently across all lists and chat.</p></article>
         <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-chat"/></svg></div><h3>Direct Communication</h3><p>Send interest, photo requests, and chat with accepted matches. Manage everything from the Interests hub.</p></article>
         <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mobile"/></svg></div><h3>Mobile OTP Verification</h3><p>Every account is tied to a verified Indian mobile number at registration for authentic, trustworthy profiles.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-search"/></svg></div><h3>Advanced Filters</h3><p>Sub-community, education, location, age, and partner preferences — same filters as the in-app search experience.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-star"/></svg></div><h3>Birth &amp; Community Requests</h3><p>Request horoscope / birth details and community reference checks before sharing contact information.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-chat"/></svg></div><h3>In-App Support</h3><p>Settings → Support → chat with our team, plus WhatsApp and phone help (10 AM – 6 PM IST).</p></article>
       </div>
     </div>
   </section>
@@ -1895,6 +1952,7 @@
     };
     var hashToTopic = {
       homeScreen: 'home',
+      homeHeroLead: 'home',
       top: 'home',
       register: 'home',
       'get-started': 'how',
@@ -1944,8 +2002,14 @@
       }
       ids.forEach(revealInPanel);
       if (topic === 'home') {
-        var homeReveal = document.querySelectorAll('#homeScreen .reveal');
-        homeReveal.forEach(function (r) { r.classList.add('visible'); });
+        document.querySelectorAll('#homeScreen .reveal').forEach(function (r) { r.classList.add('visible'); });
+        requestAnimationFrame(function () {
+          var lead = document.getElementById('homeHeroLead');
+          if (!lead) return;
+          var tabsH = tabBar ? tabBar.offsetHeight : 0;
+          var top = lead.getBoundingClientRect().top + window.scrollY - varNavH() - tabsH - 10;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        });
       }
       if (topic !== 'home') {
         var first = document.getElementById(ids[0]);
@@ -2023,6 +2087,10 @@
     document.body.classList.add('site-unlocked');
     setHomeTopic(topicFromHash(location.hash) || 'home');
     document.querySelectorAll('#homeScreen .reveal').forEach(function (r) { r.classList.add('visible'); });
+    requestAnimationFrame(function () {
+      var lead = document.getElementById('homeHeroLead');
+      if (lead) window.scrollTo({ top: 0, behavior: 'auto' });
+    });
 
     // ── Tabs
     function setTab(panel) {
@@ -2077,12 +2145,14 @@
     document.querySelectorAll('.nav-links a, .footer a, #siteContent a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         var href = link.getAttribute('href') || '';
-        if (href === '#register' || href === '#top' || href === '#homeScreen') {
+        if (href === '#register' || href === '#top' || href === '#homeScreen' || href === '#homeHeroLead') {
           e.preventDefault();
           setHomeTopic('home');
           setTab(link.getAttribute('data-reg-tab') === 'login' ? 'login' : 'register');
-          var reg = document.getElementById('register');
-          if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (href === '#register') {
+            var reg = document.getElementById('register');
+            if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
           return;
         }
         if (applyTopicNav(href, e)) return;
