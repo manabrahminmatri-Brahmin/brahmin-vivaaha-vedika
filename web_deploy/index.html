@@ -131,6 +131,63 @@
       color: #fff;
     }
     .topic-panel-hidden { display: none !important; }
+    body.site-locked #homeTopicTabs .topic-tab-btn:not([data-topic="home"]) {
+      display: none;
+    }
+    #homeScreen {
+      padding: 28px 24px 40px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    #homeScreen .home-screen-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 55% 70% at 90% 40%, rgba(240,120,64,0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(196,75,10,0.06) 0%, transparent 60%),
+        var(--bg);
+      pointer-events: none;
+    }
+    #homeScreen .home-screen-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    #homeScreen .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr min(420px, 42%);
+      gap: clamp(32px, 5vw, 64px);
+      align-items: start;
+    }
+    #homeScreen .hero-copy h1 {
+      font-family: var(--font);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--ink-2);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    #homeScreen .hero-copy h1 .accent { color: var(--rust-vivid); }
+    #homeScreen .hero-telugu {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+    #homeScreen .hero-desc {
+      font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+      color: var(--ink-3);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) {
+      #homeScreen .hero-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    }
   #homeExplore {
     padding: 20px 24px 0;
     background: var(--bg-warm);
@@ -964,7 +1021,7 @@
   <!-- ─── Navbar ─── -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a class="brand" href="#top">
+      <a class="brand" href="#homeScreen">
         <div class="brand-logo">
           <img src="app_logo.png" width="140" height="140" alt="mana Vivaaha Vedika logo" />
         </div>
@@ -1005,6 +1062,7 @@
     </div>
     <ul class="nav-links" id="navLinks">
       <li class="nav-drawer-label">Browse</li>
+      <li><a href="#homeScreen">Home</a></li>
       <li><a href="#profiles">Profiles</a></li>
       <li><a href="#app-preview">App Preview</a></li>
       <li><a href="#features">Features</a></li>
@@ -1019,14 +1077,25 @@
     </ul>
   </nav>
 
-  <!-- ─── Hero ─── -->
-  <header class="hero hero--gate" id="top">
-    <div class="hero-bg"></div>
-    <div class="hero-ornament a"></div>
-    <div class="hero-ornament b"></div>
-    <div class="hero-inner">
+  <!-- ─── Main (topic tabs below header; Home = registration) ─── -->
+  <main id="siteContent" class="site-content">
+
+  <nav class="topic-tabs" id="homeTopicTabs" aria-label="Site sections">
+    <button type="button" class="topic-tab-btn active" data-topic="home">Home</button>
+    <button type="button" class="topic-tab-btn" data-topic="explore">Explore</button>
+    <button type="button" class="topic-tab-btn" data-topic="profiles">Browse Profiles</button>
+    <button type="button" class="topic-tab-btn" data-topic="app-preview">App Preview</button>
+    <button type="button" class="topic-tab-btn" data-topic="features">Features</button>
+    <button type="button" class="topic-tab-btn" data-topic="community">Sub-community</button>
+    <button type="button" class="topic-tab-btn" data-topic="plans">Membership Plans</button>
+    <button type="button" class="topic-tab-btn" data-topic="how">How It Works</button>
+  </nav>
+
+  <!-- Home: registration & welcome -->
+  <section id="homeScreen">
+    <div class="home-screen-bg" aria-hidden="true"></div>
+    <div class="home-screen-inner">
       <div class="hero-grid">
-        <!-- Copy -->
         <div class="hero-copy">
           <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
           <h1>Find Your <span class="accent">Perfect</span><br/>Brahmin Match</h1>
@@ -1071,13 +1140,11 @@
             </article>
           </div>
         </div>
-        <!-- Registration Card -->
         <div class="reg-card" id="register">
           <div class="reg-tabs" role="tablist">
             <button type="button" class="reg-tab active" data-panel="register" role="tab" aria-selected="true">New Registration</button>
             <button type="button" class="reg-tab" data-panel="login" role="tab" aria-selected="false">Member Login</button>
           </div>
-          <!-- Register panel -->
           <div class="reg-panel active" id="regPanelRegister">
             <div class="reg-card-head">Create a Matrimony Profile</div>
             <form class="reg-form" id="heroRegForm" novalidate>
@@ -1113,13 +1180,12 @@
               </div>
               <label class="reg-check">
                 <input type="checkbox" id="regAgree" required />
-                <span>I agree to the <a href="terms.html" target="_blank">Terms</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</span>
+                <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms</a>, <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>, and <a href="refund.html" target="_blank" rel="noopener">Return &amp; Refund Policy</a>.</span>
               </label>
               <button type="submit" class="btn btn-primary reg-submit">Continue →</button>
               <p class="reg-note">Next: install the app to complete OTP &amp; MPIN setup.</p>
             </form>
           </div>
-          <!-- Login panel -->
           <div class="reg-panel" id="regPanelLogin" hidden>
             <div class="reg-card-head">Already Registered? Log In</div>
             <form class="reg-form" id="heroLoginForm" novalidate>
@@ -1137,23 +1203,8 @@
           </div>
         </div>
       </div>
-      <p style="text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.7);margin-top:24px;display:none;" id="gateHint">Fill in the form above to continue. Need help? Use the <strong>Help</strong> menu.</p>
     </div>
-  </header>
-
-  <!-- ─── Main Content (locked until registration) ─── -->
-  <main id="siteContent" class="site-content is-locked" aria-hidden="true">
-
-  <nav class="topic-tabs" id="homeTopicTabs" aria-label="Explore topics">
-    <button type="button" class="topic-tab-btn active" data-topic="explore">Explore</button>
-    <button type="button" class="topic-tab-btn" data-topic="profiles">Browse Profiles</button>
-    <button type="button" class="topic-tab-btn" data-topic="app-preview">App Preview</button>
-    <button type="button" class="topic-tab-btn" data-topic="features">Features</button>
-    <button type="button" class="topic-tab-btn" data-topic="community">Sub-community</button>
-    <button type="button" class="topic-tab-btn" data-topic="plans">Membership Plans</button>
-    <button type="button" class="topic-tab-btn" data-topic="how">How It Works</button>
-    <button type="button" class="topic-tab-btn" data-topic="register">Register Free</button>
-  </nav>
+  </section>
 
   <!-- Quick Search -->
   <div id="homeExplore">
@@ -1651,13 +1702,14 @@
       <div class="footer-col">
         <h4>Explore</h4>
         <ul>
+          <li><a href="#homeScreen">Home</a></li>
           <li><a href="#profiles">Browse Profiles</a></li>
           <li><a href="#app-preview">App Preview</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#community">Sub-community</a></li>
           <li><a href="#plans">Membership Plans</a></li>
           <li><a href="#how">How It Works</a></li>
-          <li><a href="#register">Register Free</a></li>
+          <li><a href="#register">Register / Log in</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1709,7 +1761,12 @@
       if (homeFloat) homeFloat.classList.toggle('visible', y > 400);
     }, { passive: true });
     if (homeFloat) homeFloat.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (document.body.classList.contains('site-unlocked')) {
+        setHomeTopic('home');
+      }
+      var homeEl = document.getElementById('homeScreen');
+      if (homeEl) homeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // ── Nav toggle
@@ -1752,26 +1809,29 @@
 
     // ── Home topic tabs (one screen per Explore topic)
     var topicPanels = {
+      home: ['homeScreen', 'get-started'],
       explore: ['homeExplore', 'stats'],
       profiles: ['profiles'],
       'app-preview': ['app-preview'],
       features: ['features'],
       community: ['community'],
       plans: ['plans', 'download'],
-      how: ['how'],
-      register: ['get-started']
+      how: ['how']
     };
     var hashToTopic = {
+      homeScreen: 'home',
+      top: 'home',
+      register: 'home',
+      'get-started': 'home',
       profiles: 'profiles',
       'app-preview': 'app-preview',
       features: 'features',
       community: 'community',
       plans: 'plans',
       how: 'how',
-      register: 'register',
-      'get-started': 'register',
       stats: 'explore',
       download: 'plans',
+      homeExplore: 'explore'
     };
     var allTopicPanelIds = [];
     Object.keys(topicPanels).forEach(function (t) {
@@ -1793,7 +1853,7 @@
     }
 
     function setHomeTopic(topic) {
-      var ids = topicPanels[topic] || topicPanels.explore;
+      var ids = topicPanels[topic] || topicPanels.home;
       allTopicPanelIds.forEach(function (id) {
         var el = document.getElementById(id);
         if (!el) return;
@@ -1829,7 +1889,14 @@
     if (homeTopicTabs) {
       homeTopicTabs.querySelectorAll('.topic-tab-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          setHomeTopic(btn.getAttribute('data-topic') || 'explore');
+          var topic = btn.getAttribute('data-topic') || 'home';
+          if (document.body.classList.contains('site-locked') && topic !== 'home') {
+            setHomeTopic('home');
+            var regGate = document.getElementById('register');
+            if (regGate) regGate.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+          setHomeTopic(topic);
         });
       });
     }
@@ -1855,30 +1922,36 @@
       if (!topic && id === 'homeExplore') topic = 'explore';
       if (!topic) return false;
       if (e) e.preventDefault();
-      if (document.body.classList.contains('site-locked')) unlockSite(false);
+      if (document.body.classList.contains('site-locked') && topic !== 'home') {
+        setHomeTopic('home');
+        var regGate = document.getElementById('register');
+        if (regGate) regGate.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return true;
+      }
       setHomeTopic(topic);
       return true;
     }
 
-    // ── Unlock
+    // ── Unlock (browse tabs after registration / login)
     var siteContent = document.getElementById('siteContent');
     function unlockSite(scroll) {
       sessionStorage.setItem('mvv_unlocked', '1');
       document.body.classList.remove('site-locked');
       document.body.classList.add('site-unlocked');
-      if (siteContent) { siteContent.classList.remove('is-locked'); siteContent.removeAttribute('aria-hidden'); }
-      if (scroll && siteContent) {
+      if (scroll) {
         requestAnimationFrame(function () {
-          siteContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setHomeTopic(topicFromHash(location.hash) || 'explore');
+          setHomeTopic(topicFromHash(location.hash) || 'home');
+          var reg = document.getElementById('register');
+          if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
       }
     }
     if (sessionStorage.getItem('mvv_unlocked') === '1') {
-      unlockSite(false);
-      setHomeTopic(topicFromHash(location.hash) || 'explore');
+      document.body.classList.remove('site-locked');
+      document.body.classList.add('site-unlocked');
+      setHomeTopic(topicFromHash(location.hash) || 'home');
     } else {
-      setHomeTopic('explore');
+      setHomeTopic('home');
     }
 
     // ── Tabs
@@ -1934,19 +2007,19 @@
     document.querySelectorAll('.nav-links a, .footer a, #siteContent a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         var href = link.getAttribute('href') || '';
-        if (href === '#register' || href === '#top') {
-          if (href === '#register' && document.body.classList.contains('site-locked')) {
-            e.preventDefault();
-            setTab('register');
-            var reg = document.getElementById('register');
-            if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
+        if (href === '#register' || href === '#top' || href === '#homeScreen') {
+          e.preventDefault();
+          setHomeTopic('home');
+          setTab(link.getAttribute('data-reg-tab') === 'login' ? 'login' : 'register');
+          var reg = document.getElementById('register');
+          if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return;
         }
         if (applyTopicNav(href, e)) return;
         if (!document.body.classList.contains('site-locked')) return;
         if (href.charAt(0) !== '#') return;
         e.preventDefault();
+        setHomeTopic('home');
         setTab('register');
         var regHero = document.getElementById('register');
         if (regHero) regHero.scrollIntoView({ behavior: 'smooth', block: 'center' });
