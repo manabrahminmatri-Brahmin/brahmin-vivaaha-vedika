@@ -1,12 +1,12 @@
 # Live website (Firebase & GitHub Pages)
 
-This folder is the **published site**. Edit `index.html`, `privacy.html`, and `terms.html` here only.
+This folder is the **published site**. Edit `index.html`, `privacy.html`, `terms.html`, and `refund.html` here only.
 
 After changes, sync to repo root (needed if GitHub Pages uses branch deploy):
 
 ```powershell
 .\scripts\sync-web-deploy-to-root.ps1
-git add web_deploy index.html privacy.html terms.html assets
+git add web_deploy index.html privacy.html terms.html refund.html assets
 git commit -m "Update landing page"
 git push origin main
 ```

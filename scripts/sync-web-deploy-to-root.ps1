@@ -13,7 +13,7 @@ if (-not (Test-Path $logoRoot)) {
   elseif (Test-Path $logoFull) { Copy-Item -Force $logoFull $logoRoot }
 }
 
-foreach ($f in @("index.html", "privacy.html", "terms.html", "app_logo.png", "favicon.png")) {
+foreach ($f in @("index.html", "privacy.html", "terms.html", "refund.html", "app_logo.png", "favicon.png")) {
   $from = Join-Path $src $f
   if (Test-Path $from) { Copy-Item -Force $from (Join-Path $root $f) }
 }
