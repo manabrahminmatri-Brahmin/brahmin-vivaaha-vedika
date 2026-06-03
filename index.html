@@ -131,11 +131,12 @@
       color: #fff;
     }
     .topic-panel-hidden { display: none !important; }
-    #homeScreen {
-      padding: 28px 24px 40px;
+    .home-screen-section {
+      padding: 28px 0 56px;
       background: var(--bg);
       position: relative;
       overflow: hidden;
+      min-height: calc(100dvh - var(--nav-h) - 52px);
     }
     #homeScreen .home-screen-bg {
       position: absolute;
@@ -150,8 +151,43 @@
     #homeScreen .home-screen-inner {
       position: relative;
       z-index: 1;
-      max-width: var(--max);
+    }
+    .home-screen-lead {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 28px;
+    }
+    .home-screen-lead .hero-badge { margin-bottom: 12px; }
+    .home-screen-lead .hero-desc { max-width: none; margin-left: auto; margin-right: auto; }
+    #homeScreen .hero-highlights {
+      max-height: none;
+      overflow: visible;
+      max-width: 520px;
       margin: 0 auto;
+    }
+    .home-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .home-quick-links a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--rust-deep);
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .home-quick-links a:hover {
+      background: var(--rust-pale);
+      border-color: var(--rust);
+      text-decoration: none;
     }
     #homeScreen .hero-grid {
       display: grid;
@@ -159,7 +195,7 @@
       gap: clamp(32px, 5vw, 64px);
       align-items: start;
     }
-    #homeScreen .hero-copy h1 {
+    .home-screen-lead h1 {
       font-family: var(--font);
       font-size: clamp(2rem, 5vw, 3.4rem);
       font-weight: 800;
@@ -168,7 +204,7 @@
       letter-spacing: -0.01em;
       margin-bottom: 6px;
     }
-    #homeScreen .hero-copy h1 .accent { color: var(--rust-vivid); }
+    .home-screen-lead h1 .accent { color: var(--rust-vivid); }
     #homeScreen .hero-telugu {
       font-size: clamp(1rem, 2vw, 1.2rem);
       color: var(--muted);
@@ -183,7 +219,12 @@
       margin-bottom: 24px;
     }
     @media (max-width: 900px) {
-      #homeScreen .hero-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      #homeScreen .hero-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin: 0 auto;
+      }
+      .home-screen-lead { margin-bottom: 20px; }
     }
   #homeExplore {
     padding: 20px 24px 0;
@@ -1088,54 +1129,44 @@
     <button type="button" class="topic-tab-btn" data-topic="how">How It Works</button>
   </nav>
 
-  <!-- Home: registration & welcome -->
-  <section id="homeScreen">
+  <!-- Home: welcome + registration only -->
+  <section id="homeScreen" class="section home-screen-section">
     <div class="home-screen-bg" aria-hidden="true"></div>
-    <div class="home-screen-inner">
+    <div class="wrap home-screen-inner">
+      <div class="home-screen-lead reveal">
+        <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
+        <h1>Find Your <span class="accent">Perfect</span> Brahmin Match</h1>
+        <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
+        <p class="hero-desc">Register free below, then browse profiles, compatibility scores, and Premium plans in the other tabs.</p>
+      </div>
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="hero-badge">Trusted Telugu Brahmin Matrimony · MSME Registered</div>
-          <h1>Find Your <span class="accent">Perfect</span><br/>Brahmin Match</h1>
-          <p class="hero-telugu">మన వివాహ వేదిక — Where Tradition Meets Technology</p>
-          <p class="hero-desc">Everything you need for a meaningful Brahmin matrimony journey — in one trusted app.</p>
           <div class="hero-highlights">
             <article class="hero-point">
               <div class="hero-point-body">
                 <h3 class="hero-point-title">Free Registration (₹0)</h3>
-                <p class="hero-point-text">OTP-verified mobile number &amp; secure MPIN login.</p>
+                <p class="hero-point-text">OTP-verified mobile &amp; secure MPIN login in the app.</p>
               </div>
             </article>
             <article class="hero-point">
               <div class="hero-point-body">
-                <h3 class="hero-point-title">Smart Compatibility Matching</h3>
-                <p class="hero-point-text">Ashtakoot matching, sub-community preferences &amp; advanced filters.</p>
+                <h3 class="hero-point-title">Ashtakoot &amp; Sub-community Filters</h3>
+                <p class="hero-point-text">Traditional matching with modern search and privacy controls.</p>
               </div>
             </article>
             <article class="hero-point">
               <div class="hero-point-body">
-                <h3 class="hero-point-title">Family-Managed Profiles</h3>
-                <p class="hero-point-text">Secure profile management with privacy controls.</p>
-              </div>
-            </article>
-            <article class="hero-point">
-              <div class="hero-point-body">
-                <h3 class="hero-point-title">Connect with Confidence</h3>
-                <p class="hero-point-text">Interests, photo requests &amp; chat after mutual acceptance.</p>
-              </div>
-            </article>
-            <article class="hero-point">
-              <div class="hero-point-body">
-                <h3 class="hero-point-title">Premium Membership</h3>
-                <p class="hero-point-text">Full access to premium features from ₹99/month.</p>
-              </div>
-            </article>
-            <article class="hero-point">
-              <div class="hero-point-body">
-                <h3 class="hero-point-title">Trusted &amp; Secure Platform</h3>
-                <p class="hero-point-text">OTP Verified • Family Friendly • Privacy Focused • UDYAM Registered</p>
+                <h3 class="hero-point-title">Premium from ₹99/month</h3>
+                <p class="hero-point-text">Unlock photos, contacts, and messaging when you are ready.</p>
               </div>
             </article>
           </div>
+          <nav class="home-quick-links" aria-label="Explore the site">
+            <a href="#" data-home-topic="explore">Quick Search</a>
+            <a href="#" data-home-topic="profiles">Browse Profiles</a>
+            <a href="#" data-home-topic="plans">Membership Plans</a>
+            <a href="#" data-home-topic="how">How It Works</a>
+          </nav>
         </div>
         <div class="reg-card" id="register">
           <div class="reg-tabs" role="tablist">
@@ -1203,8 +1234,8 @@
     </div>
   </section>
 
-  <!-- Quick Search -->
-  <div id="homeExplore">
+  <!-- Quick Search (Explore tab) -->
+  <div id="homeExplore" class="topic-panel-hidden">
     <div class="wrap">
       <div class="search-bar reveal">
         <div class="search-title"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-search"/></svg> Quick Profile Search</div>
@@ -1237,8 +1268,8 @@
     </div>
   </div>
 
-  <!-- Stats -->
-  <section class="section alt" id="stats">
+  <!-- Stats (Explore tab) -->
+  <section class="section alt topic-panel-hidden" id="stats">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Our Community</span>
@@ -1256,7 +1287,7 @@
   </section>
 
   <!-- Featured Profiles -->
-  <section class="section" id="profiles">
+  <section class="section topic-panel-hidden" id="profiles">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Today's Matches</span>
@@ -1288,7 +1319,7 @@
   </section>
 
   <!-- App Preview (screenshots) -->
-  <section class="section alt" id="app-preview">
+  <section class="section alt topic-panel-hidden" id="app-preview">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">App Preview</span>
@@ -1364,7 +1395,7 @@
   </section>
 
   <!-- Key Features -->
-  <section class="section" id="features">
+  <section class="section topic-panel-hidden" id="features">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Key Features</span>
@@ -1384,7 +1415,7 @@
   </section>
 
   <!-- Sub-community -->
-  <section class="section" id="community">
+  <section class="section topic-panel-hidden" id="community">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Brahmin Community</span>
@@ -1408,7 +1439,7 @@
   </section>
 
   <!-- How It Works -->
-  <section class="section alt" id="how">
+  <section class="section alt topic-panel-hidden" id="how">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Simple Steps</span>
@@ -1426,8 +1457,8 @@
     </div>
   </section>
 
-  <!-- Register -->
-  <section class="section" id="get-started">
+  <!-- Bride & Groom CTA (How It Works tab) -->
+  <section class="section topic-panel-hidden" id="get-started">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Get Started Free</span>
@@ -1474,7 +1505,7 @@
   </section>
 
   <!-- Membership Plans -->
-  <section class="section alt" id="plans">
+  <section class="section alt topic-panel-hidden" id="plans">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Membership Plans</span>
@@ -1591,7 +1622,7 @@
   </section>
 
   <!-- App Download CTA -->
-  <section class="section" id="download">
+  <section class="section topic-panel-hidden" id="download">
     <div class="wrap">
       <div class="app-cta reveal">
         <div class="app-cta-text">
@@ -1621,7 +1652,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="section alt" id="faq">
+  <section class="section alt topic-panel-hidden" id="faq">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">FAQ</span>
@@ -1643,7 +1674,7 @@
   </section>
 
   <!-- Contact -->
-  <section class="section" id="contact">
+  <section class="section topic-panel-hidden" id="contact">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Get in Touch</span>
@@ -1661,7 +1692,7 @@
   </section>
 
   <!-- UDYAM -->
-  <section class="section alt" id="udyam">
+  <section class="section alt topic-panel-hidden" id="udyam">
     <div class="wrap">
       <div class="udyam reveal">
         <div class="udyam-left">
@@ -1806,20 +1837,20 @@
 
     // ── Home topic tabs (one screen per Explore topic)
     var topicPanels = {
-      home: ['homeScreen', 'get-started'],
+      home: ['homeScreen'],
       explore: ['homeExplore', 'stats'],
       profiles: ['profiles'],
       'app-preview': ['app-preview'],
       features: ['features'],
       community: ['community'],
       plans: ['plans', 'download'],
-      how: ['how']
+      how: ['how', 'get-started']
     };
     var hashToTopic = {
       homeScreen: 'home',
       top: 'home',
       register: 'home',
-      'get-started': 'home',
+      'get-started': 'how',
       profiles: 'profiles',
       'app-preview': 'app-preview',
       features: 'features',
@@ -1890,6 +1921,13 @@
         });
       });
     }
+    document.querySelectorAll('[data-home-topic]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var topic = link.getAttribute('data-home-topic');
+        if (topic) setHomeTopic(topic);
+      });
+    });
     function showSinglePanel(id) {
       allTopicPanelIds.forEach(function (pid) {
         var el = document.getElementById(pid);
@@ -1904,7 +1942,6 @@
       var id = href.slice(1);
       if (id === 'faq' || id === 'contact' || id === 'udyam') {
         if (e) e.preventDefault();
-        if (document.body.classList.contains('site-locked')) unlockSite(false);
         showSinglePanel(id);
         return true;
       }
