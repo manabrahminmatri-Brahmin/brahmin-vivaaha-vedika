@@ -40,6 +40,9 @@
       --radius:     20px;
       --radius-sm:  12px;
       --nav-h:      140px;
+      --topic-gap:  20px;
+      --topic-tabs-h: 52px;
+      --topic-scroll-pad: calc(var(--nav-h) + var(--topic-tabs-h) + var(--topic-gap));
       --max:        1160px;
       --font: 'Poppins', sans-serif;
     }
@@ -131,8 +134,16 @@
       color: #fff;
     }
     .topic-panel-hidden { display: none !important; }
+    .site-content { padding-top: var(--nav-h); }
+    .topic-panel {
+      scroll-margin-top: var(--topic-scroll-pad);
+      padding-top: var(--topic-gap);
+    }
+    .topic-panel.section {
+      padding: calc(36px + var(--topic-gap)) 24px 64px;
+    }
     #homeScreen.home-screen-section {
-      padding: 12px 0 48px;
+      padding: var(--topic-gap) 0 48px;
       background: var(--bg);
       position: relative;
       overflow: visible;
@@ -160,7 +171,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
-      scroll-margin-top: calc(var(--nav-h) + 56px);
+      scroll-margin-top: var(--topic-scroll-pad);
     }
     .home-hero-band .hero-badge { margin-bottom: 10px; }
     .home-hero-band h1 {
@@ -292,11 +303,26 @@
       .home-benefits { order: 1; }
       #homeScreen .reg-form-row { grid-template-columns: 1fr; }
     }
-  #homeExplore {
-    padding: 20px 24px 0;
-    background: var(--bg-warm);
-  }
-  #homeExplore .search-bar { margin-top: 0; }
+    #exploreScreen .explore-search-block {
+      padding: 0 0 12px;
+      background: var(--bg-warm);
+    }
+    #exploreScreen .topic-panel-intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 20px;
+      padding: 0 24px;
+    }
+    #exploreScreen .topic-panel-intro h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--ink-2);
+      margin-top: 4px;
+    }
+    #exploreScreen #stats.section {
+      padding: 48px 24px 64px;
+    }
+    #exploreScreen .search-bar { margin-top: 0; }
 
     /* ─── Buttons ─── */
     .btn {
@@ -647,7 +673,6 @@
 
     /* ─── Section spacing ─── */
     .section { padding: 84px 24px; }
-    #homeScreen.home-screen-section { padding: 16px 0 40px; }
     .section.alt { background: var(--bg-warm); }
 
     /* ─── Divider ornament ─── */
@@ -1335,11 +1360,18 @@
     </div>
   </section>
 
-  <!-- Quick Search (Explore tab) -->
-  <div id="homeExplore" class="topic-panel-hidden">
+  <!-- Explore: quick search + community stats -->
+  <section id="exploreScreen" class="topic-panel topic-panel-hidden" aria-label="Explore">
+  <div id="homeExplore" class="explore-search-block">
     <div class="wrap">
+      <header class="topic-panel-intro reveal">
+        <span class="eyebrow">Explore</span>
+        <div class="divider"></div>
+        <h2>Quick Profile Search</h2>
+        <p>Filter by age, sub-community, location, and education — then browse matching profiles in the app.</p>
+      </header>
       <div class="search-bar reveal">
-        <div class="search-title"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-search"/></svg> Quick Profile Search</div>
+        <div class="search-title"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-search"/></svg> Search criteria</div>
         <div class="search-fields">
           <div class="search-field">
             <label>Looking for</label>
@@ -1369,8 +1401,7 @@
     </div>
   </div>
 
-  <!-- Stats (Explore tab) -->
-  <section class="section alt topic-panel-hidden" id="stats">
+  <section class="section alt" id="stats">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Our Community</span>
@@ -1386,9 +1417,10 @@
       </div>
     </div>
   </section>
+  </section>
 
   <!-- Featured Profiles -->
-  <section class="section topic-panel-hidden" id="profiles">
+  <section class="section topic-panel topic-panel-hidden" id="profiles">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Today's Matches</span>
@@ -1420,7 +1452,7 @@
   </section>
 
   <!-- App Preview (screenshots) -->
-  <section class="section alt topic-panel-hidden" id="app-preview">
+  <section class="section alt topic-panel topic-panel-hidden" id="app-preview">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">App Preview</span>
@@ -1496,7 +1528,7 @@
   </section>
 
   <!-- Key Features -->
-  <section class="section topic-panel-hidden" id="features">
+  <section class="section topic-panel topic-panel-hidden" id="features">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Key Features</span>
@@ -1519,7 +1551,7 @@
   </section>
 
   <!-- Sub-community -->
-  <section class="section topic-panel-hidden" id="community">
+  <section class="section topic-panel topic-panel-hidden" id="community">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Brahmin Community</span>
@@ -1543,7 +1575,7 @@
   </section>
 
   <!-- How It Works -->
-  <section class="section alt topic-panel-hidden" id="how">
+  <section class="section alt topic-panel topic-panel-hidden" id="how">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Simple Steps</span>
@@ -1562,7 +1594,7 @@
   </section>
 
   <!-- Bride & Groom CTA (How It Works tab) -->
-  <section class="section topic-panel-hidden" id="get-started">
+  <section class="section topic-panel topic-panel-hidden" id="get-started">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Get Started Free</span>
@@ -1609,7 +1641,7 @@
   </section>
 
   <!-- Membership Plans -->
-  <section class="section alt topic-panel-hidden" id="plans">
+  <section class="section alt topic-panel topic-panel-hidden" id="plans">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">Membership Plans</span>
@@ -1726,7 +1758,7 @@
   </section>
 
   <!-- App Download CTA -->
-  <section class="section topic-panel-hidden" id="download">
+  <section class="section topic-panel topic-panel-hidden" id="download">
     <div class="wrap">
       <div class="app-cta reveal">
         <div class="app-cta-text">
@@ -1942,7 +1974,7 @@
     // ── Home topic tabs (one screen per Explore topic)
     var topicPanels = {
       home: ['homeScreen'],
-      explore: ['homeExplore', 'stats'],
+      explore: ['exploreScreen'],
       profiles: ['profiles'],
       'app-preview': ['app-preview'],
       features: ['features'],
@@ -1963,8 +1995,9 @@
       plans: 'plans',
       how: 'how',
       stats: 'explore',
-      download: 'plans',
-      homeExplore: 'explore'
+      exploreScreen: 'explore',
+      homeExplore: 'explore',
+      download: 'plans'
     };
     var allTopicPanelIds = [];
     Object.keys(topicPanels).forEach(function (t) {
@@ -1982,6 +2015,26 @@
       el.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
       el.querySelectorAll('.num[data-target]').forEach(function (n) {
         if (!n.dataset.done) { n.dataset.done = '1'; animateCounter(n); }
+      });
+    }
+
+    function varNavH() {
+      var v = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+      return parseInt(v, 10) || 140;
+    }
+    function topicScrollOffset() {
+      var tabBar = document.getElementById('homeTopicTabs');
+      var gap = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topic-gap'), 10) || 20;
+      return varNavH() + (tabBar ? tabBar.offsetHeight : 52) + gap;
+    }
+    function scrollToTopicPanel(topic, ids) {
+      var anchor = document.getElementById(topic === 'home' ? 'homeScreen' : ids[0]);
+      if (!anchor) return;
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var y = anchor.getBoundingClientRect().top + window.scrollY - topicScrollOffset();
+          window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        });
       });
     }
 
@@ -2003,28 +2056,8 @@
       ids.forEach(revealInPanel);
       if (topic === 'home') {
         document.querySelectorAll('#homeScreen .reveal').forEach(function (r) { r.classList.add('visible'); });
-        requestAnimationFrame(function () {
-          var lead = document.getElementById('homeHeroLead');
-          if (!lead) return;
-          var tabsH = tabBar ? tabBar.offsetHeight : 0;
-          var top = lead.getBoundingClientRect().top + window.scrollY - varNavH() - tabsH - 10;
-          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-        });
       }
-      if (topic !== 'home') {
-        var first = document.getElementById(ids[0]);
-        if (first && siteContent) {
-          requestAnimationFrame(function () {
-            var tabsH = tabBar ? tabBar.offsetHeight : 0;
-            var top = first.getBoundingClientRect().top + window.scrollY - varNavH() - tabsH - 8;
-            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-          });
-        }
-      }
-    }
-    function varNavH() {
-      var v = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
-      return parseInt(v, 10) || 140;
+      scrollToTopicPanel(topic, ids);
     }
     function topicFromHash(hash) {
       if (!hash || hash.charAt(0) !== '#') return null;
@@ -2087,10 +2120,6 @@
     document.body.classList.add('site-unlocked');
     setHomeTopic(topicFromHash(location.hash) || 'home');
     document.querySelectorAll('#homeScreen .reveal').forEach(function (r) { r.classList.add('visible'); });
-    requestAnimationFrame(function () {
-      var lead = document.getElementById('homeHeroLead');
-      if (lead) window.scrollTo({ top: 0, behavior: 'auto' });
-    });
 
     // ── Tabs
     function setTab(panel) {
