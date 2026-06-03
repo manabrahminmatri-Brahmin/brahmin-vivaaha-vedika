@@ -160,11 +160,11 @@ Note: Refund requests must be raised within 3–5 days of the transaction.
         },
         'section8_body': {
           'english': '''
-• All prices are in INR (₹), inclusive or exclusive of GST as stated at checkout or in the app.
+• All prices are in INR (₹) as shown in the app at checkout.
 • Prices may change without prior notice; applicable taxes follow Indian law.
 ''',
           'telugu': '''
-• ధరలు INR (₹)లో ఉంటాయి; చెక్‌అవుట్/యాప్‌లో పేర్కొన్న విధంగా GST సహా లేదా ప్రత్యేకం.
+• ధరలు INR (₹)లో, యాప్‌లో చెక్అవుట్‌లో చూపిన విధంగా ఉంటాయి.
 • ధరలు ముందు హెచ్చరిక లేకుండా మారవచ్చు; పన్నులు భారత చట్టాల ప్రకారం.
 ''',
         },

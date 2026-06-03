@@ -53,7 +53,6 @@ class PremiumUpgradeScreen extends StatefulWidget {
 }
 
 class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
-  static const double _gstRate = 0.18;
   /// Pre-select Platinum so duration + pay CTA are visible without an extra tap.
   MembershipTier? _selectedTier = MembershipTier.platinum;
   int _selectedPlanIndex = 0;
@@ -117,10 +116,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
     super.dispose();
   }
 
-  double _gstAmount(double basePrice) => (basePrice * _gstRate);
-  double _totalWithGst(double basePrice) => basePrice + _gstAmount(basePrice);
   String _rupees(double amount) => amount.toStringAsFixed(2);
-  String get _gstLabel => '${(_gstRate * 100).toStringAsFixed(0)}% GST';
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +283,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
       );
     }
     final plans = _plansForTier(_selectedTier!);
-    final hasPaidPlans = plans.any((p) => p.price > 0);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -296,17 +291,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: AC.text(context))),
-        if (hasPaidPlans) ...[
-          const SizedBox(height: 6),
-          Text(
-            'Prices below are shown before GST. $_gstLabel will be added at payment.',
-            style: TextStyle(
-              fontSize: 12,
-              color: AC.textMuted(context),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
         const SizedBox(height: 16),
         ...plans.asMap().entries.map((entry) => Padding(
               padding: const EdgeInsets.only(bottom: 12),
@@ -318,7 +302,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
 
   Widget _buildPlanCard(MembershipPlan plan, int index) {
     final isSelected = _selectedPlanIndex == index;
-    final isPaidPlan = plan.price > 0;
     return GestureDetector(
       onTap: () => setState(() => _selectedPlanIndex = index),
       child: Container(
@@ -386,35 +369,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
                     color: isSelected
                         ? AppTheme.primaryOrange
                         : AC.text(context))),
-            if (isPaidPlan) ...[
-              Text(
-                'price excl. GST',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: AC.textMuted(context),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryOrange.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(
-                    color: AppTheme.primaryOrange.withValues(alpha: 0.35),
-                  ),
-                ),
-                child: Text(
-                  '$_gstLabel extra',
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: AppTheme.primaryOrange,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ],
             if (plan.originalPrice != null) ...[
               const SizedBox(height: 4),
               Text(
@@ -425,15 +379,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
                   decoration: TextDecoration.lineThrough,
                 ),
               ),
-              if (isPaidPlan)
-                Text(
-                  'original excl. GST',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: AC.textMuted(context),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
             ],
           ]),
         ]),
@@ -615,7 +560,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
     if (plans.isEmpty) return const SizedBox.shrink();
     final idx = min(_selectedPlanIndex, plans.length - 1);
     final selectedPlan = plans[idx];
-    final payTotal = _totalWithGst(selectedPlan.price);
+    final payTotal = selectedPlan.price;
     final isPaidPlan = selectedPlan.price > 0;
 
     return Padding(
@@ -650,7 +595,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
                 ),
                 child: Text(
                     isPaidPlan
-                        ? 'Pay ₹${_rupees(payTotal)} (incl. $_gstLabel)'
+                        ? 'Pay ₹${_rupees(payTotal)}'
                         : 'Continue with Free Plan',
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold)),
@@ -666,11 +611,10 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
   // Shows UPI details, collects UTR, saves record to Firestore for admin verification.
   // Admin will verify UTR against bank records and manually approve/reject the payment.
   void _showPaymentDialog(BuildContext context, MembershipPlan plan) {
-    final gst = _gstAmount(plan.price);
-    final total = _totalWithGst(plan.price);
+    final total = plan.price;
     final isPaidPlan = plan.price > 0;
-    final savingsInclGst = plan.originalPrice != null
-        ? _totalWithGst(plan.originalPrice!) - total
+    final savings = plan.originalPrice != null
+        ? plan.originalPrice! - total
         : 0.0;
     showDialog(
       context: context,
@@ -689,15 +633,11 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // ── Amount summary ──────────────────────────────
-                  _infoRow(
-                      isPaidPlan ? 'Plan Amount (excl. GST)' : 'Plan Amount',
-                      '₹${_rupees(plan.price)}'),
-                  if (isPaidPlan) _infoRow(_gstLabel, '₹${_rupees(gst)}'),
+                  _infoRow('Plan Amount', '₹${_rupees(plan.price)}'),
                   _infoRow('Total Payable', '₹${_rupees(total)}'),
                   _infoRow('Duration', '${plan.days} days'),
-                  if (isPaidPlan && savingsInclGst > 0.5)
-                    _infoRow(
-                        'You save (incl. GST)', '₹${_rupees(savingsInclGst)}'),
+                  if (isPaidPlan && savings > 0.5)
+                    _infoRow('You save', '₹${_rupees(savings)}'),
 
                   const SizedBox(height: 16),
 
@@ -793,8 +733,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
                           const SizedBox(height: 10),
                           _upiRow('Plan', plan.name, copyable: false, ctx: ctx),
                           const SizedBox(height: 4),
-                          _upiRow(isPaidPlan ? 'Amount (incl. GST)' : 'Amount',
-                              '₹${_rupees(total)}',
+                          _upiRow('Amount', '₹${_rupees(total)}',
                               copyable: false, ctx: ctx),
                           const SizedBox(height: 4),
                           _upiRow('Currency', 'INR', copyable: false, ctx: ctx),
@@ -999,8 +938,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
           appFirebaseFunctions.httpsCallable('createRazorpayOrder');
 
       final baseAmount = plan.price;
-      final gstAmount = _gstAmount(baseAmount);
-      final totalAmount = _totalWithGst(baseAmount);
+      final totalAmount = baseAmount;
       final amountInPaise = (totalAmount * 100).round();
       final sub = PlanService.instance.getPlanById(plan.id);
       // Razorpay requires receipt length <= 40.
@@ -1018,8 +956,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
           'discountedFee': sub?.discountedFee ?? baseAmount,
           'tier': plan.tier.name,
           'baseAmount': baseAmount,
-          'gstRate': _gstRate,
-          'gstAmount': gstAmount,
           'totalAmount': totalAmount,
           'userDocId': user.id,
           'mobile': user.mobileNumber,
@@ -1081,7 +1017,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
 
   // ── After payment details submitted ────────────────────────────────────────
   void _showPaymentSuccessDialog(MembershipPlan plan, String utr) {
-    final total = _totalWithGst(plan.price);
+    final total = plan.price;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -1105,7 +1041,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
               textAlign: TextAlign.center),
           const SizedBox(height: 10),
           Text(
-            'Your payment of ₹${_rupees(total)} (incl. GST, reference: $utr) has been recorded.\n\n'
+            'Your payment of ₹${_rupees(total)} (reference: $utr) has been recorded.\n\n'
             'Our team will verify your payment against bank records and activate '
             'your premium membership shortly—usually within a few hours.\n\n'
             'You will receive a confirmation once activated. Pull to refresh on Home or '
@@ -1125,7 +1061,7 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
             child: ElevatedButton.icon(
               onPressed: () {
                 final msg =
-                    'Hi mana Vivaaha Vedika — I paid ₹${_rupees(total)} (incl. GST) for ${plan.name}. '
+                    'Hi mana Vivaaha Vedika — I paid ₹${_rupees(total)} for ${plan.name}. '
                     'UTR/ref: $utr. Mobile: ${context.read<AuthService>().currentUser?.mobileNumber ?? ''}. '
                     'Please help if my premium status has not updated.';
                 Clipboard.setData(ClipboardData(text: msg));
