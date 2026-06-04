@@ -179,21 +179,18 @@ The App is intended for use by individuals seeking Vivaaha Vedika alliances with
 
             _buildTermSection(
               context,
-              number: '1',
               title: _getText('section1_title'),
               content: _getText('section1_content'),
             ),
 
             _buildTermSection(
               context,
-              number: '2',
               title: _getText('section2_title'),
               content: _getText('section2_content'),
             ),
 
             _buildTermSection(
               context,
-              number: '3',
               title: _selectedLanguage == Language.english
                   ? 'Eligibility Criteria'
                   : 'అర్హత ప్రమాణాలు',
@@ -220,7 +217,6 @@ To use mana Vivaaha Vedika, you must:
 
             _buildTermSection(
               context,
-              number: '4',
               title: _selectedLanguage == Language.english
                   ? 'User Conduct'
                   : 'యూజర్ ప్రవర్తన',
@@ -253,7 +249,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '5',
               title: _selectedLanguage == Language.english
                   ? 'Profile Content'
                   : 'ప్రొఫైల్ కంటెంట్',
@@ -278,7 +273,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '6',
               title: _selectedLanguage == Language.english
                   ? 'Ashtakoot Matching'
                   : 'అష్టకూట సరిపోలిక',
@@ -301,7 +295,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '7',
               title: _selectedLanguage == Language.english
                   ? 'Premium Membership'
                   : 'ప్రీమియం సభ్యత్వం',
@@ -326,7 +319,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '8',
               title: _selectedLanguage == Language.english
                   ? 'Contact Requests'
                   : 'సంప్రదింపు అభ్యర్థనలు',
@@ -352,7 +344,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '9',
               title: _selectedLanguage == Language.english
                   ? 'Privacy & Data'
                   : 'గోప్యత మరియు డేటా',
@@ -375,7 +366,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '10',
               title: _selectedLanguage == Language.english
                   ? 'Limitation of Liability'
                   : 'బాధ్యత పరిమితి',
@@ -400,7 +390,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '11',
               title: _selectedLanguage == Language.english
                   ? 'Termination'
                   : 'ముగింపు',
@@ -421,7 +410,6 @@ Users agree NOT to:
 
             _buildTermSection(
               context,
-              number: '12',
               title: _selectedLanguage == Language.english
                   ? 'Governing Law'
                   : 'పాలన చట్టం',
@@ -539,7 +527,6 @@ Users agree NOT to:
   }
 
   Widget _buildTermSection(BuildContext context, {
-    required String number,
     required String title,
     required String content,
   }) {
@@ -560,37 +547,12 @@ Users agree NOT to:
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryOrange,
-                  borderRadius: BorderRadius.circular(8),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: AC.text(context),
+                  fontWeight: FontWeight.w600,
                 ),
-                child: Center(
-                  child: Text(
-                    number,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AC.text(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 12),
           Text(

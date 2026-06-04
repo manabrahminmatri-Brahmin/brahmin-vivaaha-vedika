@@ -41,7 +41,8 @@
       --radius:     20px;
       --radius-sm:  12px;
       --nav-h:      140px;
-      --topic-gap:  20px;
+      --topic-gap:  24px;
+      --topic-head-space: 40px;
       --topic-tabs-h: 52px;
       --topic-scroll-pad: calc(var(--nav-h) + var(--topic-tabs-h) + var(--topic-gap));
       --max:        1160px;
@@ -54,11 +55,12 @@
 
     body {
       font-family: var(--font);
-      background: var(--bg);
+      background: linear-gradient(165deg, var(--bg) 0%, #fff 50%, #fff5f0 100%);
       color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      padding-top: var(--nav-h);
     }
     button, input, select, textarea, optgroup {
       font-family: var(--font);
@@ -84,16 +86,39 @@
       color: var(--rust);
       margin-bottom: 10px;
     }
-    .section-head { text-align: center; max-width: 600px; margin: 0 auto 52px; }
+    .section-head { text-align: center; max-width: 600px; margin: 0 auto var(--topic-head-space); }
     .section-head h2 {
       font-family: var(--font);
-      font-size: clamp(1.85rem, 4vw, 2.75rem);
+      font-size: 1.65rem;
       font-weight: 700;
       color: var(--ink-2);
-      line-height: 1.18;
-      margin-bottom: 14px;
+      line-height: 1.22;
+      margin: 0 0 12px;
     }
-    .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
+    .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin: 0; }
+    .topic-panel .section-head,
+    .topic-panel .topic-panel-intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto var(--topic-head-space);
+      padding: 0;
+    }
+    .topic-panel .section-head h2,
+    .topic-panel .topic-panel-intro h2 {
+      font-family: var(--font);
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--ink-2);
+      line-height: 1.22;
+      margin: 0 0 12px;
+    }
+    .topic-panel .section-head p,
+    .topic-panel .topic-panel-intro p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
 
     /* ─── App TabBar (orange underline + bold selected label) ─── */
     .app-tab-bar {
@@ -107,6 +132,10 @@
       padding: 0 8px;
     }
     .app-tab-bar::-webkit-scrollbar { height: 4px; }
+    .topic-tabs .app-tab-btn {
+      font-size: 0.8rem;
+      padding: 12px 10px 10px;
+    }
     .app-tab-btn {
       flex-shrink: 0;
       position: relative;
@@ -147,16 +176,16 @@
       box-shadow: 0 2px 12px rgba(196, 75, 10, 0.05);
     }
     .topic-panel-hidden { display: none !important; }
-    .site-content { padding-top: var(--nav-h); }
+    .site-content { padding-top: 0; }
     .topic-panel {
       scroll-margin-top: var(--topic-scroll-pad);
-      padding-top: var(--topic-gap);
     }
-    .topic-panel.section {
-      padding: calc(36px + var(--topic-gap)) 24px 64px;
+    .topic-panel.section,
+    #homeScreen.home-screen-section,
+    #exploreScreen.topic-panel {
+      padding: var(--topic-gap) 24px 64px;
     }
     #homeScreen.home-screen-section {
-      padding: var(--topic-gap) 0 48px;
       background: var(--bg);
       position: relative;
       overflow: visible;
@@ -301,23 +330,12 @@
       #homeScreen .reg-form-row { grid-template-columns: 1fr; }
     }
     #exploreScreen .explore-search-block {
-      padding: 0 0 12px;
+      padding: 0 24px 12px;
       background: var(--bg-warm);
     }
-    #exploreScreen .topic-panel-intro {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 20px;
-      padding: 0 24px;
-    }
-    #exploreScreen .topic-panel-intro h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--ink-2);
-      margin-top: 4px;
-    }
     #exploreScreen #stats.section {
-      padding: 48px 24px 64px;
+      padding: 48px 24px 0;
+      margin: 0;
     }
     #exploreScreen .search-bar { margin-top: 0; }
 
@@ -348,28 +366,38 @@
     .btn-light { background: rgba(255,255,255,0.92); color: var(--rust-deep); backdrop-filter: blur(8px); }
     .btn-light:hover { background: #fff; }
 
-    /* ─── Navbar ─── */
+    /* ─── Navbar (matches privacy / terms / refund top-bar) ─── */
     .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       height: var(--nav-h);
+      z-index: 200;
       background: var(--orange);
       border-bottom: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 22px;
+      margin: 0;
+      gap: 12px;
       transition: box-shadow 0.3s;
     }
     .nav.scrolled { box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18); }
-    .nav-inner {
-      max-width: var(--max); margin: 0 auto; padding: 0 20px;
-      height: 100%; display: flex; align-items: center;
-      justify-content: space-between; gap: 14px;
-    }
     .brand {
-      display: flex; align-items: center; gap: 16px;
-      min-width: 0; flex: 1 1 auto; max-width: min(520px, 58vw);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: #fff;
+      text-decoration: none;
+      min-width: 0;
+      flex: 1 1 auto;
     }
     .brand-logo {
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -399,51 +427,72 @@
     }
     .brand-name .mana { color: #fff; font-weight: 800; }
     .nav-actions {
-      display: flex; gap: 8px; align-items: center;
-      flex-shrink: 0; margin-left: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      background: #fff;
+      font-size: 0.8rem;
+      color: var(--orange-dark);
+      font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      transition: all 0.2s ease;
+      font-family: var(--font);
+      white-space: nowrap;
+    }
+    .back-link:hover {
+      color: var(--orange);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
     }
     .nav-toggle {
-      display: none; background: none; border: none; font-size: 1.4rem;
-      cursor: pointer; color: #fff; padding: 4px;
-    }
-    .nav-actions .btn-ghost {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.55);
-      background: transparent;
-    }
-    .nav-actions .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: #fff;
-      color: #fff;
-    }
-    .nav-actions .btn-primary {
+      display: none;
       background: #fff;
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      border-radius: 999px;
+      font-size: 1.1rem;
+      cursor: pointer;
       color: var(--orange-dark);
+      padding: 8px 12px;
+      line-height: 1;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-    }
-    .nav-actions .btn-primary:hover {
-      background: #fff;
-      color: var(--orange);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
     }
 
     /* Help menu */
     .nav-help { position: relative; }
     .nav-help-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 9px 16px; border-radius: 999px;
-      border: 1.5px solid rgba(255, 255, 255, 0.45);
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff; font-family: var(--font);
-      font-size: 0.8rem; font-weight: 600; cursor: pointer;
-      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+      background: #fff;
+      color: var(--orange-dark);
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      line-height: 1;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      transition: all 0.2s ease;
     }
     .nav-help-btn:hover {
-      background: rgba(255, 255, 255, 0.22);
-      border-color: rgba(255, 255, 255, 0.75);
-      color: #fff;
+      color: var(--orange);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
     }
-    .nav-help-chevron { font-size: 0.6rem; transition: transform 0.2s; }
+    .nav-help-chevron { font-size: 0.6rem; color: var(--orange-dark); transition: transform 0.2s; }
     .nav-help.open .nav-help-chevron { transform: rotate(180deg); }
     .nav-help-menu {
       position: absolute; top: calc(100% + 10px); right: 0;
@@ -1085,19 +1134,23 @@
       .app-stores { justify-content: center; }
       .nav-toggle { display: block; }
       :root { --nav-h: 120px; }
-      .brand { max-width: min(440px, 52vw); gap: 16px; }
-      .brand-logo { width: 100px; height: 100px; }
+      body { padding-top: var(--nav-h); }
+      .brand { gap: 12px; }
+      .brand-logo { width: 80px; height: 80px; }
+      .back-link { padding: 8px 12px; font-size: 0.72rem; }
+      .nav-help-btn { padding: 8px 12px; font-size: 0.72rem; }
       .search-fields { grid-template-columns: 1fr 1fr; }
       .profiles-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 600px) {
       :root { --nav-h: 120px; }
+      body { padding-top: var(--nav-h); }
       .brand { gap: 12px; max-width: calc(100% - 168px); }
       .brand-logo { width: 80px; height: 80px; }
       .brand-name { font-size: clamp(0.95rem, 3.5vw, 1.1rem); }
       .brand-text-wrap small { font-size: 0.58rem; letter-spacing: 0.08em; }
-      .nav-actions .btn-sm { padding: 8px 12px; font-size: 0.72rem; }
-      .nav-help-btn { padding: 8px 10px; font-size: 0.72rem; }
+      .back-link { padding: 8px 12px; font-size: 0.72rem; }
+      .nav-help-btn { padding: 8px 12px; font-size: 0.72rem; }
       .section { padding: 60px 16px; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .features-grid { grid-template-columns: 1fr; }
@@ -1144,50 +1197,54 @@
 
   <!-- ─── Navbar ─── -->
   <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a class="brand" href="#homeScreen">
-        <div class="brand-logo">
-          <img src="app_logo.png" width="140" height="140" alt="mana Vivaaha Vedika logo" />
-        </div>
-        <div class="brand-text-wrap">
-          <small>Brahmin Matrimony</small>
-          <div class="brand-name"><span class="mana">mana</span> Vivaaha Vedika</div>
-        </div>
-      </a>
-      <div class="nav-actions">
-        <div class="nav-help" id="navHelp">
-          <button type="button" class="nav-help-btn" id="navHelpBtn" aria-expanded="false">
-            Help <span class="nav-help-chevron">▼</span>
-          </button>
-          <div class="nav-help-menu" id="navHelpMenu">
-            <div class="nav-help-head">Customer Care</div>
-            <div class="nav-help-phone-row">
-              <p>Call Us</p>
-              <div class="nav-help-num">
-                <a href="tel:+918985936678">+91 8985936678</a>
-                <span>India</span>
-              </div>
-            </div>
-            <ul class="nav-help-links">
-              <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener"><span class="hi"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-whatsapp"/></svg></span> Live Help (WhatsApp)</a></li>
-              <li><a href="#contact" data-help-scroll><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-contact"/></svg></span> Contact Us</a></li>
-              <li><a href="#faq" data-help-scroll><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-faq"/></svg></span> FAQ</a></li>
-              <li><a href="mailto:support@manavivaahavedika.in"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mail"/></svg></span> Email Support</a></li>
-              <li><a href="privacy.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-lock"/></svg></span> Privacy Policy</a></li>
-              <li><a href="terms.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-doc"/></svg></span> Terms &amp; Conditions</a></li>
-              <li><a href="refund.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-doc"/></svg></span> Return &amp; Refund Policy</a></li>
-            </ul>
-            <p class="nav-help-foot">Support hours: 10 AM – 6 PM IST · Eluru, Andhra Pradesh</p>
-          </div>
-        </div>
-        <a class="btn btn-sm btn-ghost" href="#register" data-reg-tab="login">Log in</a>
-        <button class="nav-toggle" type="button" id="navToggle" aria-label="Open menu">☰</button>
+    <a class="brand" href="#homeScreen">
+      <div class="brand-logo">
+        <img src="app_logo.png" width="120" height="120" alt="mana Vivaaha Vedika logo" loading="eager" decoding="async" />
       </div>
+      <div class="brand-text-wrap">
+        <small>Brahmin Matrimony</small>
+        <div class="brand-name"><span class="mana">mana</span> Vivaaha Vedika</div>
+      </div>
+    </a>
+    <div class="nav-actions">
+      <div class="nav-help" id="navHelp">
+        <button type="button" class="nav-help-btn" id="navHelpBtn" aria-expanded="false">
+          Help <span class="nav-help-chevron">▼</span>
+        </button>
+        <div class="nav-help-menu" id="navHelpMenu">
+          <div class="nav-help-head">Customer Care</div>
+          <div class="nav-help-phone-row">
+            <p>Call Us</p>
+            <div class="nav-help-num">
+              <a href="tel:+918985936678">+91 8985936678</a>
+              <span>India</span>
+            </div>
+          </div>
+          <ul class="nav-help-links">
+            <li><a href="https://wa.me/918985936678" target="_blank" rel="noopener"><span class="hi"><svg class="ui-icon ui-icon--fill" aria-hidden="true"><use href="#ico-whatsapp"/></svg></span> Live Help (WhatsApp)</a></li>
+            <li><a href="#contact" data-help-scroll><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-contact"/></svg></span> Contact Us</a></li>
+            <li><a href="#faq" data-help-scroll><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-faq"/></svg></span> FAQ</a></li>
+            <li><a href="mailto:support@manavivaahavedika.in"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-mail"/></svg></span> Email Support</a></li>
+            <li><a href="privacy.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-lock"/></svg></span> Privacy Policy</a></li>
+            <li><a href="terms.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-doc"/></svg></span> Terms &amp; Conditions</a></li>
+            <li><a href="refund.html"><span class="hi"><svg class="ui-icon ui-icon--stroke" aria-hidden="true"><use href="#ico-doc"/></svg></span> Return &amp; Refund Policy</a></li>
+          </ul>
+          <p class="nav-help-foot">Support hours: 10 AM – 6 PM IST · Eluru, Andhra Pradesh</p>
+        </div>
+      </div>
+      <a class="back-link" href="#register" data-reg-tab="login">Log in</a>
+      <button class="nav-toggle" type="button" id="navToggle" aria-label="Open menu">☰</button>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li class="nav-drawer-label">Account</li>
-      <li><a href="#register">Register Free</a></li>
-      <li><a href="#register" data-reg-tab="login">Member Login</a></li>
+      <li class="nav-drawer-label">Sections</li>
+      <li><a href="#homeScreen">Home</a></li>
+      <li><a href="#exploreScreen">Explore Profiles</a></li>
+      <li><a href="#plans">Membership Plans</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#profiles">Browse Profiles</a></li>
+      <li><a href="#community">Sub Communities</a></li>
+      <li><a href="#app-preview">App Preview</a></li>
       <li class="nav-drawer-label">Legal</li>
       <li><a href="privacy.html">Privacy Policy</a></li>
       <li><a href="terms.html">Terms &amp; Conditions</a></li>
@@ -1200,17 +1257,17 @@
 
   <nav class="topic-tabs app-tab-bar" id="homeTopicTabs" role="tablist" aria-label="Site sections">
     <button type="button" class="topic-tab-btn app-tab-btn active" role="tab" aria-selected="true" data-topic="home">Home</button>
-    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="explore">Explore</button>
-    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="profiles">Browse Profiles</button>
-    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="app-preview">App Preview</button>
-    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="features">Features</button>
-    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="community">Sub-community</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="explore">Explore Profiles</button>
     <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="plans">Membership Plans</button>
     <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="how">How It Works</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="features">Features</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="profiles">Browse Profiles</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="community">Sub Communities</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="app-preview">App Preview</button>
   </nav>
 
   <!-- Home: welcome + registration only -->
-  <section id="homeScreen" class="section home-screen-section">
+  <section id="homeScreen" class="section home-screen-section topic-panel">
     <div class="home-screen-bg" aria-hidden="true"></div>
     <div class="wrap home-screen-inner">
       <header class="home-hero-band" id="homeHeroLead">
@@ -1347,7 +1404,7 @@
   <div id="homeExplore" class="explore-search-block">
     <div class="wrap">
       <header class="topic-panel-intro reveal">
-        <span class="eyebrow">Explore</span>
+        <span class="eyebrow">Explore Profiles</span>
         <div class="divider"></div>
         <h2>Quick Profile Search</h2>
         <p>Filter by age, sub-community, location, and education — then browse matching profiles in the app.</p>
@@ -1376,7 +1433,7 @@
             <select><option>Any</option><option>B.E / B.Tech</option><option>M.Tech</option><option>MBBS / MD</option><option>CA / CS</option><option>MBA</option></select>
           </div>
           <div>
-            <a class="btn btn-primary" href="#profiles" style="margin-top:20px;height:44px;">Search</a>
+            <a class="btn btn-primary" href="#profiles" data-topic-nav="profiles" style="margin-top:20px;height:44px;">Search</a>
           </div>
         </div>
       </div>
@@ -1849,13 +1906,13 @@
         <h4>Explore</h4>
         <ul>
           <li><a href="#homeScreen">Home</a></li>
-          <li><a href="#profiles">Browse Profiles</a></li>
-          <li><a href="#app-preview">App Preview</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#community">Sub-community</a></li>
+          <li><a href="#exploreScreen">Explore Profiles</a></li>
           <li><a href="#plans">Membership Plans</a></li>
           <li><a href="#how">How It Works</a></li>
-          <li><a href="#register">Register / Log in</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#profiles">Browse Profiles</a></li>
+          <li><a href="#community">Sub Communities</a></li>
+          <li><a href="#app-preview">App Preview</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1957,12 +2014,12 @@
     var topicPanels = {
       home: ['homeScreen'],
       explore: ['exploreScreen'],
-      profiles: ['profiles'],
-      'app-preview': ['app-preview'],
-      features: ['features'],
-      community: ['community'],
       plans: ['plans', 'download'],
-      how: ['how', 'get-started']
+      how: ['how', 'get-started'],
+      features: ['features'],
+      profiles: ['profiles'],
+      community: ['community'],
+      'app-preview': ['app-preview']
     };
     var hashToTopic = {
       homeScreen: 'home',
@@ -1970,16 +2027,16 @@
       top: 'home',
       register: 'home',
       'get-started': 'how',
-      profiles: 'profiles',
-      'app-preview': 'app-preview',
-      features: 'features',
-      community: 'community',
-      plans: 'plans',
-      how: 'how',
-      stats: 'explore',
       exploreScreen: 'explore',
       homeExplore: 'explore',
-      download: 'plans'
+      stats: 'explore',
+      plans: 'plans',
+      download: 'plans',
+      how: 'how',
+      features: 'features',
+      profiles: 'profiles',
+      community: 'community',
+      'app-preview': 'app-preview'
     };
     var allTopicPanelIds = [];
     Object.keys(topicPanels).forEach(function (t) {
@@ -2010,7 +2067,8 @@
       return varNavH() + (tabBar ? tabBar.offsetHeight : 52) + gap;
     }
     function scrollToTopicPanel(topic, ids) {
-      var anchor = document.getElementById(topic === 'home' ? 'homeScreen' : ids[0]);
+      var anchorId = topic === 'home' ? 'homeScreen' : ids[0];
+      var anchor = document.getElementById(anchorId);
       if (!anchor) return;
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
@@ -2156,14 +2214,22 @@
     document.querySelectorAll('.nav-links a, .footer a, #siteContent a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         var href = link.getAttribute('href') || '';
-        if (href === '#register' || href === '#top' || href === '#homeScreen' || href === '#homeHeroLead') {
+        if (href === '#register') {
           e.preventDefault();
           setHomeTopic('home');
           setTab(link.getAttribute('data-reg-tab') === 'login' ? 'login' : 'register');
-          if (href === '#register') {
-            var reg = document.getElementById('register');
-            if (reg) reg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          var reg = document.getElementById('register');
+          if (reg) {
+            requestAnimationFrame(function () {
+              var y = reg.getBoundingClientRect().top + window.scrollY - topicScrollOffset();
+              window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+            });
           }
+          return;
+        }
+        if (href === '#top' || href === '#homeScreen' || href === '#homeHeroLead') {
+          e.preventDefault();
+          setHomeTopic('home');
           return;
         }
         if (applyTopicNav(href, e)) return;
@@ -2172,8 +2238,6 @@
         e.preventDefault();
         setHomeTopic('home');
         setTab('register');
-        var regHero = document.getElementById('register');
-        if (regHero) regHero.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     });
 
