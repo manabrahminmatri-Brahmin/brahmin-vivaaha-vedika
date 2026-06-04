@@ -33,6 +33,7 @@
       --ink-2:      #3D2010;
       --ink-3:      #6B3A20;
       --muted:      #8C6E5A;
+      --text-sub:   #54656F;
       --border:     rgba(196, 75, 10, 0.14);
       --shadow-sm:  0 2px 12px rgba(196,75,10,0.10);
       --shadow-md:  0 8px 32px rgba(196,75,10,0.14);
@@ -94,44 +95,56 @@
     }
     .section-head p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
 
-    /* ─── Home topic tabs (app-like screens) ─── */
+    /* ─── App TabBar (orange underline + bold selected label) ─── */
+    .app-tab-bar {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      background: var(--surface);
+      padding: 0 8px;
+    }
+    .app-tab-bar::-webkit-scrollbar { height: 4px; }
+    .app-tab-btn {
+      flex-shrink: 0;
+      position: relative;
+      border: none;
+      background: transparent;
+      color: var(--text-sub);
+      font-family: var(--font);
+      font-size: 0.94rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      padding: 14px 12px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .app-tab-btn:hover { color: var(--ink-2); }
+    .app-tab-btn.active,
+    .app-tab-btn[aria-selected="true"] {
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .app-tab-btn.active::after,
+    .app-tab-btn[aria-selected="true"]::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0;
+      height: 4px;
+      background: var(--orange);
+      border-radius: 2px 2px 0 0;
+    }
     .topic-tabs {
       position: sticky;
       top: var(--nav-h);
       z-index: 150;
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 12px 20px;
-      background: rgba(253, 250, 247, 0.98);
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 4px 16px rgba(196, 75, 10, 0.06);
-      scrollbar-width: thin;
-      -webkit-overflow-scrolling: touch;
-    }
-    .topic-tabs::-webkit-scrollbar { height: 4px; }
-    .topic-tab-btn {
-      flex-shrink: 0;
-      border: 1.5px solid rgba(252, 86, 3, 0.28);
-      background: #fff;
-      color: var(--orange-dark);
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-family: var(--font);
-      font-size: 0.76rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-    .topic-tab-btn:hover {
-      background: var(--rust-pale);
-      border-color: var(--orange);
-    }
-    .topic-tab-btn.active {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
+      box-shadow: 0 2px 12px rgba(196, 75, 10, 0.05);
     }
     .topic-panel-hidden { display: none !important; }
     .site-content { padding-top: var(--nav-h); }
@@ -250,22 +263,6 @@
       font-size: 0.8rem;
       line-height: 1.5;
     }
-    .home-quick-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 14px;
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .home-quick-links a {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--rust-deep);
-      text-decoration: none;
-    }
-    .home-quick-links a:hover { color: var(--rust); text-decoration: underline; }
-    .home-quick-links a::before { content: '→ '; color: var(--rust); font-weight: 700; }
     #homeScreen .reg-card {
       position: static;
       max-height: none;
@@ -627,15 +624,15 @@
       border: 1px solid var(--border); overflow: hidden;
     }
     .reg-tabs {
-      display: grid; grid-template-columns: 1fr 1fr;
+      display: flex;
       border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 0 4px;
     }
     .reg-tab {
-      padding: 13px 12px; border: none; background: var(--rust-pale);
-      font-family: var(--font); font-size: 0.82rem; font-weight: 600;
-      color: var(--muted); cursor: pointer; transition: all 0.2s;
+      flex: 1;
+      min-width: 0;
     }
-    .reg-tab.active { background: #fff; color: var(--rust-deep); box-shadow: inset 0 -2.5px 0 var(--rust); }
     .reg-card-head {
       background: linear-gradient(135deg, var(--rust-deep), var(--rust-vivid));
       color: #fff; padding: 15px 22px; text-align: center;
@@ -702,14 +699,11 @@
     .stat-card .label { font-size: 0.84rem; color: var(--muted); font-weight: 500; }
 
     /* ─── Profile Cards ─── */
-    .profiles-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
-    .tab-btn {
-      padding: 8px 18px; border-radius: 999px;
-      border: 1.5px solid var(--border); background: #fff;
-      color: var(--muted); font-size: 0.82rem; font-weight: 600;
-      font-family: var(--font); cursor: pointer; transition: all 0.2s;
+    .profiles-tabs {
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
     }
-    .tab-btn.active, .tab-btn:hover { background: var(--rust); color: #fff; border-color: var(--rust); }
     .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
     .profile-card {
       background: #fff; border-radius: var(--radius); overflow: hidden;
@@ -1191,15 +1185,9 @@
       </div>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li class="nav-drawer-label">Browse</li>
-      <li><a href="#homeScreen">Home</a></li>
-      <li><a href="#profiles">Profiles</a></li>
-      <li><a href="#app-preview">App Preview</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#plans">Plans &amp; Pricing</a></li>
-      <li><a href="#how">How It Works</a></li>
-      <li><a href="#community">Sub-communities</a></li>
+      <li class="nav-drawer-label">Account</li>
       <li><a href="#register">Register Free</a></li>
+      <li><a href="#register" data-reg-tab="login">Member Login</a></li>
       <li class="nav-drawer-label">Legal</li>
       <li><a href="privacy.html">Privacy Policy</a></li>
       <li><a href="terms.html">Terms &amp; Conditions</a></li>
@@ -1210,15 +1198,15 @@
   <!-- ─── Main (topic tabs below header; Home = registration) ─── -->
   <main id="siteContent" class="site-content">
 
-  <nav class="topic-tabs" id="homeTopicTabs" aria-label="Site sections">
-    <button type="button" class="topic-tab-btn active" data-topic="home">Home</button>
-    <button type="button" class="topic-tab-btn" data-topic="explore">Explore</button>
-    <button type="button" class="topic-tab-btn" data-topic="profiles">Browse Profiles</button>
-    <button type="button" class="topic-tab-btn" data-topic="app-preview">App Preview</button>
-    <button type="button" class="topic-tab-btn" data-topic="features">Features</button>
-    <button type="button" class="topic-tab-btn" data-topic="community">Sub-community</button>
-    <button type="button" class="topic-tab-btn" data-topic="plans">Membership Plans</button>
-    <button type="button" class="topic-tab-btn" data-topic="how">How It Works</button>
+  <nav class="topic-tabs app-tab-bar" id="homeTopicTabs" role="tablist" aria-label="Site sections">
+    <button type="button" class="topic-tab-btn app-tab-btn active" role="tab" aria-selected="true" data-topic="home">Home</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="explore">Explore</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="profiles">Browse Profiles</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="app-preview">App Preview</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="features">Features</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="community">Sub-community</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="plans">Membership Plans</button>
+    <button type="button" class="topic-tab-btn app-tab-btn" role="tab" aria-selected="false" data-topic="how">How It Works</button>
   </nav>
 
   <!-- Home: welcome + registration only -->
@@ -1285,17 +1273,11 @@
               </div>
             </article>
           </div>
-          <nav class="home-quick-links" aria-label="Explore the site">
-            <a href="#" data-home-topic="explore">Quick Search</a>
-            <a href="#" data-home-topic="profiles">Browse Profiles</a>
-            <a href="#" data-home-topic="plans">Membership Plans</a>
-            <a href="#" data-home-topic="how">How It Works</a>
-          </nav>
         </aside>
         <div class="reg-card home-reg-card" id="register">
-          <div class="reg-tabs" role="tablist">
-            <button type="button" class="reg-tab active" data-panel="register" role="tab" aria-selected="true">New Registration</button>
-            <button type="button" class="reg-tab" data-panel="login" role="tab" aria-selected="false">Member Login</button>
+          <div class="reg-tabs app-tab-bar" role="tablist">
+            <button type="button" class="reg-tab app-tab-btn active" data-panel="register" role="tab" aria-selected="true">New Registration</button>
+            <button type="button" class="reg-tab app-tab-btn" data-panel="login" role="tab" aria-selected="false">Member Login</button>
           </div>
           <div class="reg-panel active" id="regPanelRegister">
             <div class="reg-card-head">Create a Matrimony Profile</div>
@@ -1426,24 +1408,24 @@
         <span class="eyebrow">Today's Matches</span>
         <div class="divider"></div>
         <h2>Featured Profiles</h2>
-        <p>Sample profiles for preview — open the app to browse and connect with real members.</p>
+        <p>Sample profiles for preview — profile IDs match the app (<strong>MB</strong> + 5 digits for brides, <strong>MG</strong> + 5 digits for grooms). Open the app to browse real members.</p>
       </div>
-      <div class="profiles-tabs reveal">
-        <button class="tab-btn active" onclick="filterProfiles('all',this)">All Profiles</button>
-        <button class="tab-btn" onclick="filterProfiles('bride',this)">Brides 👰</button>
-        <button class="tab-btn" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
-        <button class="tab-btn" onclick="filterProfiles('premium',this)">Premium ✦</button>
-        <button class="tab-btn" onclick="filterProfiles('new',this)">New Joins</button>
+      <div class="profiles-tabs app-tab-bar reveal" role="tablist" aria-label="Profile filters">
+        <button type="button" class="tab-btn app-tab-btn active" role="tab" aria-selected="true" onclick="filterProfiles('all',this)">All Profiles</button>
+        <button type="button" class="tab-btn app-tab-btn" role="tab" aria-selected="false" onclick="filterProfiles('bride',this)">Brides 👰</button>
+        <button type="button" class="tab-btn app-tab-btn" role="tab" aria-selected="false" onclick="filterProfiles('groom',this)">Grooms 🤵</button>
+        <button type="button" class="tab-btn app-tab-btn" role="tab" aria-selected="false" onclick="filterProfiles('premium',this)">Premium ✦</button>
+        <button type="button" class="tab-btn app-tab-btn" role="tab" aria-selected="false" onclick="filterProfiles('new',this)">New Joins</button>
       </div>
       <div class="profiles-grid" id="profilesGrid">
-        <div class="profile-card reveal" data-type="bride"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDE8D8,#FFD0B5);">👰<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0182</div><div class="profile-name">Sowmya Sharma</div><div class="profile-age">26 yrs · 5'4" · Vijayawada</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Velanadu</div></div><div class="profile-tags"><span class="profile-tag">M.Tech</span><span class="profile-tag">Software Engineer</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="groom"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDE8D8,#FFC5A0);">🤵<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0341</div><div class="profile-name">Karthik Subramanyam</div><div class="profile-age">29 yrs · 5'10" · Hyderabad</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Mulakanadu</div></div><div class="profile-tags"><span class="profile-tag">B.E + MBA</span><span class="profile-tag">IT Manager</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="bride premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#FFE0CC,#FFCBA4);">👰<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0227</div><div class="profile-name">Padmavathi Rao</div><div class="profile-age">24 yrs · 5'2" · Tirupati</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Telaganya</div></div><div class="profile-tags"><span class="profile-tag">MBBS</span><span class="profile-tag">Doctor</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="groom premium new"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDD9C0,#FFBF94);">🤵<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0512</div><div class="profile-name">Venkata Ramana</div><div class="profile-age">31 yrs · 5'8" · Visakhapatnam</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Velanadu</div></div><div class="profile-tags"><span class="profile-tag">CA</span><span class="profile-tag">Finance Director</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="bride new"><div class="profile-avatar" style="background:linear-gradient(145deg,#FEF3C7,#FDE68A);">👰<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0604</div><div class="profile-name">Ananya Krishnamurthy</div><div class="profile-age">27 yrs · 5'5" · Guntur</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Dravida · Konaseema</div></div><div class="profile-tags"><span class="profile-tag">MBA</span><span class="profile-tag">Bank Manager</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="groom new"><div class="profile-avatar" style="background:linear-gradient(145deg,#DBF0FB,#BFDBFE);">🤵<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0689</div><div class="profile-name">Srinivasa Murthy</div><div class="profile-age">28 yrs · 5'9" · Nellore</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Aruvela (6000)</div></div><div class="profile-tags"><span class="profile-tag">M.Pharm</span><span class="profile-tag">Govt Employee</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="bride premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#FCE7F3,#FBCFE8);">👰<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-B-2024-0733</div><div class="profile-name">Lalitha Devi</div><div class="profile-age">25 yrs · 5'3" · Kurnool</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Mulakanadu</div></div><div class="profile-tags"><span class="profile-tag">B.Ed + M.A</span><span class="profile-tag">Teacher</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
-        <div class="profile-card reveal" data-type="groom premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#D1FAE5,#A7F3D0);">🤵<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MVV-G-2024-0801</div><div class="profile-name">Prasad Narayana</div><div class="profile-age">32 yrs · 5'11" · Chennai</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Nandavarika</div></div><div class="profile-tags"><span class="profile-tag">MBBS + MS</span><span class="profile-tag">Surgeon</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDE8D8,#FFD0B5);">👰<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MB18247</div><div class="profile-name">Sowmya Sharma</div><div class="profile-age">26 yrs · 5'4" · Vijayawada</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Velanadu</div></div><div class="profile-tags"><span class="profile-tag">M.Tech</span><span class="profile-tag">Software Engineer</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDE8D8,#FFC5A0);">🤵<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MG34182</div><div class="profile-name">Karthik Subramanyam</div><div class="profile-age">29 yrs · 5'10" · Hyderabad</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Mulakanadu</div></div><div class="profile-tags"><span class="profile-tag">B.E + MBA</span><span class="profile-tag">IT Manager</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#FFE0CC,#FFCBA4);">👰<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MB22756</div><div class="profile-name">Padmavathi Rao</div><div class="profile-age">24 yrs · 5'2" · Tirupati</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Telaganya</div></div><div class="profile-tags"><span class="profile-tag">MBBS</span><span class="profile-tag">Doctor</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom premium new"><div class="profile-avatar" style="background:linear-gradient(145deg,#FDD9C0,#FFBF94);">🤵<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MG51294</div><div class="profile-name">Venkata Ramana</div><div class="profile-age">31 yrs · 5'8" · Visakhapatnam</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Velanadu</div></div><div class="profile-tags"><span class="profile-tag">CA</span><span class="profile-tag">Finance Director</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride new"><div class="profile-avatar" style="background:linear-gradient(145deg,#FEF3C7,#FDE68A);">👰<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MB60418</div><div class="profile-name">Ananya Krishnamurthy</div><div class="profile-age">27 yrs · 5'5" · Guntur</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Dravida · Konaseema</div></div><div class="profile-tags"><span class="profile-tag">MBA</span><span class="profile-tag">Bank Manager</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom new"><div class="profile-avatar" style="background:linear-gradient(145deg,#DBF0FB,#BFDBFE);">🤵<span class="badge-pill badge-free">Free</span></div><div class="profile-body"><div class="profile-id">MG68923</div><div class="profile-name">Srinivasa Murthy</div><div class="profile-age">28 yrs · 5'9" · Nellore</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Aruvela (6000)</div></div><div class="profile-tags"><span class="profile-tag">M.Pharm</span><span class="profile-tag">Govt Employee</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="bride premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#FCE7F3,#FBCFE8);">👰<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MB73351</div><div class="profile-name">Lalitha Devi</div><div class="profile-age">25 yrs · 5'3" · Kurnool</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Vaidiki · Mulakanadu</div></div><div class="profile-tags"><span class="profile-tag">B.Ed + M.A</span><span class="profile-tag">Teacher</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
+        <div class="profile-card reveal" data-type="groom premium"><div class="profile-avatar" style="background:linear-gradient(145deg,#D1FAE5,#A7F3D0);">🤵<span class="badge-pill badge-premium">Premium</span></div><div class="profile-body"><div class="profile-id">MG80147</div><div class="profile-name">Prasad Narayana</div><div class="profile-age">32 yrs · 5'11" · Chennai</div><div class="profile-subcomm"><div class="profile-subcomm-label">Sub-community</div><div class="profile-subcomm-val">Niyogi · Nandavarika</div></div><div class="profile-tags"><span class="profile-tag">MBBS + MS</span><span class="profile-tag">Surgeon</span></div><div class="profile-actions"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View Profile</a><button class="profile-like-btn" onclick="this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'❤️':'🤍'">🤍</button></div></div></div>
       </div>
       <div style="text-align:center;margin-top:32px;" class="reveal">
         <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.manavivaahavedika.brahmin" target="_blank" rel="noopener">View All Profiles in App →</a>
@@ -2228,8 +2210,12 @@
 
     // ── Profile filter
     window.filterProfiles = function (type, btn) {
-      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.profiles-tabs .tab-btn').forEach(function (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
       document.querySelectorAll('.profile-card').forEach(function (c) {
         c.style.display = (type === 'all' || (c.dataset.type || '').includes(type)) ? '' : 'none';
       });
