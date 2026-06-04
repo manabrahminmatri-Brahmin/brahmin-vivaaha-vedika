@@ -1,8 +1,27 @@
-# Live website (Firebase & GitHub Pages)
+# mana Vivaaha Vedika
 
-This folder is the **published site**. Edit `index.html`, `privacy.html`, and `terms.html` here — not the old `index.html` in the repo root.
+Flutter matrimony app for the Telugu Brahmin community.
 
-**Assets:** Keep `app_logo.png`, `favicon.png`, and `assets/` (screenshots, MSME logo) in this folder for the live site. If images are missing locally, run: `git checkout HEAD -- web_deploy/app_logo.png web_deploy/favicon.png web_deploy/assets/`
+## Website (landing + legal pages)
 
-- **Firebase:** `firebase deploy --only hosting` → https://manabrahminmatri-de0ad.web.app
-- **GitHub Pages:** push to `main` (workflow copies `web_deploy/` → https://manabrahminmatri-brahmin.github.io/brahmin-vivaaha-vedika/
+Edit only **`web_deploy/`** — `index.html`, `privacy.html`, `terms.html`, `refund.html`, plus `assets/`, `favicon.png`, and `app_logo.png`.
+
+| Host | Deploys from | URL |
+|------|----------------|-----|
+| Firebase Hosting | `web_deploy/` (`firebase.json`) | https://manabrahminmatri-de0ad.web.app |
+| GitHub Pages | `web_deploy/` (GitHub Actions) | https://manabrahminmatri-brahmin.github.io/brahmin-vivaaha-vedika/ |
+
+```bash
+git add web_deploy
+git commit -m "Update website"
+git push origin main
+```
+
+## App
+
+```bash
+flutter pub get
+flutter run
+```
+
+**Note:** `web/index.html` is the Flutter web build shell — not the marketing site. Do not edit it for landing-page content.

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../services/presence_service.dart';
 import '../theme/app_theme.dart';
@@ -41,34 +40,12 @@ class OnlineStatusIndicator extends StatefulWidget {
 }
 
 class _OnlineStatusIndicatorState extends State<OnlineStatusIndicator> {
-  Timer? _labelRefreshTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _configureTimer();
-  }
-
-  void _configureTimer() {
-    _labelRefreshTimer?.cancel();
-    // Tick periodically so stale "online" decays to grey without waiting for
-    // another Firestore snapshot, and labels like "5m ago" stay current.
-    _labelRefreshTimer =
-        Timer.periodic(const Duration(seconds: 20), (_) {
-      if (mounted) setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _labelRefreshTimer?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final presence = PresenceService();
-    return StreamBuilder<PresenceData>(
+    return ValueListenableBuilder<int>(
+      valueListenable: presence.uiStalenessTick,
+      builder: (context, _, __) => StreamBuilder<PresenceData>(
       stream: presence.watchUser(widget.userId),
       initialData: presence.lastPresenceFor(widget.userId),
       builder: (context, snapshot) {
@@ -89,6 +66,7 @@ class _OnlineStatusIndicatorState extends State<OnlineStatusIndicator> {
           labelStyle: widget.labelStyle,
         );
       },
+      ),
     );
   }
 }
@@ -285,29 +263,15 @@ class LivePresenceLabel extends StatefulWidget {
 }
 
 class _LivePresenceLabelState extends State<LivePresenceLabel> {
-  Timer? _tick;
-
-  @override
-  void initState() {
-    super.initState();
-    _tick = Timer.periodic(const Duration(seconds: 20), (_) {
-      if (mounted) setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _tick?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final id = widget.userId.trim();
     if (id.isEmpty) return const SizedBox.shrink();
 
     final presence = PresenceService();
-    return StreamBuilder<PresenceData>(
+    return ValueListenableBuilder<int>(
+      valueListenable: presence.uiStalenessTick,
+      builder: (context, _, __) => StreamBuilder<PresenceData>(
       stream: presence.watchUser(id),
       initialData: presence.lastPresenceFor(id),
       builder: (context, snapshot) {
@@ -332,6 +296,7 @@ class _LivePresenceLabelState extends State<LivePresenceLabel> {
           style: widget.style ?? defaultStyle,
         );
       },
+      ),
     );
   }
 }
@@ -363,26 +328,12 @@ class OnlineStatusOverlay extends StatefulWidget {
 }
 
 class _OnlineStatusOverlayState extends State<OnlineStatusOverlay> {
-  Timer? _stalenessTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _stalenessTimer = Timer.periodic(const Duration(seconds: 20), (_) {
-      if (mounted) setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _stalenessTimer?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final presence = PresenceService();
-    return StreamBuilder<PresenceData>(
+    return ValueListenableBuilder<int>(
+      valueListenable: presence.uiStalenessTick,
+      builder: (context, _, __) => StreamBuilder<PresenceData>(
       stream: presence.watchUser(widget.userId),
       initialData: presence.lastPresenceFor(widget.userId),
       builder: (context, snapshot) {
@@ -444,6 +395,7 @@ class _OnlineStatusOverlayState extends State<OnlineStatusOverlay> {
           ],
         );
       },
+      ),
     );
   }
 }

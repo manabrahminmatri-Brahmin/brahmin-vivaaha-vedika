@@ -10,12 +10,9 @@ on:
       - master
     paths:
       - 'web_deploy/**'
-      - 'index.html'
-      - 'privacy.html'
-      - 'assets/**'
-      - 'favicon.png'
       - 'firebase.json'
       - '.firebaserc'
+      - 'favicon.png'
       - '.github/workflows/firebase-hosting.yml'
   workflow_dispatch:
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../theme/app_theme.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/whatsapp_channel_card.dart';
 import '../../utils/app_animations.dart';
 import '../../core/support_links.dart';
 import '../../utils/app_version.dart';
@@ -68,8 +66,14 @@ class _AboutScreenState extends State<AboutScreen> {
         'telugu': 'మమ్మలను సంప్రదించండి',
       },
       'contactContent': {
-        'english': 'For any queries, support, or feedback, please reach out to us. We are here to help you find your perfect match.',
-        'telugu': 'ఏవైనా ప్రశ్నలు, మద్దతు లేదా అభిప్రాయం కోసం, దయచేసి మమ్మలను సంప్రదించండి. మీకు తగిన జంటను కనుగొనడంలో మేము సహాయపడతాము.',
+        'english':
+            'For any queries, support, or feedback, please reach out to us.\n\n${SupportLinks.contactBlockEn}',
+        'telugu':
+            'ఏవైనా ప్రశ్నలు, మద్దతు లేదా అభిప్రాయం కోసం, దయచేసి మమ్మలను సంప్రదించండి.\n\n${SupportLinks.contactBlockTe}',
+      },
+      'websiteButton': {
+        'english': 'Visit Website',
+        'telugu': 'వెబ్‌సైట్ చూడండి',
       },
       'emailButton': {
         'english': 'Email Us',
@@ -201,21 +205,38 @@ class _AboutScreenState extends State<AboutScreen> {
               title: _getText('contactTitle'),
               content: _getText('contactContent'),
               icon: Icons.mail_outline,
-              actionButton: ElevatedButton.icon(
-                onPressed: () => _launchEmail(),
-                icon: Icon(Icons.email),
-                label: Text(_getText('emailButton')),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.primaryOrange,
-                  foregroundColor: Colors.white,
-                ),
+              actionButton: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () => SupportLinks.openSupportEmail(
+                        context,
+                        subject: 'Inquiry about mana Vivaaha Vedika',
+                        body: '',
+                      ),
+                      icon: const Icon(Icons.email),
+                      label: Text(_getText('emailButton')),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primaryOrange,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () => SupportLinks.openWebsite(context),
+                      icon: const Icon(Icons.language),
+                      label: Text(_getText('websiteButton')),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppTheme.primaryOrange,
+                        side: const BorderSide(color: AppTheme.primaryOrange),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ).appFadeIn(delay: Duration(milliseconds: 500)),
-
-            const SizedBox(height: 16),
-
-            const WhatsAppChannelCard()
-                .appFadeIn(delay: Duration(milliseconds: 550)),
 
             const SizedBox(height: 32),
 
@@ -345,24 +366,4 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Future<void> _launchEmail() async {
-    final Uri emailUri = Uri(
-      scheme: 'mailto',
-      path: SupportLinks.supportEmail,
-      query: 'subject=Inquiry about mana Vivaaha Vedika',
-    );
-
-    if (await canLaunchUrl(emailUri)) {
-      await launchUrl(emailUri);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not launch email app'),
-            backgroundColor: AppTheme.kumkumRed,
-          ),
-        );
-      }
-    }
-  }
 }

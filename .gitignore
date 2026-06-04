@@ -78,4 +78,7 @@ __pycache__/
 
 # Firebase CLI local cache
 .firebase/
-.firebase/
+
+# Stray zero-byte files sometimes created at repo root by mistake
+/git
+/main

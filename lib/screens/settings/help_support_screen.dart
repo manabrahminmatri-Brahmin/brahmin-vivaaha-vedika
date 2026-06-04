@@ -79,7 +79,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     ),
     FAQItem(
       question: '🆘 How do I contact support?',
-      answer: 'Open Settings → Support tab → Chat with Support for in-app messages, or use Call / WhatsApp / Email on this page. Share your profile ID and a screenshot for faster resolution.',
+      answer:
+          'Open Settings → Support tab → Chat with Support for in-app messages, or use Call / WhatsApp / Email / Website on this page (${SupportLinks.supportEmail}, ${SupportLinks.supportWebsiteDisplay}). Share your profile ID and a screenshot for faster resolution.',
     ),
   ];
   
@@ -130,19 +131,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   }
   
   Future<void> _sendEmail() async {
-    try {
-      final uri = Uri.parse('mailto:$_supportEmail?subject=${Uri.encodeComponent('Support Request - Mana Vivaaha Vedika')}&body=${Uri.encodeComponent('Please describe your issue or question here...\n\nApp Version: 1.0.0')}');
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open email client. Please make sure you have an email app installed.'),
-            backgroundColor: AppTheme.kumkumRed,
-          ),
-        );
-      }
-    }
+    await SupportLinks.openSupportEmail(context);
+  }
+
+  Future<void> _openWebsite() async {
+    await SupportLinks.openWebsite(context);
   }
   
   @override
@@ -211,6 +204,18 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     color: AppTheme.peacockBlue,
                     onTap: _sendEmail,
                   ).appSlideIn(baseDelay: Duration(milliseconds: 300)),
+
+                  const SizedBox(height: 12),
+
+                  _buildContactCard(
+                    context,
+                    icon: Icons.language,
+                    title: 'Website',
+                    subtitle: SupportLinks.supportWebsiteDisplay,
+                    description: 'Policies, registration info & updates',
+                    color: AppTheme.templeGold,
+                    onTap: _openWebsite,
+                  ).appSlideIn(baseDelay: Duration(milliseconds: 350)),
                 ],
               ),
             ),

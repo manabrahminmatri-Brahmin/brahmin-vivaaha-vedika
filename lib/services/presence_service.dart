@@ -63,6 +63,9 @@ class PresenceService {
   static final Map<String, Stream<PresenceData>> _presenceStreams = {};
   static final Map<String, PresenceData> _presenceLast = {};
 
+  /// Shared UI tick so list tiles don't each run a 20s [Timer.periodic].
+  final ValueNotifier<int> uiStalenessTick = ValueNotifier(0);
+
   /// True when this device is actively tracking presence for a logged-in user.
   bool get isSessionActive => _isTracking && _authUid != null;
 
@@ -174,6 +177,7 @@ class PresenceService {
       if (prev == null) continue;
       _presenceLast[key] = prev.applyStaleness();
     }
+    uiStalenessTick.value++;
   }
 
   void _ensureStalenessPump() {

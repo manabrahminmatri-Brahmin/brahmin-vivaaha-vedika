@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/support_links.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_header.dart';
 
@@ -79,8 +80,8 @@ The App is intended for use by individuals seeking Vivaaha Vedika alliances with
         'telugu': 'మన వివాహ వేదికను ఉపయోగించడం ద్వారా, మీరు ఈ నియమాలు మరియు షరతులను చదివినట్లు, అర్థం చేసుకున్నట్లు మరియు అంగీకరించినట్లు గుర్తిస్తారు.',
       },
       'contact': {
-        'english': 'For any queries: WhatsApp +91 8985936678',
-        'telugu': 'ఏవైనా ప్రశ్నలకు: WhatsApp +91 8985936678',
+        'english': 'For any queries: ${SupportLinks.contactFooterEn}',
+        'telugu': 'ఏవైనా ప్రశ్నలకు: ${SupportLinks.contactFooterTe}',
       },
     };
   }

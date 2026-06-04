@@ -9,6 +9,7 @@ import '../../models/gender.dart';
 import '../../models/user.dart' as app_models;
 import '../../legacy/compatibility.dart';
 import '../../services/block_service.dart';
+import '../../services/like_service_v2.dart';
 import '../../services/astrology_service.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/app_sizes.dart';
@@ -74,6 +75,57 @@ bool _matchesLikeBindInProgress = false;
 
 void _debugLikeLog(String message) {
   if (kDebugMode) debugPrint(message);
+}
+
+String _likeRowDisplayName(Map<String, dynamic> row, {String fallback = 'User'}) {
+  final name = (row['name'] as String?)?.trim();
+  if (name != null && name.isNotEmpty) return name;
+  final fn = (row[Fields.firstName] ?? row['firstName'] ?? '')
+      .toString()
+      .trim();
+  final ln = (row[Fields.lastName] ?? row['lastName'] ?? '')
+      .toString()
+      .trim();
+  if (fn.isNotEmpty) return '$fn $ln'.trim();
+  final pid = (row[Fields.profileId] ?? row['profile_id'] ?? '')
+      .toString()
+      .trim();
+  if (pid.isNotEmpty) return pid;
+  return fallback;
+}
+
+List<String> _likeRowDetailChips(Map<String, dynamic> row) {
+  final chips = <String>[];
+  final age = row[Fields.age] ?? row['age'];
+  if (age is int && age > 0) chips.add('$age yrs');
+  final city = (row[Fields.city] ?? row['city'] ?? '').toString().trim();
+  if (city.isNotEmpty) chips.add(city);
+  final occ = (row['occupation'] ?? '').toString().trim();
+  if (occ.isNotEmpty) chips.add(occ);
+  return chips;
+}
+
+void _prefetchLikeRowProfiles(List<Map<String, dynamic>> rows) {
+  final ids = <String>{};
+  for (final row in rows) {
+    for (final key in [
+      Fields.userId,
+      Fields.docId,
+      'user_id',
+      'doc_id',
+      'to_user_id',
+      'toUserId',
+      'from_user_id',
+      'fromUserId',
+      'uid',
+      'id',
+    ]) {
+      final v = (row[key] ?? '').toString().trim();
+      if (v.isNotEmpty) ids.add(v);
+    }
+  }
+  if (ids.isEmpty) return;
+  unawaited(LikeServiceV2().prefetchProfilesForLikes(ids));
 }
 
 void _debugLikeBindIdentityOnce(String fingerprint, String identitiesLine) {
@@ -276,7 +328,7 @@ class MatchesScreenState extends State<MatchesScreen>
       _debugLikeLog(
         'LIKE STREAM BIND awaiting identity (no Firebase uid or userDocId)…',
       );
-      await AppInitializer.initialize();
+      await AppInitializer.ensureInitialized();
       if (!mounted) return;
     }
 
@@ -408,6 +460,7 @@ class MatchesScreenState extends State<MatchesScreen>
     if (key != null && key.isNotEmpty) {
       _matchesYouLikedRowsCache[key] = _youLikedRows;
     }
+    _prefetchLikeRowProfiles(_youLikedRows);
   }
 
   void _storeLikedYouRows(List<Map<String, dynamic>> rows) {
@@ -416,6 +469,7 @@ class MatchesScreenState extends State<MatchesScreen>
     if (key != null && key.isNotEmpty) {
       _matchesLikedYouRowsCache[key] = _likedYouRows;
     }
+    _prefetchLikeRowProfiles(_likedYouRows);
   }
 
   Future<void> _initAsync() async {
@@ -1204,6 +1258,7 @@ class MatchesScreenState extends State<MatchesScreen>
                     key: ValueKey<String>(
                         'you_liked_${targetId.trim().toLowerCase()}'),
                     userId: targetId,
+                    likePreview: userData,
                     badgeText: 'Liked',
                     badgeColor: AppTheme.sacredGreen,
                     showOnline: false,
@@ -1304,10 +1359,14 @@ class MatchesScreenState extends State<MatchesScreen>
                       key: ValueKey<String>(
                           'liked_you_${userId.trim().toLowerCase()}'),
                       userId: userId,
-                      name: userData['name'],
+                      name: _likeRowDisplayName(
+                        userData,
+                        fallback: (userData['name'] as String?) ?? '',
+                      ),
                       profileId: (userData['profile_id'] as String?) ??
                           (userData['uid'] as String?) ??
                           '',
+                      previewChips: _likeRowDetailChips(userData),
                       index: index,
                       onTap: () => _openUser(userId),
                       onDismiss: () {},
@@ -1552,6 +1611,7 @@ class _LikedYouTile extends StatefulWidget {
   final String userId;
   final String? name; // pre-enriched from getWhoLikedMe
   final String profileId;
+  final List<String> previewChips;
   final int index;
   final VoidCallback onTap;
   final VoidCallback onDismiss;
@@ -1561,6 +1621,7 @@ class _LikedYouTile extends StatefulWidget {
     required this.userId,
     required this.name,
     required this.profileId,
+    this.previewChips = const [],
     required this.index,
     required this.onTap,
     required this.onDismiss,
@@ -1597,7 +1658,7 @@ class _LikedYouTileState extends State<_LikedYouTile> {
       auth: auth,
       uid: uid,
       fallbackProfileId: widget.profileId,
-    ).timeout(const Duration(seconds: 8), onTimeout: () => null);
+    ).timeout(const Duration(seconds: 12), onTimeout: () => null);
   }
 
   @override
@@ -1638,6 +1699,8 @@ class _LikedYouTileState extends State<_LikedYouTile> {
         }
         if (profile?.occupation != null && profile!.occupation!.isNotEmpty) {
           chips.add(profile.occupation!);
+        } else if (chips.isEmpty && widget.previewChips.isNotEmpty) {
+          chips.addAll(widget.previewChips);
         }
 
         return Container(
@@ -1873,6 +1936,8 @@ class _LikedYouTileState extends State<_LikedYouTile> {
 
 class UserProfileTile extends StatefulWidget {
   final String userId;
+  /// Profile fields merged by [LikeServiceV2] (name, age, city) for fast paint.
+  final Map<String, dynamic>? likePreview;
   final String badgeText;
   final Color badgeColor;
   final bool showOnline;
@@ -1886,6 +1951,7 @@ class UserProfileTile extends StatefulWidget {
   const UserProfileTile({
     super.key,
     required this.userId,
+    this.likePreview,
     required this.badgeText,
     required this.badgeColor,
     required this.showOnline,
@@ -1917,17 +1983,27 @@ class UserProfileTileState extends State<UserProfileTile> {
     if (userId.isEmpty) return null;
     final auth = context.read<AuthService>();
     return _cachedResolveMatchUser(auth: auth, uid: userId)
-        .timeout(const Duration(seconds: 8), onTimeout: () => null);
+        .timeout(const Duration(seconds: 12), onTimeout: () => null);
+  }
+
+  Map<String, dynamic>? get _effectivePreview {
+    final fromWidget = widget.likePreview;
+    if (fromWidget != null && fromWidget.isNotEmpty) {
+      return fromWidget;
+    }
+    return LikeServiceV2().cachedProfilePreview(widget.userId);
   }
 
   @override
   Widget build(BuildContext context) {
+    final preview = _effectivePreview;
     return FutureBuilder<app_models.User?>(
       future: _userFuture,
       builder: (context, snap) {
         final user = snap.data;
         final profile = user?.profile;
-        final loading = snap.connectionState == ConnectionState.waiting;
+        final loading =
+            snap.connectionState == ConnectionState.waiting && user == null;
 
         // ── Avatar ─────────────────────────────────────────
         Widget avatar = Container(
@@ -1999,19 +2075,27 @@ class UserProfileTileState extends State<UserProfileTile> {
         // ── Name / details ─────────────────────────────────
         final displayName = profile != null
             ? '${profile.firstName} ${profile.lastName}'.trim()
-            : (loading ? 'Loading…' : 'User');
+            : (preview != null
+                ? _likeRowDisplayName(preview)
+                : (loading ? 'Loading…' : 'User'));
 
-        final profileId = user?.profileId ?? '';
+        var profileId = user?.profileId ?? '';
+        if (profileId.isEmpty && preview != null) {
+          profileId = (preview[Fields.profileId] ?? preview['profile_id'] ?? '')
+              .toString()
+              .trim();
+        }
 
-        // Detail chips: age, location, occupation
-        final chips = <String>[];
-        if (profile?.age != null) chips.add('${profile!.age} yrs');
-        if (profile?.city != null && profile!.city!.isNotEmpty) {
-          chips.add(profile.city!);
-        }
-        if (profile?.occupation != null && profile!.occupation!.isNotEmpty) {
-          chips.add(profile.occupation!);
-        }
+        final chips = profile != null
+            ? <String>[
+                if (profile.age != null) '${profile.age} yrs',
+                if (profile.city != null && profile.city!.isNotEmpty)
+                  profile.city!,
+                if (profile.occupation != null &&
+                    profile.occupation!.isNotEmpty)
+                  profile.occupation!,
+              ]
+            : (preview != null ? _likeRowDetailChips(preview) : <String>[]);
 
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
@@ -2236,7 +2320,7 @@ class _MutualMatchTileState extends State<_MutualMatchTile> {
       auth: auth,
       uid: uid,
       fallbackProfileId: widget.profileId,
-    ).timeout(const Duration(seconds: 8), onTimeout: () => null);
+    ).timeout(const Duration(seconds: 12), onTimeout: () => null);
   }
 
   @override

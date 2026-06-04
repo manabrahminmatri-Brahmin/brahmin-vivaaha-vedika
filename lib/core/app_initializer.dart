@@ -72,9 +72,20 @@ class AppInitializer {
     }
   }
 
+  /// Fast path when identity was already loaded this session.
+  static Future<Result<void>> ensureInitialized() async {
+    if (_initialized && IdentityProvider.hasIdentity) {
+      return Result.success(null, message: 'Already initialized');
+    }
+    return initialize();
+  }
+
   /// Initialize app on login
   /// Call this immediately after successful authentication
   static Future<Result<void>> initialize() async {
+    if (_initialized && IdentityProvider.hasIdentity) {
+      return Result.success(null, message: 'Already initialized');
+    }
     try {
       final authUser = FirebaseAuth.instance.currentUser;
       
@@ -170,8 +181,8 @@ class AppInitializer {
     debugPrint('👋 App identity cleared');
   }
 
-  /// Ensure initialized (throws if not)
-  static void ensureInitialized() {
+  /// Throws if identity was not loaded (sync guard for services).
+  static void requireInitialized() {
     if (!_initialized || !IdentityProvider.hasIdentity) {
       throw StateError(
         'App not initialized. Call AppInitializer.initialize() after login.',

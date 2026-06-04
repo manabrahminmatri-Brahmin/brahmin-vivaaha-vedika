@@ -13,7 +13,6 @@ import '../../core/app_router.dart';
 import '../auth/existing_user_login_screen.dart';
 import '../../widgets/app_header.dart';
 import '../../core/support_links.dart';
-import '../../widgets/whatsapp_channel_card.dart';
 import '../../widgets/common/labeled_adaptive_switch.dart';
 import '../../services/app_recommendation_service.dart';
 import '../../services/theme_service.dart';
@@ -890,9 +889,6 @@ class _AboutTab extends StatelessWidget {
           subtitle: 'Version $appVersion ($buildNumber)',
           onTap: () => NavHelper.push(context, Routes.about),
         ),
-        const SizedBox(height: 12),
-        const WhatsAppChannelCard(compact: true),
-
         _sectionHeader(context, 'Legal'),
         _SettingsCard(
           icon: Icons.description,

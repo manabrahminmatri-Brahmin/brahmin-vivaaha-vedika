@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/support_links.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_header.dart';
 import '../../utils/app_animations.dart';
@@ -116,8 +117,10 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         'telugu': 'సంప్రదింపు సమాచారం',
       },
       'contact_content': {
-        'english': 'If you have questions about this Privacy Policy or want to exercise your rights, please contact us at: WhatsApp +91 8985936678',
-        'telugu': 'ఈ గోప్యతా విధానం గురించి మీకు ప్రశ్నలు ఉంటే లేదా మీ హక్కులను అమలు చేయాలనుకుంటే, దయచేసి మమ్మలను సంప్రదించండి: WhatsApp +91 8985936678',
+        'english':
+            'If you have questions about this Privacy Policy or want to exercise your rights, please contact us:\n\n${SupportLinks.contactBlockEn}',
+        'telugu':
+            'ఈ గోప్యతా విధానం గురించి మీకు ప్రశ్నలు ఉంటే లేదా మీ హక్కులను అమలు చేయాలనుకుంటే, దయచేసి మమ్మలను సంప్రదించండి:\n\n${SupportLinks.contactBlockTe}',
       },
       'lastUpdated': {
         'english': 'Last Updated: December 2025',

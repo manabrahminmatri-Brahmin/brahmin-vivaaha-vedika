@@ -3,17 +3,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/app_theme.dart';
 
-/// Support contact + official [mana Vivaaha Vedika WhatsApp channel](https://whatsapp.com/channel/0029VbCYZdDLY6d9W19WRi2C).
+/// Official support contact for mana Vivaaha Vedika (app + policies).
 class SupportLinks {
   SupportLinks._();
 
   static const String supportPhone = '+918985936678';
   static const String supportPhoneDisplay = '+91 8985936678';
   static const String supportEmail = 'support@manavivaahavedika.in';
-
-  /// Official updates channel — replaces legacy Mana matrimony announcements.
-  static const String whatsAppChannelUrl =
-      'https://whatsapp.com/channel/0029VbCYZdDLY6d9W19WRi2C';
+  static const String supportWebsiteDisplay = 'www.manavivaahavedika.in';
+  static const String supportWebsiteUrl = 'https://www.manavivaahavedika.in';
 
   /// Digits-only E.164 without '+' for [wa.me](https://wa.me) links.
   static const String supportPhoneWaMe = '918985936678';
@@ -21,17 +19,54 @@ class SupportLinks {
   static Uri get whatsAppSupportUri =>
       Uri.parse('https://wa.me/$supportPhoneWaMe');
 
-  static Uri get whatsAppChannelUri => Uri.parse(whatsAppChannelUrl);
+  static Uri get supportWebsiteUri => Uri.parse(supportWebsiteUrl);
+
+  /// Single-line footer for Terms, Privacy, About, etc.
+  static String get contactFooterEn =>
+      'Email: $supportEmail · Website: $supportWebsiteDisplay · WhatsApp: $supportPhoneDisplay';
+
+  static String get contactFooterTe =>
+      'ఇమెయిల్: $supportEmail · వెబ్‌సైట్: $supportWebsiteDisplay · WhatsApp: $supportPhoneDisplay';
+
+  /// Multi-line block for refund / payment policy contact sections.
+  static String get contactBlockEn => '''
+Email: $supportEmail
+Website: $supportWebsiteDisplay
+Phone / WhatsApp: $supportPhoneDisplay''';
+
+  static String get contactBlockTe => '''
+ఇమెయిల్: $supportEmail
+వెబ్‌సైట్: $supportWebsiteDisplay
+ఫోన్ / WhatsApp: $supportPhoneDisplay''';
 
   static Future<void> openWhatsAppSupport(BuildContext context) async {
     await _launch(context, whatsAppSupportUri, 'Could not open WhatsApp chat.');
   }
 
-  static Future<void> openWhatsAppChannel(BuildContext context) async {
+  static Future<void> openSupportEmail(
+    BuildContext context, {
+    String subject = 'Support Request - Mana Vivaaha Vedika',
+    String body =
+        'Please describe your issue or question here...\n\nApp Version: 1.0.0',
+  }) async {
+    final uri = Uri(
+      scheme: 'mailto',
+      path: supportEmail,
+      query:
+          'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}',
+    );
     await _launch(
       context,
-      whatsAppChannelUri,
-      'Could not open the mana Vivaaha Vedika WhatsApp channel.',
+      uri,
+      'Could not open email client. Please make sure you have an email app installed.',
+    );
+  }
+
+  static Future<void> openWebsite(BuildContext context) async {
+    await _launch(
+      context,
+      supportWebsiteUri,
+      'Could not open the website.',
     );
   }
 

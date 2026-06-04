@@ -90,9 +90,9 @@ class AuthController extends ChangeNotifier {
   /// Matches from the last broad fetch that did not fit the requested page size.
   final List<app_models.User> _matchProfileOverflow = [];
 
-  static const int _kDiscoveryOverfetchFactor = 4;
-  static const int _kDiscoveryFetchMin = 40;
-  static const int _kDiscoveryFetchMax = 400;
+  static const int _kDiscoveryOverfetchFactor = 2;
+  static const int _kDiscoveryFetchMin = 24;
+  static const int _kDiscoveryFetchMax = 120;
 
   int _discoveryFetchSize(int pageLimit) =>
       (pageLimit * _kDiscoveryOverfetchFactor)
@@ -1254,10 +1254,20 @@ class AuthController extends ChangeNotifier {
     // Recent tab retention policy:
     // 1) only profiles created within the last 7 days
     // 2) keep at most the latest 10 profiles (oldest drops first)
+    // 3) opposite gender only (groom sees brides, bride sees grooms)
     const maxRecentWindow = 10;
     const recentDays = 7;
     final effectiveLimit = limit.clamp(1, maxRecentWindow);
     final cutoff = DateTime.now().toUtc().subtract(const Duration(days: recentDays));
+
+    final myGender = await _resolveMyGenderForMatching();
+    if (myGender == null) {
+      debugPrint(
+        '⚠️ getRecentlyAddedProfiles: user gender unknown — cannot load opposite-gender profiles',
+      );
+      return [];
+    }
+
     final fetchSize = _discoveryFetchSize(effectiveLimit);
     final out = <app_models.User>[];
     final registrationByUserId = <String, DateTime>{};
@@ -1320,8 +1330,16 @@ class AuthController extends ChangeNotifier {
           nCompletion++;
           continue;
         }
-        // Recently Added is a recency feed, not a gender-matching feed.
-        // Keep profile eligibility gates, but do not exclude by gender here.
+        final peerGender =
+            u.profile?.gender ?? genderFromUserDocumentData(data);
+        if (peerGender == null) {
+          nUnknown++;
+          continue;
+        }
+        if (peerGender == myGender) {
+          nGender++;
+          continue;
+        }
         final registeredAt = registeredAtFromDoc(data) ?? u.createdAt.toUtc();
         if (registeredAt.isBefore(cutoff)) {
           // Do not short-circuit here: legacy datasets may mix timestamp/string
@@ -1376,6 +1394,10 @@ class AuthController extends ChangeNotifier {
         if (u.id == _currentUser?.id) continue;
         if (u.isDeleted) continue;
         if (!ProfileCompletionPolicy.isEligibleForDiscovery(u)) continue;
+        final peerGender =
+            u.profile?.gender ?? genderFromUserDocumentData(data);
+        if (peerGender == null) continue;
+        if (peerGender == myGender) continue;
         final registeredAt = registeredAtFromDoc(data) ?? u.createdAt.toUtc();
         relaxed.add(u);
         relaxedRegistration[u.id] = registeredAt;

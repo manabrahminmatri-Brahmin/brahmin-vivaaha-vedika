@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/support_links.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/whatsapp_channel_card.dart';
 
 enum _PolicyLang { english, telugu }
 
@@ -191,15 +190,13 @@ Note: Refund requests must be raised within 3–5 days of the transaction.
 For payment-related queries:
 
 • Service: mana Vivaaha Vedika
-• Phone / WhatsApp: ${SupportLinks.supportPhoneDisplay}
-• WhatsApp Channel: ${SupportLinks.whatsAppChannelUrl}
+${SupportLinks.contactBlockEn}
 ''',
           'telugu': '''
 చెల్లింపు మరియు రీఫండ్ సంబంధిత ప్రశ్నలకు:
 
 • సేవా పేరు: మన వివాహ వేదిక
-• ఫోన్ / WhatsApp: ${SupportLinks.supportPhoneDisplay}
-• WhatsApp Channel: ${SupportLinks.whatsAppChannelUrl}
+${SupportLinks.contactBlockTe}
 ''',
         },
       };
@@ -317,8 +314,6 @@ For payment-related queries:
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            const WhatsAppChannelCard(compact: true),
             const SizedBox(height: 24),
           ],
         ),

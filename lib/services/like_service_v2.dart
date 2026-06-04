@@ -25,6 +25,42 @@ class LikeServiceV2 {
   factory LikeServiceV2() => _instance;
   LikeServiceV2._internal();
 
+  /// Cached profile preview rows keyed by user doc id (speeds Matches tab).
+  final Map<String, Map<String, dynamic>> _profilePreviewById = {};
+
+  String? _sentEnrichPeerKey;
+  List<Map<String, dynamic>>? _sentEnrichCache;
+  String? _recvEnrichPeerKey;
+  List<Map<String, dynamic>>? _recvEnrichCache;
+
+  String? _likesStreamIdentityKey;
+  Stream<app_result.Result<List<Map<String, dynamic>>>>? _sentLikesBroadcast;
+  Stream<app_result.Result<List<Map<String, dynamic>>>>? _recvLikesBroadcast;
+
+  void resetLikeStreamCache() {
+    _likesStreamIdentityKey = null;
+    _sentLikesBroadcast = null;
+    _recvLikesBroadcast = null;
+    _sentEnrichPeerKey = null;
+    _sentEnrichCache = null;
+    _recvEnrichPeerKey = null;
+    _recvEnrichCache = null;
+  }
+
+  /// Warm profile cache for Matches list tiles (fire-and-forget).
+  Future<void> prefetchProfilesForLikes(Iterable<String> userIds) async {
+    final ids = userIds.map((e) => e.trim()).where((e) => e.isNotEmpty).toSet();
+    if (ids.isEmpty) return;
+    await fetchProfilesBatch(ids.toList());
+  }
+
+  Map<String, dynamic>? cachedProfilePreview(String userId) {
+    final id = userId.trim();
+    if (id.isEmpty) return null;
+    final hit = _profilePreviewById[id];
+    return hit == null ? null : Map<String, dynamic>.from(hit);
+  }
+
   /// 🔥 Backward compatibility: boundFirestoreUserId for old Provider patterns
   String? get boundFirestoreUserId {
     return IdentityProvider.userDocId.isEmpty
@@ -36,7 +72,7 @@ class LikeServiceV2 {
     var userId = IdentityProvider.userDocId.trim();
     if (userId.isNotEmpty) return userId;
 
-    final initResult = await AppInitializer.initialize();
+    final initResult = await AppInitializer.ensureInitialized();
     if (initResult.isSuccess) {
       userId = IdentityProvider.userDocId.trim();
     }
@@ -231,6 +267,10 @@ class LikeServiceV2 {
 
       final likeDocId =
           (gateway['likeId'] as String?) ?? '${currentUserId}_$targetUserDocId';
+      _sentEnrichPeerKey = null;
+      _sentEnrichCache = null;
+      _recvEnrichPeerKey = null;
+      _recvEnrichCache = null;
       return app_result.Result.success({
         'likeId': likeDocId,
         'liked': true,
@@ -268,6 +308,10 @@ class LikeServiceV2 {
         );
       }
 
+      _sentEnrichPeerKey = null;
+      _sentEnrichCache = null;
+      _recvEnrichPeerKey = null;
+      _recvEnrichCache = null;
       return app_result.Result.success(null, message: 'Unliked');
     } catch (e) {
       ErrorFirewall.logError(e, context: 'LikeServiceV2.unlikeUser');
@@ -313,6 +357,27 @@ class LikeServiceV2 {
     }
   }
 
+  String _likesStreamKey(Set<String> aliases) =>
+      aliases.map((a) => a.trim()).where((a) => a.isNotEmpty).join('|');
+
+  Stream<app_result.Result<List<Map<String, dynamic>>>> _sharedLikesStream({
+    required bool sent,
+    required Set<String> identityAliases,
+    required Stream<app_result.Result<List<Map<String, dynamic>>>> Function()
+        build,
+  }) {
+    final identityKey = _likesStreamKey(identityAliases);
+    if (_likesStreamIdentityKey != identityKey) {
+      _likesStreamIdentityKey = identityKey;
+      _sentLikesBroadcast = null;
+      _recvLikesBroadcast = null;
+    }
+    if (sent) {
+      return _sentLikesBroadcast ??= build().asBroadcastStream();
+    }
+    return _recvLikesBroadcast ??= build().asBroadcastStream();
+  }
+
   /// Stream of users who liked current user (received likes)
   Stream<app_result.Result<List<Map<String, dynamic>>>> streamLikesReceived() {
     final currentUserIds = _currentIdentityAliases();
@@ -326,10 +391,13 @@ class LikeServiceV2 {
       );
     }
 
-    return _streamLikesByAliases(
-      identityField: Fields.toUserId,
+    return _sharedLikesStream(
+      sent: false,
       identityAliases: currentUserIds,
-    ).asyncMap((result) async {
+      build: () => _streamLikesByAliases(
+        identityField: Fields.toUserId,
+        identityAliases: currentUserIds,
+      ).asyncMap((result) async {
       if (result.isError || result.data == null) {
         return result;
       }
@@ -364,9 +432,11 @@ class LikeServiceV2 {
       final visible = await _filterLikesWithActiveProfiles(
         enriched,
         peerField: Fields.fromUserId,
+        cacheScope: 'received',
       );
       return app_result.Result.success(visible);
-    });
+    }),
+    );
   }
 
   /// Stream of users current user liked (sent likes)
@@ -384,10 +454,13 @@ class LikeServiceV2 {
       );
     }
 
-    return _streamLikesByAliases(
-      identityField: Fields.fromUserId,
+    return _sharedLikesStream(
+      sent: true,
       identityAliases: currentUserIds,
-    ).asyncMap((result) async {
+      build: () => _streamLikesByAliases(
+        identityField: Fields.fromUserId,
+        identityAliases: currentUserIds,
+      ).asyncMap((result) async {
       if (result.isError || result.data == null) {
         return result;
       }
@@ -426,34 +499,90 @@ class LikeServiceV2 {
       final visible = await _filterLikesWithActiveProfiles(
         enriched,
         peerField: Fields.toUserId,
+        cacheScope: 'sent',
       );
       return app_result.Result.success(visible);
-    });
+    }),
+    );
   }
 
-  /// Drop likes whose peer profile no longer exists (deleted accounts).
+  String _peerIdFromLike(
+    Map<String, dynamic> like, {
+    required String peerField,
+    required String legacyPeer,
+  }) {
+    return (like[peerField] ?? like[legacyPeer] ?? '').toString().trim();
+  }
+
+  List<Map<String, dynamic>> _mergeProfilePreviewsIntoLikes(
+    List<Map<String, dynamic>> likes,
+    Map<String, Map<String, dynamic>> profiles, {
+    required String peerField,
+    required String legacyPeer,
+  }) {
+    return likes.map((like) {
+      final id = _peerIdFromLike(like, peerField: peerField, legacyPeer: legacyPeer);
+      final preview = profiles[id];
+      if (preview == null || preview.isEmpty) return like;
+      return {...like, ...preview};
+    }).toList();
+  }
+
+  /// Drop deleted peers, merge cached profile previews (name, photo, city).
   Future<List<Map<String, dynamic>>> _filterLikesWithActiveProfiles(
     List<Map<String, dynamic>> likes, {
     required String peerField,
+    required String cacheScope,
   }) async {
     if (likes.isEmpty) return likes;
     final legacyPeer = peerField == Fields.fromUserId ? 'fromUserId' : 'toUserId';
     final peerIds = <String>{};
     for (final like in likes) {
-      final id = (like[peerField] ?? like[legacyPeer] ?? '').toString().trim();
+      final id = _peerIdFromLike(like, peerField: peerField, legacyPeer: legacyPeer);
       if (id.isNotEmpty) peerIds.add(id);
     }
     if (peerIds.isEmpty) return likes;
 
-    final profiles = await fetchProfilesBatch(peerIds.toList());
-    if (profiles.isError || profiles.data == null) return likes;
+    final peerKey = peerIds.toList()..sort();
+    final peerFingerprint = '$cacheScope:${peerKey.join('|')}';
+    if (cacheScope == 'sent' &&
+        _sentEnrichPeerKey == peerFingerprint &&
+        _sentEnrichCache != null) {
+      return List<Map<String, dynamic>>.from(_sentEnrichCache!);
+    }
+    if (cacheScope == 'received' &&
+        _recvEnrichPeerKey == peerFingerprint &&
+        _recvEnrichCache != null) {
+      return List<Map<String, dynamic>>.from(_recvEnrichCache!);
+    }
 
-    final active = profiles.data!.keys.toSet();
-    return likes.where((like) {
-      final id =
-          (like[peerField] ?? like[legacyPeer] ?? '').toString().trim();
-      return id.isNotEmpty && active.contains(id);
+    final profiles = await fetchProfilesBatch(peerIds.toList());
+    // On total failure, keep likes so the tab does not look empty/broken.
+    if (profiles.isError || profiles.data == null) {
+      return likes;
+    }
+
+    final active = profiles.data!;
+    final filtered = likes.where((like) {
+      final id = _peerIdFromLike(like, peerField: peerField, legacyPeer: legacyPeer);
+      return id.isNotEmpty && active.containsKey(id);
     }).toList();
+
+    final merged = _mergeProfilePreviewsIntoLikes(
+      filtered,
+      active,
+      peerField: peerField,
+      legacyPeer: legacyPeer,
+    );
+
+    if (cacheScope == 'sent') {
+      _sentEnrichPeerKey = peerFingerprint;
+      _sentEnrichCache = merged;
+    } else if (cacheScope == 'received') {
+      _recvEnrichPeerKey = peerFingerprint;
+      _recvEnrichCache = merged;
+    }
+    return merged;
   }
 
   /// Batch fetch profiles using repository with retry logic
@@ -465,25 +594,34 @@ class LikeServiceV2 {
 
     try {
       final results = <String, Map<String, dynamic>>{};
+      final missing = <String>[];
+      for (final raw in userIds) {
+        final id = raw.trim();
+        if (id.isEmpty) continue;
+        final cached = _profilePreviewById[id];
+        if (cached != null) {
+          results[id] = Map<String, dynamic>.from(cached);
+        } else {
+          missing.add(id);
+        }
+      }
 
       const batchSize = 30;
 
-      debugPrint(
-        '🔍 Fetching ${userIds.length} profiles in batches of $batchSize',
-      );
-
-      for (var i = 0; i < userIds.length; i += batchSize) {
-        final batch = userIds.sublist(
-          i,
-          i + batchSize > userIds.length ? userIds.length : i + batchSize,
-        );
-
+      if (missing.isNotEmpty && kDebugMode) {
         debugPrint(
-          '🔍 Fetching batch ${(i ~/ batchSize) + 1}: ${batch.length} profiles',
+          '🔍 Fetching ${missing.length}/${userIds.length} profiles (cache hit ${results.length})',
+        );
+      }
+
+      for (var i = 0; i < missing.length; i += batchSize) {
+        final batch = missing.sublist(
+          i,
+          i + batchSize > missing.length ? missing.length : i + batchSize,
         );
 
-        int retries = 3;
-        bool batchSuccess = false;
+        int retries = 2;
+        var batchSuccess = false;
 
         while (retries > 0 && !batchSuccess) {
           try {
@@ -504,7 +642,7 @@ class LikeServiceV2 {
                 debugPrint(
                   '⚠️ Batch query error (${queryResult.message}), retrying... ($retries left)',
                 );
-                await Future.delayed(const Duration(seconds: 2));
+                await Future.delayed(const Duration(milliseconds: 500));
                 continue;
               }
               debugPrint(
@@ -516,7 +654,6 @@ class LikeServiceV2 {
             for (final doc in queryResult.data ?? []) {
               final id = doc['id'] as String?;
               if (id == null || id.isEmpty) {
-                debugPrint('⚠️ Skipping document with null/empty ID');
                 continue;
               }
 
@@ -524,9 +661,7 @@ class LikeServiceV2 {
                 final profile = _extractProfileData(id, doc);
                 if (profile != null) {
                   results[id] = profile;
-                  debugPrint('✅ Loaded profile: $id (${profile['name']})');
-                } else {
-                  debugPrint('⚠️ Profile $id is deleted/inactive — skipped');
+                  _profilePreviewById[id] = profile;
                 }
               } catch (e) {
                 debugPrint('❌ Error extracting profile $id: $e');
@@ -538,18 +673,19 @@ class LikeServiceV2 {
           } catch (e) {
             retries--;
             if (retries > 0) {
-              debugPrint('⚠️ Batch error (${3 - retries}/3): $e');
-              await Future.delayed(const Duration(seconds: 2));
+              await Future.delayed(const Duration(milliseconds: 500));
             } else {
-              debugPrint('❌ Failed to fetch batch after 3 attempts: $e');
+              debugPrint('❌ Failed to fetch batch: $e');
             }
           }
         }
       }
 
-      debugPrint(
-        '✅ Successfully fetched ${results.length}/${userIds.length} profiles',
-      );
+      if (kDebugMode && results.isNotEmpty) {
+        debugPrint(
+          '✅ Profile batch ready ${results.length}/${userIds.length}',
+        );
+      }
       return app_result.Result.success(results);
     } catch (e, stack) {
       debugPrint('❌ Fatal error in _fetchProfilesBatch: $e');
@@ -753,6 +889,10 @@ class LikeService extends ChangeNotifier {
   }
 
   void _onIdentityChanged(AppIdentity? _) {
+    _v2Service.resetLikeStreamCache();
+    _lastLikesCacheKey = null;
+    _youLikedFingerprint = '';
+    _likedYouFingerprint = '';
     Future.microtask(notifyListeners);
   }
 
@@ -760,6 +900,49 @@ class LikeService extends ChangeNotifier {
   String? _lastLikesCacheKey;
   List<Map<String, dynamic>> _lastYouLiked = <Map<String, dynamic>>[];
   List<Map<String, dynamic>> _lastLikedYou = <Map<String, dynamic>>[];
+  String _youLikedFingerprint = '';
+  String _likedYouFingerprint = '';
+
+  static String _likesListFingerprint(List<Map<String, dynamic>> rows) {
+    if (rows.isEmpty) return '0';
+    final ids = <String>[];
+    for (final row in rows) {
+      ids.add(
+        (row['id'] ??
+                row['user_id'] ??
+                row['doc_id'] ??
+                row['to_user_id'] ??
+                row['from_user_id'] ??
+                '')
+            .toString(),
+      );
+    }
+    ids.sort();
+    return '${rows.length}:${ids.join('|')}';
+  }
+
+  void _notifyIfLikesChanged({
+    required bool sent,
+    required List<Map<String, dynamic>> next,
+    String? queryError,
+  }) {
+    final fp = _likesListFingerprint(next);
+    final errChanged = sent
+        ? _youLikedQueryError != queryError
+        : _likedYouQueryError != queryError;
+    final prevFp = sent ? _youLikedFingerprint : _likedYouFingerprint;
+    if (!errChanged && fp == prevFp) return;
+    if (sent) {
+      _youLikedFingerprint = fp;
+      _youLikedQueryError = queryError;
+      _lastYouLiked = List<Map<String, dynamic>>.from(next);
+    } else {
+      _likedYouFingerprint = fp;
+      _likedYouQueryError = queryError;
+      _lastLikedYou = List<Map<String, dynamic>>.from(next);
+    }
+    notifyListeners();
+  }
 
   /// Last Firestore/query failure for sent-likes stream (UI may show retry).
   String? _youLikedQueryError;
@@ -849,26 +1032,38 @@ class LikeService extends ChangeNotifier {
       if (sent) {
         return _v2Service.streamLikesSent().map((result) {
           if (result.isSuccess) {
-            _youLikedQueryError = null;
-            notifyListeners();
+            _notifyIfLikesChanged(
+              sent: true,
+              next: result.data ?? <Map<String, dynamic>>[],
+              queryError: null,
+            );
             return result.data ?? [];
           }
           final msg = '${result.errorCode}: ${result.message}';
-          _youLikedQueryError = msg;
-          notifyListeners();
+          _notifyIfLikesChanged(
+            sent: true,
+            next: _lastYouLiked,
+            queryError: msg,
+          );
           debugPrint('LIKE STREAM ERROR sent streamLikes: $msg');
           return <Map<String, dynamic>>[];
         });
       } else {
         return _v2Service.streamLikesReceived().map((result) {
           if (result.isSuccess) {
-            _likedYouQueryError = null;
-            notifyListeners();
+            _notifyIfLikesChanged(
+              sent: false,
+              next: result.data ?? <Map<String, dynamic>>[],
+              queryError: null,
+            );
             return result.data ?? [];
           }
           final msg = '${result.errorCode}: ${result.message}';
-          _likedYouQueryError = msg;
-          notifyListeners();
+          _notifyIfLikesChanged(
+            sent: false,
+            next: _lastLikedYou,
+            queryError: msg,
+          );
           debugPrint('LIKE STREAM ERROR received streamLikes: $msg');
           return <Map<String, dynamic>>[];
         });
@@ -913,16 +1108,18 @@ class LikeService extends ChangeNotifier {
       yield* _v2Service.streamLikesSent().map((result) {
         if (result.isError) {
           final msg = '${result.errorCode}: ${result.message}';
-          _youLikedQueryError = msg;
-          notifyListeners();
+          _notifyIfLikesChanged(
+            sent: true,
+            next: _lastYouLiked,
+            queryError: msg,
+          );
           debugPrint('LIKE STREAM ERROR getYouLiked: $msg');
           return List<Map<String, dynamic>>.from(_lastYouLiked);
         }
-        _youLikedQueryError = null;
-        notifyListeners();
-        _lastYouLiked = List<Map<String, dynamic>>.from(
+        final next = List<Map<String, dynamic>>.from(
           result.data ?? <Map<String, dynamic>>[],
         );
+        _notifyIfLikesChanged(sent: true, next: next, queryError: null);
         debugPrint('LIKE STREAM READY sent=${_lastYouLiked.length}');
         return _lastYouLiked;
       });
@@ -943,16 +1140,18 @@ class LikeService extends ChangeNotifier {
       yield* _v2Service.streamLikesReceived().map((result) {
         if (result.isError) {
           final msg = '${result.errorCode}: ${result.message}';
-          _likedYouQueryError = msg;
-          notifyListeners();
+          _notifyIfLikesChanged(
+            sent: false,
+            next: _lastLikedYou,
+            queryError: msg,
+          );
           debugPrint('LIKE STREAM ERROR getLikedYou: $msg');
           return List<Map<String, dynamic>>.from(_lastLikedYou);
         }
-        _likedYouQueryError = null;
-        notifyListeners();
-        _lastLikedYou = List<Map<String, dynamic>>.from(
+        final next = List<Map<String, dynamic>>.from(
           result.data ?? <Map<String, dynamic>>[],
         );
+        _notifyIfLikesChanged(sent: false, next: next, queryError: null);
         debugPrint('LIKE STREAM READY received=${_lastLikedYou.length}');
         return _lastLikedYou;
       });

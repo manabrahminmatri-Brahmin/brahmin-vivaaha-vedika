@@ -14,7 +14,6 @@ import '../../services/auth_service.dart';
 import '../../services/plan_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/whatsapp_channel_card.dart';
 import '../../utils/app_animations.dart';
 import '../../core/app_router.dart';
 
@@ -141,9 +140,6 @@ class _PremiumUpgradeScreenState extends State<PremiumUpgradeScreen> {
               const SizedBox(height: 32),
               _buildFeaturesComparison(context)
                   .appFadeIn(delay: const Duration(milliseconds: 300)),
-              const SizedBox(height: 16),
-              const WhatsAppChannelCard(compact: true)
-                  .appFadeIn(delay: const Duration(milliseconds: 350)),
               const SizedBox(height: 32),
               if (_selectedTier != null)
                 _buildPaymentButton(context)

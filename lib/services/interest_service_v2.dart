@@ -107,11 +107,13 @@ class InterestServiceV2 {
   static const int _maxRetries = 3;
   static const Duration _retryDelay = Duration(seconds: 2);
 
+  final Map<String, Map<String, dynamic>> _interestProfileById = {};
+
   Future<String> _currentUserDocIdOrInitialize() async {
     var userId = IdentityProvider.userDocId.trim();
     if (userId.isNotEmpty) return userId;
 
-    final initResult = await AppInitializer.initialize();
+    final initResult = await AppInitializer.ensureInitialized();
     if (initResult.isSuccess) {
       userId = IdentityProvider.userDocId.trim();
     }
@@ -430,7 +432,7 @@ class InterestServiceV2 {
             ],
             orderBy: Fields.createdAt,
             descending: true,
-            includeMetadataChanges: true,
+            includeMetadataChanges: false,
           ),
         )
         .toList();
@@ -611,7 +613,7 @@ class InterestServiceV2 {
             ],
             orderBy: Fields.createdAt,
             descending: true,
-            includeMetadataChanges: true,
+            includeMetadataChanges: false,
           ),
         )
         .toList();
@@ -757,13 +759,24 @@ class InterestServiceV2 {
 
     try {
       final results = <String, Map<String, dynamic>>{};
+      for (final id in userIds) {
+        final cached = _interestProfileById[id];
+        if (cached != null) {
+          results[id] = Map<String, dynamic>.from(cached);
+        }
+      }
+      final missing =
+          userIds.where((id) => !results.containsKey(id)).toList();
+      if (missing.isEmpty) {
+        return Result.success(results);
+      }
 
       final batchSize = InterestBadgeAggregator.firestoreWhereInMax;
 
-      for (var i = 0; i < userIds.length; i += batchSize) {
-        final batch = userIds.sublist(
+      for (var i = 0; i < missing.length; i += batchSize) {
+        final batch = missing.sublist(
           i,
-          i + batchSize > userIds.length ? userIds.length : i + batchSize,
+          i + batchSize > missing.length ? missing.length : i + batchSize,
         );
 
         final queryResult = await FirestoreRepository.query(
@@ -782,6 +795,7 @@ class InterestServiceV2 {
           final profile = _extractProfileData(id, doc);
           if (profile != null) {
             results[id] = profile;
+            _interestProfileById[id] = profile;
           }
         }
 
@@ -804,8 +818,12 @@ class InterestServiceV2 {
               final profile = _extractProfileData(id, doc);
               if (profile == null) continue;
               final authUid = (doc[Fields.authUid] as String? ?? '').trim();
-              if (authUid.isNotEmpty) results[authUid] = profile;
+              if (authUid.isNotEmpty) {
+                results[authUid] = profile;
+                _interestProfileById[authUid] = profile;
+              }
               results[id] = profile;
+              _interestProfileById[id] = profile;
             }
           }
           final byProfile = await FirestoreRepository.query(
@@ -819,8 +837,12 @@ class InterestServiceV2 {
               final profile = _extractProfileData(id, doc);
               if (profile == null) continue;
               final profileId = (doc[Fields.profileId] as String? ?? '').trim();
-              if (profileId.isNotEmpty) results[profileId] = profile;
+              if (profileId.isNotEmpty) {
+                results[profileId] = profile;
+                _interestProfileById[profileId] = profile;
+              }
               results[id] = profile;
+              _interestProfileById[id] = profile;
             }
           }
         }
@@ -1143,7 +1165,7 @@ class InterestService extends ChangeNotifier {
     var userId = IdentityProvider.userDocId.trim();
     if (userId.isNotEmpty) return userId;
 
-    final initResult = await AppInitializer.initialize();
+    final initResult = await AppInitializer.ensureInitialized();
     if (initResult.isSuccess) {
       userId = IdentityProvider.userDocId.trim();
     }
