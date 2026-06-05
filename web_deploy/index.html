@@ -864,7 +864,7 @@
     .udyam-left { display: flex; align-items: center; gap: 22px; }
     .udyam-logo {
       width: 180px; height: 68px; padding: 10px 14px;
-      background: #FAFAFA; border: 1px solid var(--border);
+      background: #fff; border: 1px solid var(--border);
       border-radius: 10px; display: flex; align-items: center; justify-content: center;
     }
     .udyam-logo img { width: 100%; height: 100%; object-fit: contain; }
@@ -877,7 +877,11 @@
       border: 1px solid var(--rust-tint2); letter-spacing: 0.04em;
     }
     .udyam-right { font-size: 0.78rem; color: var(--muted); max-width: 280px; line-height: 1.65; }
-    .site-trust-strip { padding-top: 48px; padding-bottom: 48px; }
+    .site-trust-strip {
+      padding-top: 48px;
+      padding-bottom: 48px;
+      background: #fff;
+    }
 
     /* ─── Footer ─── */
     .footer {
@@ -1827,7 +1831,7 @@
   </main>
 
   <!-- UDYAM / MSME — always visible above footer -->
-  <section class="section alt site-trust-strip" id="udyam">
+  <section class="section site-trust-strip" id="udyam">
     <div class="wrap">
       <div class="udyam reveal visible">
         <div class="udyam-left">
