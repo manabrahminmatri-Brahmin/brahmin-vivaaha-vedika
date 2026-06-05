@@ -957,6 +957,7 @@
       border: 1px solid var(--rust-tint2); letter-spacing: 0.04em;
     }
     .udyam-right { font-size: 0.78rem; color: var(--muted); max-width: 280px; line-height: 1.65; }
+    .site-trust-strip { padding-top: 48px; padding-bottom: 48px; }
 
     /* ─── Footer ─── */
     .footer {
@@ -1017,22 +1018,23 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 40px;
-      padding: 8px 16px;
+      min-height: 0;
+      padding: 4px 12px 5px;
       background: #fff;
-      border-radius: 10px;
+      border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      line-height: 0;
     }
     .footer-razorpay-badge:hover {
       transform: translateY(-1px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
     }
     .footer-razorpay-logo {
-      height: 22px;
+      height: 34px;
       width: auto;
-      max-width: 120px;
+      max-width: 148px;
       display: block;
       object-fit: contain;
     }
@@ -1914,10 +1916,12 @@
     </div>
   </section>
 
-  <!-- UDYAM -->
-  <section class="section alt topic-panel-hidden" id="udyam">
+  </main>
+
+  <!-- UDYAM / MSME — always visible above footer -->
+  <section class="section alt site-trust-strip" id="udyam">
     <div class="wrap">
-      <div class="udyam reveal">
+      <div class="udyam reveal visible">
         <div class="udyam-left">
           <div class="udyam-logo">
             <img src="assets/msme-logo.png" width="152" height="48" alt="MSME — Micro, Small &amp; Medium Enterprises" loading="lazy" />
@@ -1932,8 +1936,6 @@
       </div>
     </div>
   </section>
-
-  </main>
 
   <!-- ─── Footer ─── -->
   <footer class="footer">
@@ -1955,7 +1957,7 @@
             Secure payments via
           </span>
           <a class="footer-razorpay-badge" href="https://razorpay.com/" target="_blank" rel="noopener noreferrer" title="Payments secured by Razorpay (UPI, Card, Netbanking)">
-            <img src="assets/razorpay-logo.png" width="120" height="22" alt="Razorpay" class="footer-razorpay-logo" loading="lazy" decoding="async" />
+            <img src="assets/razorpay-logo.png" width="148" height="34" alt="Razorpay" class="footer-razorpay-logo" loading="lazy" decoding="async" />
           </a>
         </div>
       </div>
@@ -2101,7 +2103,7 @@
         if (allTopicPanelIds.indexOf(id) === -1) allTopicPanelIds.push(id);
       });
     });
-    ['faq', 'contact', 'udyam'].forEach(function (id) {
+    ['faq', 'contact'].forEach(function (id) {
       if (allTopicPanelIds.indexOf(id) === -1) allTopicPanelIds.push(id);
     });
 
@@ -2187,7 +2189,7 @@
     function applyTopicNav(href, e) {
       if (!href || href.charAt(0) !== '#') return false;
       var id = href.slice(1);
-      if (id === 'faq' || id === 'contact' || id === 'udyam') {
+      if (id === 'faq' || id === 'contact') {
         if (e) e.preventDefault();
         showSinglePanel(id);
         return true;
