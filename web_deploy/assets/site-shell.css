@@ -1,0 +1,22 @@
+/* Uniform page canvas — all site pages */
+:root {
+  --page-bg-start: #fff8f5;
+  --page-bg-mid: #ffffff;
+  --page-bg-end: #fff5f0;
+  --page-bg-gradient: linear-gradient(
+    165deg,
+    var(--page-bg-start) 0%,
+    var(--page-bg-mid) 50%,
+    var(--page-bg-end) 100%
+  );
+}
+
+html {
+  background: var(--page-bg-gradient);
+  background-attachment: fixed;
+  min-height: 100%;
+}
+
+body {
+  background: transparent;
+}

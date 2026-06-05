@@ -12,6 +12,7 @@
   <link rel="apple-touch-icon" href="app_logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/site-header.css" />
+  <link rel="stylesheet" href="assets/site-shell.css" />
   <style>
     /* ─── Design Tokens ─── */
     :root {
@@ -28,8 +29,8 @@
       --amber:      #F5A623;
       --gold:       #D4920A;
       --surface:    #FFFFFF;
-      --bg:         #FDFAF7;
-      --bg-warm:    #FBF5EF;
+      --bg:         #fff8f5;
+      --bg-warm:    #fff8f5;
       --ink:        #1C0E08;
       --ink-2:      #3D2010;
       --ink-3:      #6B3A20;
@@ -56,7 +57,6 @@
 
     body {
       font-family: var(--font);
-      background: linear-gradient(165deg, var(--bg) 0%, #fff 50%, #fff5f0 100%);
       color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -131,6 +131,7 @@
       scrollbar-width: thin;
       background: var(--surface);
       padding: 0 8px;
+      border-bottom: 1px solid var(--border);
     }
     .app-tab-bar::-webkit-scrollbar { height: 4px; }
     .topic-tabs .app-tab-btn {
@@ -187,19 +188,12 @@
       padding: var(--topic-gap) 24px 64px;
     }
     #homeScreen.home-screen-section {
-      background: var(--bg);
+      background: transparent;
       position: relative;
       overflow: visible;
     }
     #homeScreen .home-screen-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 55% 70% at 90% 40%, rgba(240,120,64,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 15% 80%, rgba(196,75,10,0.05) 0%, transparent 60%),
-        var(--bg);
-      pointer-events: none;
+      display: none;
     }
     #homeScreen .home-screen-inner {
       position: relative;
@@ -639,7 +633,7 @@
 
     /* ─── Section spacing ─── */
     .section { padding: 84px 24px; }
-    .section.alt { background: var(--bg-warm); }
+    .section.alt { background: transparent; }
 
     /* ─── Divider ornament ─── */
     .divider {
@@ -874,7 +868,7 @@
     .site-trust-strip {
       padding-top: 48px;
       padding-bottom: 48px;
-      background: #fff;
+      background: transparent;
     }
 
     /* ─── Footer ─── */
