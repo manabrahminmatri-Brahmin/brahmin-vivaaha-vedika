@@ -8,14 +8,14 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site-header.css" />
   <style>
     :root {
       --orange: #fc5603;
       --orange-light: #ff7a35;
       --orange-dark: #d84315;
       --maroon: #d84315;
-      --nav-h: 140px;
       --page-gap: 32px;
       --bg: #fff8f5;
       --surface: #f0f2f5;
@@ -38,91 +38,9 @@
     }
     a { color: var(--orange); text-decoration: none; font-weight: 500; }
     a:hover { text-decoration: underline; }
-    .top-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--nav-h);
-      z-index: 200;
-      background: var(--orange);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 22px;
-      margin: 0;
-      gap: 12px;
-    }
-    .top-brand {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      color: #fff;
+    a.back-link,
+    a.back-link:hover {
       text-decoration: none;
-      min-width: 0;
-    }
-    .top-brand-logo {
-      width: 120px;
-      height: 120px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 0;
-    }
-    .top-brand-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 14px;
-      max-width: none;
-    }
-    .top-brand-text {
-      line-height: 1.2;
-      min-width: 0;
-      align-self: center;
-    }
-    .top-brand-text small {
-      display: block;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 4px;
-    }
-    .top-brand-name {
-      font-size: clamp(1.12rem, 2.5vw, 1.45rem);
-      font-weight: 700;
-      line-height: 1.2;
-      color: #fff;
-      letter-spacing: -0.02em;
-    }
-    .top-brand-name .mana {
-      color: #fff;
-      font-weight: 800;
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 18px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(255, 255, 255, 0.8);
-      background: #fff;
-      font-size: 0.8rem;
-      color: var(--orange-dark);
-      font-weight: 600;
-      line-height: 1;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-      transition: all 0.2s ease;
-    }
-    .back-link:hover {
-      color: var(--orange);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
     }
     .hero {
       background: var(--orange);
@@ -288,13 +206,7 @@
     }
 
     @media (max-width: 900px) {
-      :root { --nav-h: 120px; }
       body { padding-top: var(--nav-h); }
-      .top-brand { gap: 12px; }
-      .top-brand-logo { width: 80px; height: 80px; }
-      .top-brand-text small { font-size: 0.58rem; letter-spacing: 0.08em; }
-      .top-brand-name { font-size: clamp(0.95rem, 3.5vw, 1.1rem); }
-      .back-link { padding: 8px 12px; font-size: 0.72rem; }
       .hero { padding: 34px 16px 30px; margin: var(--page-gap) 16px 20px; }
     }
   </style>
@@ -303,7 +215,7 @@
   <div class="top-bar">
     <a class="top-brand" href="index.html">
       <div class="top-brand-logo">
-        <img src="app_logo.png" width="68" height="68" alt="mana Vivaaha Vedika logo" loading="eager" decoding="async" />
+        <img src="app_logo.png" width="120" height="120" alt="mana Vivaaha Vedika logo" loading="eager" decoding="async" />
       </div>
       <div class="top-brand-text">
         <small>Brahmin Matrimony</small>

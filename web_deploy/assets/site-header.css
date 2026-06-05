@@ -1,0 +1,156 @@
+/* Shared fixed header — index (.nav) + policy pages (.top-bar) */
+:root {
+  --nav-h: 140px;
+}
+
+.top-bar,
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  z-index: 200;
+  background: #fc5603;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+  margin: 0;
+  gap: 12px;
+}
+
+.top-brand,
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  text-decoration: none;
+  min-width: 0;
+  flex: 1 1 auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.top-brand-logo,
+.brand-logo {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.top-brand-logo img,
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+  max-width: none;
+}
+
+.top-brand-text,
+.brand-text-wrap {
+  line-height: 1.2;
+  min-width: 0;
+  align-self: center;
+}
+
+.top-brand-text small,
+.brand-text-wrap small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.top-brand-name,
+.brand-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.12rem, 2.5vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.top-brand-name .mana,
+.brand-name .mana {
+  color: #fff;
+  font-weight: 800;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  background: #fff;
+  font-size: 0.8rem;
+  color: #d84315;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.back-link:hover {
+  color: #fc5603;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --nav-h: 120px;
+  }
+
+  .top-brand,
+  .brand {
+    gap: 12px;
+  }
+
+  .top-brand-logo,
+  .brand-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .top-brand-text small,
+  .brand-text-wrap small {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .top-brand-name,
+  .brand-name {
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  }
+
+  .back-link {
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-brand,
+  .brand {
+    max-width: calc(100% - 168px);
+  }
+}
